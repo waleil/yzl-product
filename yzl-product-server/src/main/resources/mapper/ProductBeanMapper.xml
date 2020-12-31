@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.net.yzl.product.dao.ProductBeanMapper" >
+  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.ProductBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="product_no" property="productNo" jdbcType="INTEGER" />
+    <result column="business_code" property="businessCode" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="withhold_stock" property="withholdStock" jdbcType="INTEGER" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="eng_name" property="engName" jdbcType="VARCHAR" />
+    <result column="goods_source" property="goodsSource" jdbcType="BIT" />
+    <result column="brand_no" property="brandNo" jdbcType="INTEGER" />
+    <result column="category_dict_code" property="categoryDictCode" jdbcType="INTEGER" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+    <result column="licence" property="licence" jdbcType="VARCHAR" />
+    <result column="gift_flag" property="giftFlag" jdbcType="BIT" />
+    <result column="jf_exchange_flag" property="jfExchangeFlag" jdbcType="BIT" />
+    <result column="jf_price" property="jfPrice" jdbcType="INTEGER" />
+    <result column="finance_code" property="financeCode" jdbcType="VARCHAR" />
+    <result column="producter_no" property="producterNo" jdbcType="INTEGER" />
+    <result column="supplier_no" property="supplierNo" jdbcType="INTEGER" />
+    <result column="sale_price" property="salePrice" jdbcType="INTEGER" />
+    <result column="member_price" property="memberPrice" jdbcType="INTEGER" />
+    <result column="cost_price" property="costPrice" jdbcType="INTEGER" />
+    <result column="best_price" property="bestPrice" jdbcType="INTEGER" />
+    <result column="yk_price" property="ykPrice" jdbcType="INTEGER" />
+    <result column="jk_price" property="jkPrice" jdbcType="INTEGER" />
+    <result column="zk_price" property="zkPrice" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="stock_threshold" property="stockThreshold" jdbcType="INTEGER" />
+    <result column="available_stock" property="availableStock" jdbcType="INTEGER" />
+    <result column="sale_pattern" property="salePattern" jdbcType="BIT" />
+    <result column="sale_start_time" property="saleStartTime" jdbcType="TIMESTAMP" />
+    <result column="sale_end_time" property="saleEndTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="patent_num_flag" property="patentNumFlag" jdbcType="BIT" />
+    <result column="batch_code" property="batchCode" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="INTEGER" />
+    <result column="lengths" property="lengths" jdbcType="REAL" />
+    <result column="wide" property="wide" jdbcType="REAL" />
+    <result column="high" property="high" jdbcType="REAL" />
+    <result column="volume" property="volume" jdbcType="REAL" />
+    <result column="expiration_date" property="expirationDate" jdbcType="INTEGER" />
+    <result column="valid_date" property="validDate" jdbcType="TIMESTAMP" />
+    <result column="aql_date" property="aqlDate" jdbcType="INTEGER" />
+    <result column="mpcg" property="mpcg" jdbcType="VARCHAR" />
+    <result column="total_use_num" property="totalUseNum" jdbcType="VARCHAR" />
+    <result column="one_use_num" property="oneUseNum" jdbcType="VARCHAR" />
+    <result column="avalue" property="avalue" jdbcType="VARCHAR" />
+    <result column="one_to_times" property="oneToTimes" jdbcType="VARCHAR" />
+    <result column="cj_name" property="cjName" jdbcType="VARCHAR" />
+    <result column="cj_country_no" property="cjCountryNo" jdbcType="INTEGER" />
+    <result column="cj_province_no" property="cjProvinceNo" jdbcType="INTEGER" />
+    <result column="cj_city_no" property="cjCityNo" jdbcType="INTEGER" />
+    <result column="cj_area_no" property="cjAreaNo" jdbcType="INTEGER" />
+    <result column="cj_addr" property="cjAddr" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+    <result column="old_id" property="oldId" jdbcType="INTEGER" />
+    <result column="create_no" property="createNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_no" property="updateNo" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_code, product_no, business_code, num, name, withhold_stock, nickname, 
+    eng_name, goods_source, brand_no, category_dict_code, spec, unit, bar_code, licence, 
+    gift_flag, jf_exchange_flag, jf_price, finance_code, producter_no, supplier_no, sale_price, 
+    member_price, cost_price, best_price, yk_price, jk_price, zk_price, stock, stock_threshold, 
+    available_stock, sale_pattern, sale_start_time, sale_end_time, status, patent_num_flag, 
+    batch_code, weight, lengths, wide, high, volume, expiration_date, valid_date, aql_date, 
+    mpcg, total_use_num, one_use_num, avalue, one_to_times, cj_name, cj_country_no, cj_province_no, 
+    cj_city_no, cj_area_no, cj_addr, del_flag, old_id, create_no, create_time, update_no, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_sku
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getProductByBid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from product_sku where brand_no = #{bid}
+  </select>
+
+  <select id="selectByIdList" parameterType="java.util.List" resultMap="BaseResultMap">
+    select * from product_sku
+    <if test="ids != null">
+      where id in
+      <foreach item="item" collection="ids" separator="," open="(" close=")" index="">
+        #{item, jdbcType=INTEGER}
+      </foreach>
+    </if>
+  </select>
+
+  <delete id="deleteRelationOfProductAndImgId">
+    delete from product_image
+    where itype = #{type}
+    and
+    <if test="type == 0" >
+      (product_code = #{id})
+    </if>
+    <if test="type == 1" >
+      (meal_no=#{id})
+    </if>
+  </delete>
+
+  <insert id="insertRelationOfProductAndImgUrl">
+    insert into
+    product_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pCode != null" >
+        product_code,
+      </if>
+      <if test="imgId != null" >
+        image_id,
+      </if>
+      <if test="mealNo != null" >
+        meal_no,
+      </if>
+      <if test="type != null" >
+        itype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pCode != null" >
+        #{pCode},
+      </if>
+      <if test="imgId != null" >
+        #{imgId},
+      </if>
+      <if test="mealNo != null" >
+        #{mealNo},
+      </if>
+      <if test="type != null" >
+        #{type},
+      </if>
+  </trim>
+  </insert>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_sku
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.net.yzl.product.model.ProductBean" >
+    insert into product_sku (id, product_code, product_no, 
+      business_code, num, name, 
+      withhold_stock, nickname, eng_name, 
+      goods_source, brand_no, category_dict_code, 
+      spec, unit, bar_code, 
+      licence, gift_flag, jf_exchange_flag, 
+      jf_price, finance_code, producter_no, 
+      supplier_no, sale_price, member_price, 
+      cost_price, best_price, yk_price, 
+      jk_price, zk_price, stock, 
+      stock_threshold, available_stock, sale_pattern, 
+      sale_start_time, sale_end_time, status, 
+      patent_num_flag, batch_code, weight, 
+      lengths, wide, high, volume, 
+      expiration_date, valid_date, aql_date, 
+      mpcg, total_use_num, one_use_num, 
+      avalue, one_to_times, cj_name, 
+      cj_country_no, cj_province_no, cj_city_no, 
+      cj_area_no, cj_addr, del_flag, 
+      old_id, create_no, create_time, 
+      update_no, update_time)
+    values (#{id,jdbcType=INTEGER}, #{productCode,jdbcType=VARCHAR}, #{productNo,jdbcType=INTEGER}, 
+      #{businessCode,jdbcType=VARCHAR}, #{num,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{withholdStock,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, #{engName,jdbcType=VARCHAR}, 
+      #{goodsSource,jdbcType=BIT}, #{brandNo,jdbcType=INTEGER}, #{categoryDictCode,jdbcType=INTEGER}, 
+      #{spec,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{barCode,jdbcType=VARCHAR}, 
+      #{licence,jdbcType=VARCHAR}, #{giftFlag,jdbcType=BIT}, #{jfExchangeFlag,jdbcType=BIT}, 
+      #{jfPrice,jdbcType=INTEGER}, #{financeCode,jdbcType=VARCHAR}, #{producterNo,jdbcType=INTEGER}, 
+      #{supplierNo,jdbcType=INTEGER}, #{salePrice,jdbcType=INTEGER}, #{memberPrice,jdbcType=INTEGER}, 
+      #{costPrice,jdbcType=INTEGER}, #{bestPrice,jdbcType=INTEGER}, #{ykPrice,jdbcType=INTEGER}, 
+      #{jkPrice,jdbcType=INTEGER}, #{zkPrice,jdbcType=INTEGER}, #{stock,jdbcType=INTEGER}, 
+      #{stockThreshold,jdbcType=INTEGER}, #{availableStock,jdbcType=INTEGER}, #{salePattern,jdbcType=BIT}, 
+      #{saleStartTime,jdbcType=TIMESTAMP}, #{saleEndTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{patentNumFlag,jdbcType=BIT}, #{batchCode,jdbcType=VARCHAR}, #{weight,jdbcType=INTEGER}, 
+      #{lengths,jdbcType=REAL}, #{wide,jdbcType=REAL}, #{high,jdbcType=REAL}, #{volume,jdbcType=REAL}, 
+      #{expirationDate,jdbcType=INTEGER}, #{validDate,jdbcType=TIMESTAMP}, #{aqlDate,jdbcType=INTEGER}, 
+      #{mpcg,jdbcType=VARCHAR}, #{totalUseNum,jdbcType=VARCHAR}, #{oneUseNum,jdbcType=VARCHAR}, 
+      #{avalue,jdbcType=VARCHAR}, #{oneToTimes,jdbcType=VARCHAR}, #{cjName,jdbcType=VARCHAR}, 
+      #{cjCountryNo,jdbcType=INTEGER}, #{cjProvinceNo,jdbcType=INTEGER}, #{cjCityNo,jdbcType=INTEGER}, 
+      #{cjAreaNo,jdbcType=INTEGER}, #{cjAddr,jdbcType=VARCHAR}, #{delFlag,jdbcType=BIT}, 
+      #{oldId,jdbcType=INTEGER}, #{createNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateNo,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.ProductBean" >
+    insert into product_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productCode != null" >
+        product_code,
+      </if>
+      <if test="productNo != null" >
+        product_no,
+      </if>
+      <if test="businessCode != null" >
+        business_code,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="withholdStock != null" >
+        withhold_stock,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="engName != null" >
+        eng_name,
+      </if>
+      <if test="goodsSource != null" >
+        goods_source,
+      </if>
+      <if test="brandNo != null" >
+        brand_no,
+      </if>
+      <if test="categoryDictCode != null" >
+        category_dict_code,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="licence != null" >
+        licence,
+      </if>
+      <if test="giftFlag != null" >
+        gift_flag,
+      </if>
+      <if test="jfExchangeFlag != null" >
+        jf_exchange_flag,
+      </if>
+      <if test="jfPrice != null" >
+        jf_price,
+      </if>
+      <if test="financeCode != null" >
+        finance_code,
+      </if>
+      <if test="producterNo != null" >
+        producter_no,
+      </if>
+      <if test="supplierNo != null" >
+        supplier_no,
+      </if>
+      <if test="salePrice != null" >
+        sale_price,
+      </if>
+      <if test="memberPrice != null" >
+        member_price,
+      </if>
+      <if test="costPrice != null" >
+        cost_price,
+      </if>
+      <if test="bestPrice != null" >
+        best_price,
+      </if>
+      <if test="ykPrice != null" >
+        yk_price,
+      </if>
+      <if test="jkPrice != null" >
+        jk_price,
+      </if>
+      <if test="zkPrice != null" >
+        zk_price,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="stockThreshold != null" >
+        stock_threshold,
+      </if>
+      <if test="availableStock != null" >
+        available_stock,
+      </if>
+      <if test="salePattern != null" >
+        sale_pattern,
+      </if>
+      <if test="saleStartTime != null" >
+        sale_start_time,
+      </if>
+      <if test="saleEndTime != null" >
+        sale_end_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="patentNumFlag != null" >
+        patent_num_flag,
+      </if>
+      <if test="batchCode != null" >
+        batch_code,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="lengths != null" >
+        lengths,
+      </if>
+      <if test="wide != null" >
+        wide,
+      </if>
+      <if test="high != null" >
+        high,
+      </if>
+      <if test="volume != null" >
+        volume,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="validDate != null" >
+        valid_date,
+      </if>
+      <if test="aqlDate != null" >
+        aql_date,
+      </if>
+      <if test="mpcg != null" >
+        mpcg,
+      </if>
+      <if test="totalUseNum != null" >
+        total_use_num,
+      </if>
+      <if test="oneUseNum != null" >
+        one_use_num,
+      </if>
+      <if test="avalue != null" >
+        avalue,
+      </if>
+      <if test="oneToTimes != null" >
+        one_to_times,
+      </if>
+      <if test="cjName != null" >
+        cj_name,
+      </if>
+      <if test="cjCountryNo != null" >
+        cj_country_no,
+      </if>
+      <if test="cjProvinceNo != null" >
+        cj_province_no,
+      </if>
+      <if test="cjCityNo != null" >
+        cj_city_no,
+      </if>
+      <if test="cjAreaNo != null" >
+        cj_area_no,
+      </if>
+      <if test="cjAddr != null" >
+        cj_addr,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="oldId != null" >
+        old_id,
+      </if>
+      <if test="createNo != null" >
+        create_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateNo != null" >
+        update_no,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        #{productNo,jdbcType=INTEGER},
+      </if>
+      <if test="businessCode != null" >
+        #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="withholdStock != null" >
+        #{withholdStock,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="engName != null" >
+        #{engName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSource != null" >
+        #{goodsSource,jdbcType=BIT},
+      </if>
+      <if test="brandNo != null" >
+        #{brandNo,jdbcType=INTEGER},
+      </if>
+      <if test="categoryDictCode != null" >
+        #{categoryDictCode,jdbcType=INTEGER},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="licence != null" >
+        #{licence,jdbcType=VARCHAR},
+      </if>
+      <if test="giftFlag != null" >
+        #{giftFlag,jdbcType=BIT},
+      </if>
+      <if test="jfExchangeFlag != null" >
+        #{jfExchangeFlag,jdbcType=BIT},
+      </if>
+      <if test="jfPrice != null" >
+        #{jfPrice,jdbcType=INTEGER},
+      </if>
+      <if test="financeCode != null" >
+        #{financeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="producterNo != null" >
+        #{producterNo,jdbcType=INTEGER},
+      </if>
+      <if test="supplierNo != null" >
+        #{supplierNo,jdbcType=INTEGER},
+      </if>
+      <if test="salePrice != null" >
+        #{salePrice,jdbcType=INTEGER},
+      </if>
+      <if test="memberPrice != null" >
+        #{memberPrice,jdbcType=INTEGER},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=INTEGER},
+      </if>
+      <if test="bestPrice != null" >
+        #{bestPrice,jdbcType=INTEGER},
+      </if>
+      <if test="ykPrice != null" >
+        #{ykPrice,jdbcType=INTEGER},
+      </if>
+      <if test="jkPrice != null" >
+        #{jkPrice,jdbcType=INTEGER},
+      </if>
+      <if test="zkPrice != null" >
+        #{zkPrice,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="stockThreshold != null" >
+        #{stockThreshold,jdbcType=INTEGER},
+      </if>
+      <if test="availableStock != null" >
+        #{availableStock,jdbcType=INTEGER},
+      </if>
+      <if test="salePattern != null" >
+        #{salePattern,jdbcType=BIT},
+      </if>
+      <if test="saleStartTime != null" >
+        #{saleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleEndTime != null" >
+        #{saleEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="patentNumFlag != null" >
+        #{patentNumFlag,jdbcType=BIT},
+      </if>
+      <if test="batchCode != null" >
+        #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="lengths != null" >
+        #{lengths,jdbcType=REAL},
+      </if>
+      <if test="wide != null" >
+        #{wide,jdbcType=REAL},
+      </if>
+      <if test="high != null" >
+        #{high,jdbcType=REAL},
+      </if>
+      <if test="volume != null" >
+        #{volume,jdbcType=REAL},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=INTEGER},
+      </if>
+      <if test="validDate != null" >
+        #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aqlDate != null" >
+        #{aqlDate,jdbcType=INTEGER},
+      </if>
+      <if test="mpcg != null" >
+        #{mpcg,jdbcType=VARCHAR},
+      </if>
+      <if test="totalUseNum != null" >
+        #{totalUseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="oneUseNum != null" >
+        #{oneUseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="avalue != null" >
+        #{avalue,jdbcType=VARCHAR},
+      </if>
+      <if test="oneToTimes != null" >
+        #{oneToTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="cjName != null" >
+        #{cjName,jdbcType=VARCHAR},
+      </if>
+      <if test="cjCountryNo != null" >
+        #{cjCountryNo,jdbcType=INTEGER},
+      </if>
+      <if test="cjProvinceNo != null" >
+        #{cjProvinceNo,jdbcType=INTEGER},
+      </if>
+      <if test="cjCityNo != null" >
+        #{cjCityNo,jdbcType=INTEGER},
+      </if>
+      <if test="cjAreaNo != null" >
+        #{cjAreaNo,jdbcType=INTEGER},
+      </if>
+      <if test="cjAddr != null" >
+        #{cjAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="oldId != null" >
+        #{oldId,jdbcType=INTEGER},
+      </if>
+      <if test="createNo != null" >
+        #{createNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateNo != null" >
+        #{updateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.ProductBean" >
+    update product_sku
+    <set >
+      <if test="productCode != null" >
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        product_no = #{productNo,jdbcType=INTEGER},
+      </if>
+      <if test="businessCode != null" >
+        business_code = #{businessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="withholdStock != null" >
+        withhold_stock = #{withholdStock,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="engName != null" >
+        eng_name = #{engName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSource != null" >
+        goods_source = #{goodsSource,jdbcType=BIT},
+      </if>
+      <if test="brandNo != null" >
+        brand_no = #{brandNo,jdbcType=INTEGER},
+      </if>
+      <if test="categoryDictCode != null" >
+        category_dict_code = #{categoryDictCode,jdbcType=INTEGER},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="licence != null" >
+        licence = #{licence,jdbcType=VARCHAR},
+      </if>
+      <if test="giftFlag != null" >
+        gift_flag = #{giftFlag,jdbcType=BIT},
+      </if>
+      <if test="jfExchangeFlag != null" >
+        jf_exchange_flag = #{jfExchangeFlag,jdbcType=BIT},
+      </if>
+      <if test="jfPrice != null" >
+        jf_price = #{jfPrice,jdbcType=INTEGER},
+      </if>
+      <if test="financeCode != null" >
+        finance_code = #{financeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="producterNo != null" >
+        producter_no = #{producterNo,jdbcType=INTEGER},
+      </if>
+      <if test="supplierNo != null" >
+        supplier_no = #{supplierNo,jdbcType=INTEGER},
+      </if>
+      <if test="salePrice != null" >
+        sale_price = #{salePrice,jdbcType=INTEGER},
+      </if>
+      <if test="memberPrice != null" >
+        member_price = #{memberPrice,jdbcType=INTEGER},
+      </if>
+      <if test="costPrice != null" >
+        cost_price = #{costPrice,jdbcType=INTEGER},
+      </if>
+      <if test="bestPrice != null" >
+        best_price = #{bestPrice,jdbcType=INTEGER},
+      </if>
+      <if test="ykPrice != null" >
+        yk_price = #{ykPrice,jdbcType=INTEGER},
+      </if>
+      <if test="jkPrice != null" >
+        jk_price = #{jkPrice,jdbcType=INTEGER},
+      </if>
+      <if test="zkPrice != null" >
+        zk_price = #{zkPrice,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="stockThreshold != null" >
+        stock_threshold = #{stockThreshold,jdbcType=INTEGER},
+      </if>
+      <if test="availableStock != null" >
+        available_stock = #{availableStock,jdbcType=INTEGER},
+      </if>
+      <if test="salePattern != null" >
+        sale_pattern = #{salePattern,jdbcType=BIT},
+      </if>
+      <if test="saleStartTime != null" >
+        sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleEndTime != null" >
+        sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="patentNumFlag != null" >
+        patent_num_flag = #{patentNumFlag,jdbcType=BIT},
+      </if>
+      <if test="batchCode != null" >
+        batch_code = #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="lengths != null" >
+        lengths = #{lengths,jdbcType=REAL},
+      </if>
+      <if test="wide != null" >
+        wide = #{wide,jdbcType=REAL},
+      </if>
+      <if test="high != null" >
+        high = #{high,jdbcType=REAL},
+      </if>
+      <if test="volume != null" >
+        volume = #{volume,jdbcType=REAL},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=INTEGER},
+      </if>
+      <if test="validDate != null" >
+        valid_date = #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aqlDate != null" >
+        aql_date = #{aqlDate,jdbcType=INTEGER},
+      </if>
+      <if test="mpcg != null" >
+        mpcg = #{mpcg,jdbcType=VARCHAR},
+      </if>
+      <if test="totalUseNum != null" >
+        total_use_num = #{totalUseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="oneUseNum != null" >
+        one_use_num = #{oneUseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="avalue != null" >
+        avalue = #{avalue,jdbcType=VARCHAR},
+      </if>
+      <if test="oneToTimes != null" >
+        one_to_times = #{oneToTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="cjName != null" >
+        cj_name = #{cjName,jdbcType=VARCHAR},
+      </if>
+      <if test="cjCountryNo != null" >
+        cj_country_no = #{cjCountryNo,jdbcType=INTEGER},
+      </if>
+      <if test="cjProvinceNo != null" >
+        cj_province_no = #{cjProvinceNo,jdbcType=INTEGER},
+      </if>
+      <if test="cjCityNo != null" >
+        cj_city_no = #{cjCityNo,jdbcType=INTEGER},
+      </if>
+      <if test="cjAreaNo != null" >
+        cj_area_no = #{cjAreaNo,jdbcType=INTEGER},
+      </if>
+      <if test="cjAddr != null" >
+        cj_addr = #{cjAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="oldId != null" >
+        old_id = #{oldId,jdbcType=INTEGER},
+      </if>
+      <if test="createNo != null" >
+        create_no = #{createNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateNo != null" >
+        update_no = #{updateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.ProductBean" >
+    update product_sku
+    set product_code = #{productCode,jdbcType=VARCHAR},
+      product_no = #{productNo,jdbcType=INTEGER},
+      business_code = #{businessCode,jdbcType=VARCHAR},
+      num = #{num,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      withhold_stock = #{withholdStock,jdbcType=INTEGER},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      eng_name = #{engName,jdbcType=VARCHAR},
+      goods_source = #{goodsSource,jdbcType=BIT},
+      brand_no = #{brandNo,jdbcType=INTEGER},
+      category_dict_code = #{categoryDictCode,jdbcType=INTEGER},
+      spec = #{spec,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      licence = #{licence,jdbcType=VARCHAR},
+      gift_flag = #{giftFlag,jdbcType=BIT},
+      jf_exchange_flag = #{jfExchangeFlag,jdbcType=BIT},
+      jf_price = #{jfPrice,jdbcType=INTEGER},
+      finance_code = #{financeCode,jdbcType=VARCHAR},
+      producter_no = #{producterNo,jdbcType=INTEGER},
+      supplier_no = #{supplierNo,jdbcType=INTEGER},
+      sale_price = #{salePrice,jdbcType=INTEGER},
+      member_price = #{memberPrice,jdbcType=INTEGER},
+      cost_price = #{costPrice,jdbcType=INTEGER},
+      best_price = #{bestPrice,jdbcType=INTEGER},
+      yk_price = #{ykPrice,jdbcType=INTEGER},
+      jk_price = #{jkPrice,jdbcType=INTEGER},
+      zk_price = #{zkPrice,jdbcType=INTEGER},
+      stock = #{stock,jdbcType=INTEGER},
+      stock_threshold = #{stockThreshold,jdbcType=INTEGER},
+      available_stock = #{availableStock,jdbcType=INTEGER},
+      sale_pattern = #{salePattern,jdbcType=BIT},
+      sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
+      sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      patent_num_flag = #{patentNumFlag,jdbcType=BIT},
+      batch_code = #{batchCode,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=INTEGER},
+      lengths = #{lengths,jdbcType=REAL},
+      wide = #{wide,jdbcType=REAL},
+      high = #{high,jdbcType=REAL},
+      volume = #{volume,jdbcType=REAL},
+      expiration_date = #{expirationDate,jdbcType=INTEGER},
+      valid_date = #{validDate,jdbcType=TIMESTAMP},
+      aql_date = #{aqlDate,jdbcType=INTEGER},
+      mpcg = #{mpcg,jdbcType=VARCHAR},
+      total_use_num = #{totalUseNum,jdbcType=VARCHAR},
+      one_use_num = #{oneUseNum,jdbcType=VARCHAR},
+      avalue = #{avalue,jdbcType=VARCHAR},
+      one_to_times = #{oneToTimes,jdbcType=VARCHAR},
+      cj_name = #{cjName,jdbcType=VARCHAR},
+      cj_country_no = #{cjCountryNo,jdbcType=INTEGER},
+      cj_province_no = #{cjProvinceNo,jdbcType=INTEGER},
+      cj_city_no = #{cjCityNo,jdbcType=INTEGER},
+      cj_area_no = #{cjAreaNo,jdbcType=INTEGER},
+      cj_addr = #{cjAddr,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=BIT},
+      old_id = #{oldId,jdbcType=INTEGER},
+      create_no = #{createNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_no = #{updateNo,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

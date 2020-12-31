@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.net.yzl.product.dao.AttributeDao">
+
+<!--    <resultMap id="attributeMap" type="cn.net.yzl.product.model.AttributeBean">-->
+<!--        <result property="" column=""/>-->
+<!--        <result property="" column=""/>-->
+<!--        <result property="" column=""/>-->
+<!--        <result property="" column=""/>-->
+<!--    </resultMap>-->
+
+    <resultMap id="selectByIdMap" type="cn.net.yzl.product.model.AttributeBean">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="retrieval_flag" property="retrievalFlag"/>
+        <result column="attribute_type" property="attributeType"/>
+        <result column="sort" property="sort"/>
+        <collection property="attributeValueBeanList" ofType="cn.net.yzl.product.model.AttributeValueBean">
+            <id property="id" column="id"/>
+            <id property="avalue" column="avalue"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insertAttribute" parameterType="cn.net.yzl.product.model.AttributeBean" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into attribute(`name`,retrieval_flag,attribute_type,sort)
+        values(
+        #{name},
+        #{retrievalFlag},
+        #{attributeType},
+        #{sort}
+        )
+    </insert>
+
+    <insert id="insertAttributeValue" parameterType="java.util.List">
+        insert into attribute_value(attribute_id,avalue)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.attributeId},
+            #{item.avalue}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectPageAttribute" resultType="cn.net.yzl.product.model.AttributeBean">
+        select att.id id,att.`name`,att.retrieval_flag,att.attribute_type,att.sort,att.create_time,att.update_time,cd.id classifyId,cd.`name` classifyName
+        from attribute att
+        LEFT JOIN classify_attribute ca ON att.id=ca.attribute_id
+        LEFT JOIN category_dict cd ON ca.classify_id=cd.id
+        WHERE att.del_flag=0
+    </select>
+
+    <select id="selectAttributeValue" resultType="cn.net.yzl.product.model.AttributeValueBean">
+        select id,avalue
+        from attribute_value
+        where attribute_id=#{id} and del_flag=0
+    </select>
+
+
+    <select id="selectByClassifyId" resultType="cn.net.yzl.product.model.AttributeBean">
+        SELECT att.id,att.`name`,att.retrieval_flag,att.attribute_type,att.sort,att.create_time
+        FROM attribute att
+        WHERE att.del_flag=0 and att.id in (SELECT ca.attribute_id FROM classify_attribute ca WHERE ca.classify_id=#{classifyId})
+    </select>
+
+
+    <select id="selectById" resultMap="selectByIdMap">
+        SELECT att.id,att.`name`,att.retrieval_flag,att.attribute_type,att.sort,av.id,av.avalue
+        FROM attribute att
+        LEFT JOIN attribute_value av ON att.id = av.attribute_id
+        WHERE att.id=#{id}  and att.del_flag=0  and av.del_flag=0
+    </select>
+
+
+    <update id="updateAttribute" parameterType="cn.net.yzl.product.model.AttributeBean">
+        UPDATE attribute
+        SET `name`=#{name},retrieval_flag=#{retrievalFlag},attribute_type=#{attributeType},sort=#{sort},update_time=#{updateTime}
+        WHERE id=#{id}
+    </update>
+
+
+    <update id="updateAttributeValue">
+        UPDATE attribute_value SET del_flag=#{del_flag} WHERE attribute_id=#{attribute_id} and del_flag=#{expectedDelFlag}
+    </update>
+    
+    <insert id="insertattributeClassify">
+        insert into classify_attribute(classify_id,attribute_id)
+        values(
+            #{classifyId},
+            #{id}
+        )
+    </insert>
+
+
+</mapper>

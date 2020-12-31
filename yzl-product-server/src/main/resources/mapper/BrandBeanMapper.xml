@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.net.yzl.product.dao.BrandBeanMapper" >
+  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.BrandBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="brand_url" property="brandUrl" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="descri" property="descri" jdbcType="VARCHAR" />
+    <result column="create_no" property="createNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_no" property="updateNo" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, status, brand_url, del_flag, sort, descri, create_no, create_time, update_no,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from brand
+    where id = #{id,jdbcType=INTEGER}
+    and del_flag = 0
+  </select>
+
+  <select id="selectCountByBid" resultType="java.lang.Integer">
+    select count(1)
+    from product_sku
+    where brand_no = #{bid}
+    and del_flag = 0
+  </select>
+
+  <update id="changeBrandStatus">
+    update
+        brand
+    set
+        status = #{flag}
+    where
+        id = #{id}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from brand
+    where del_flag = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from brand
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.net.yzl.product.model.BrandBean" >
+    insert into brand (id, name, status,
+      brand_url, del_flag, sort,
+      descri, create_no, create_time,
+      update_no, update_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=BIT},
+      #{brandUrl,jdbcType=VARCHAR}, #{delFlag,jdbcType=BIT}, #{sort,jdbcType=INTEGER},
+      #{descri,jdbcType=VARCHAR}, #{createNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateNo,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.BrandBean" >
+    insert into brand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="brandUrl != null" >
+        brand_url,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="descri != null" >
+        descri,
+      </if>
+      <if test="createNo != null" >
+        create_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateNo != null" >
+        update_no,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="brandUrl != null" >
+        #{brandUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="descri != null" >
+        #{descri,jdbcType=VARCHAR},
+      </if>
+      <if test="createNo != null" >
+        #{createNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateNo != null" >
+        #{updateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.BrandBean" >
+    update brand
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="brandUrl != null" >
+        brand_url = #{brandUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="descri != null" >
+        descri = #{descri,jdbcType=VARCHAR},
+      </if>
+      <if test="createNo != null" >
+        create_no = #{createNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateNo != null" >
+        update_no = #{updateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.BrandBean" >
+    update brand
+    set name = #{name,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      brand_url = #{brandUrl,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=BIT},
+      sort = #{sort,jdbcType=INTEGER},
+      descri = #{descri,jdbcType=VARCHAR},
+      create_no = #{createNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_no = #{updateNo,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

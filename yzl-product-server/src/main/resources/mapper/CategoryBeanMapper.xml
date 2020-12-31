@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.net.yzl.product.dao.CategoryBeanMapper" >
+  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.CategoryBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="display_flag" property="displayFlag" jdbcType="BIT" />
+    <result column="display_app_flag" property="displayAppFlag" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
+    <result column="descri" property="descri" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+    <result column="create_no" property="createNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_no" property="updateNo" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    id, name, pid, sort, display_flag, display_app_flag, status, unit, image_url, key_word, 
+    descri, del_flag, create_no, create_time, update_no, update_time
+  </sql>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from category_dict
+    where id = #{id,jdbcType=INTEGER}
+    and del_flag=0
+  </select>
+
+  <select id="getProductCountByCid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(1)
+    from product_sku
+    where category_dict_code = #{cid,jdbcType=INTEGER}
+    and del_flag = 0
+  </select>
+
+  <select id="selectByPid" resultMap="BaseResultMap">
+    select
+    *
+    from category_dict
+    where pid = #{pid}
+    and del_flag=0
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    *
+    from category_dict
+    where del_flag=0
+  </select>
+
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update category_dict set del_flag = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="transferCategories">
+    update product_sku set category_dict_code = #{target}
+    where category_dict_code = #{source,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="chooseCategoryStatus">
+    update category_dict set display_flag = #{flag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="chooseCategoryAppStatus">
+    update category_dict set display_app_flag = #{flag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <insert id="insert" parameterType="cn.net.yzl.product.model.CategoryBean" >
+    insert into category_dict (id, name, pid, 
+      sort, display_flag, display_app_flag, 
+      status, unit, image_url, 
+      key_word, descri, del_flag, 
+      create_no, create_time, update_no, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, 
+      #{sort,jdbcType=INTEGER}, #{displayFlag,jdbcType=BIT}, #{displayAppFlag,jdbcType=BIT}, 
+      #{status,jdbcType=BIT}, #{unit,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, 
+      #{keyWord,jdbcType=VARCHAR}, #{descri,jdbcType=VARCHAR}, #{delFlag,jdbcType=BIT}, 
+      #{createNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateNo,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.CategoryBean" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into category_dict
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="displayFlag != null" >
+        display_flag,
+      </if>
+      <if test="displayAppFlag != null" >
+        display_app_flag,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="imageUrl != null" >
+        image_url,
+      </if>
+      <if test="keyWord != null" >
+        key_word,
+      </if>
+      <if test="descri != null" >
+        descri,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="createNo != null" >
+        create_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateNo != null" >
+        update_no,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="displayFlag != null" >
+        #{displayFlag,jdbcType=BIT},
+      </if>
+      <if test="displayAppFlag != null" >
+        #{displayAppFlag,jdbcType=BIT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="descri != null" >
+        #{descri,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="createNo != null" >
+        #{createNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateNo != null" >
+        #{updateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.CategoryBean" >
+    update category_dict
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="displayFlag != null" >
+        display_flag = #{displayFlag,jdbcType=BIT},
+      </if>
+      <if test="displayAppFlag != null" >
+        display_app_flag = #{displayAppFlag,jdbcType=BIT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        key_word = #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="descri != null" >
+        descri = #{descri,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="createNo != null" >
+        create_no = #{createNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateNo != null" >
+        update_no = #{updateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.CategoryBean" >
+    update category_dict
+    set name = #{name,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      display_flag = #{displayFlag,jdbcType=BIT},
+      display_app_flag = #{displayAppFlag,jdbcType=BIT},
+      status = #{status,jdbcType=BIT},
+      unit = #{unit,jdbcType=VARCHAR},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      descri = #{descri,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=BIT},
+      create_no = #{createNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_no = #{updateNo,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+</mapper>
