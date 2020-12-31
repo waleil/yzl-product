@@ -1,8 +1,8 @@
 package cn.net.yzl.product.service;
 
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.product.model.DiseaseBean;
-import cn.net.yzl.product.model.ProductDiseaseBean;
+import cn.net.yzl.product.model.db.DiseaseBean;
+import cn.net.yzl.product.model.db.ProductDiseaseBean;
 
 import java.util.List;
 

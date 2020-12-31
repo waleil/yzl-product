@@ -3,17 +3,19 @@ package cn.net.yzl.product.service.impl;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.dao.BrandBeanMapper;
-import cn.net.yzl.product.dao.ProductBeanMapper;
-import cn.net.yzl.product.model.BrandBean;
-import cn.net.yzl.product.model.BrandBeanTO;
-import cn.net.yzl.product.model.ProductBean;
+import cn.net.yzl.product.model.db.BrandBean;
+import cn.net.yzl.product.model.vo.bread.BrandBeanTO;
+import cn.net.yzl.product.model.vo.bread.BrandDelVo;
+import cn.net.yzl.product.model.vo.bread.BrandVo;
 import cn.net.yzl.product.service.BrandService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,30 +24,38 @@ public class BrandServiceImpl implements BrandService {
 
     @Autowired
     private BrandBeanMapper brandBeanMapper;
-
-    @Autowired
-    private ProductBeanMapper productBeanMapper;
-
-    public ComResponse<PageInfo<BrandBeanTO>> getAllBrands(Integer pageNo, Integer pageSize) {
+    /**
+     * @author lichanghong
+     * @description 查询列表
+     * @date: 2020/12/31 10:15 下午
+     * @param keyWord:  关键词
+     * @param pageNo: 页码
+     * @param pageSize:每页限制数量
+     * @return: null
+     */
+    @Override
+    public ComResponse<PageInfo<BrandBeanTO>> getAllBrands(Integer pageNo, Integer pageSize,String keyWord) {
         //开启分页
         PageHelper.startPage(pageNo,pageSize);
         //分页查询
-        Page<BrandBean> pageInfo = (Page<BrandBean>)brandBeanMapper.selectAll();
+        Page<BrandBeanTO> pageInfo = (Page<BrandBeanTO>)brandBeanMapper.selectList(keyWord);
+       List<BrandBeanTO>  list= pageInfo.getResult();
+//       if(!CollectionUtils.isEmpty(list)){
+//           list.stream().forEach(brandBeanTO -> {
+//               brandBeanTO.setProductCount(brandBeanMapper.selectCountByBid(brandBeanTO.getId()));
+//           });
+//       }
         //提取列表数据，遍历并更改数据类型
-        List<BrandBean> brandBeans = pageInfo.getResult();
-            if(brandBeans==null||brandBeans.size() == 0){
-                return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(), ResponseCodeEnums.NO_DATA_CODE.getMessage());
-            }else {
-                List<BrandBeanTO> brandBeanTOS = brandBeans.stream().map(brand->{
-                    BrandBeanTO brandBeanTO = new BrandBeanTO();
-                    brandBeanTO.setBrandBean(brand);
-                    brandBeanTO.setProductCount(brandBeanMapper.selectCountByBid(brand.getId()));
-                    return brandBeanTO;
-                }).collect(Collectors.toList());
-                return ComResponse.success(new PageInfo<BrandBeanTO>(brandBeanTOS));
-            }
+        return ComResponse.success(new PageInfo<BrandBeanTO>(list));
     }
-
+    /**
+     * @author lichanghong
+     * @description 根据主键查询
+     * @date: 2020/12/31 11:01 下午
+     * @param id:
+     * @return: null
+     */
+    @Override
     public ComResponse<BrandBean> getBrandById(Integer id) {
         BrandBean brandBean = brandBeanMapper.selectByPrimaryKey(id);
         if (brandBean == null) {
@@ -53,25 +63,48 @@ public class BrandServiceImpl implements BrandService {
         }
         return ComResponse.success(brandBean);
     }
-
-
-    public ComResponse<List<ProductBean>> getProductByBid(Integer bid) {
-        List<ProductBean> list = productBeanMapper.getProductByBid(bid);
-        return ComResponse.success(list);
-    }
-
+    /**
+     * @author lichanghong
+     * @description 修改品牌上下架状态
+     * @date: 2020/12/31 11:01 下午
+     * @param flag: 状态
+     * @param id:主键
+     * @return: null
+     */
+    @Override
     public ComResponse<Void> changeBrandStatus(Integer flag, Integer id) {
         brandBeanMapper.changeBrandStatus(flag,id);
         return ComResponse.success();
     }
-
-    public ComResponse<Void> insertBrand(BrandBean brand) {
-        brandBeanMapper.insertSelective(brand);
+    /**
+     * @author lichanghong
+     * @description 编辑品牌
+     * @date: 2020/12/31 11:01 下午
+     * @param brandVo: 实体
+     * @return: null
+     */
+    @Override
+    public ComResponse<Void> editBrand(BrandVo brandVo) {
+        if(brandVo.getId()!=null&&brandVo.getId()>0){
+            brandBeanMapper.updateByPrimaryKeySelective(brandVo);
+        }else{
+            brandBeanMapper.insertSelective(brandVo);
+        }
         return ComResponse.success();
     }
-
-    public ComResponse<Void> updateBrand(BrandBean brandBean) {
-        brandBeanMapper.updateByPrimaryKeySelective(brandBean);
+    /**
+     * @author lichanghong
+     * @description 根据主键进线逻辑删除
+     * @date: 2020/12/31 10:43 下午
+     * @param brandDelVo: 删除
+     * @return: null
+     */
+    @Override
+    public ComResponse<Void> deleteBrandById(BrandDelVo brandDelVo) {
+        if(brandBeanMapper.selectCountByBid(brandDelVo.getId())>0){
+            return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(),"存在关联商品，无法删除!");
+        }
+        brandBeanMapper.deleteByPrimaryKey(brandDelVo);
         return ComResponse.success();
     }
 

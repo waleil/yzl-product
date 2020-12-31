@@ -1,9 +1,10 @@
 package cn.net.yzl.product.controller;
 
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.product.model.*;
+import cn.net.yzl.product.model.db.DiseaseBean;
+import cn.net.yzl.product.model.db.ProductBean;
+import cn.net.yzl.product.model.db.ProductDiseaseBean;
 import cn.net.yzl.product.service.*;
-import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,6 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("productServer")
 public class ProductController {
 
     @Autowired

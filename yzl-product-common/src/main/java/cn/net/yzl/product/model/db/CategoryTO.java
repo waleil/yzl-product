@@ -1,4 +1,4 @@
-package cn.net.yzl.product.model;
+package cn.net.yzl.product.model.db;
 
 import lombok.Data;
 

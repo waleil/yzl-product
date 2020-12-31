@@ -1,7 +1,7 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.AttributeBean;
-import cn.net.yzl.product.model.AttributeValueBean;
+import cn.net.yzl.product.model.db.AttributeBean;
+import cn.net.yzl.product.model.db.AttributeValueBean;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package cn.net.yzl.product.service;
 
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.product.model.ProductBean;
+import cn.net.yzl.product.model.db.ProductBean;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package cn.net.yzl.product.model;
+package cn.net.yzl.product.model.db;
 
 import lombok.Data;
 
@@ -11,13 +11,13 @@ public class BrandBean implements Serializable {
 
     private String name;
 
-    private Boolean status;
+    private boolean status;
 
     private String brandUrl;
 
-    private Boolean delFlag;
+    private boolean delFlag;
 
-    private Integer sort;
+    private int sort;
 
     private String descri;
 

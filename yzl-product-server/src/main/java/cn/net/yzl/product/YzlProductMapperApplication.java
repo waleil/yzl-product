@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableDiscoveryClient
 @MapperScan("cn.net.yzl.product.dao")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"cn.net.yzl.product", "cn.net.yzl.logger"})
 @EnableSwagger
 public class YzlProductMapperApplication {
 

@@ -1,7 +1,7 @@
 package cn.net.yzl.product.service.impl;
 
 import cn.net.yzl.product.dao.ImageBeanMapper;
-import cn.net.yzl.product.model.ImageBean;
+import cn.net.yzl.product.model.db.ImageBean;
 import cn.net.yzl.product.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.DiseaseBean;
-import cn.net.yzl.product.model.ProductDiseaseBean;
+import cn.net.yzl.product.model.db.DiseaseBean;
+import cn.net.yzl.product.model.db.ProductDiseaseBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

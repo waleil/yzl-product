@@ -1,4 +1,4 @@
-package cn.net.yzl.product.model;
+package cn.net.yzl.product.model.db;
 
 import lombok.Data;
 
@@ -7,19 +7,19 @@ import java.util.Date;
 
 @Data
 public class DiseaseBean  implements Serializable {
-    private Integer id;
+    private int id;
 
     private String name;
 
-    private Integer pid;
+    private int pid;
 
-    private Integer sort;
+    private int sort;
 
     private String createNo;
 
     private String updateNo;
 
-    private Boolean delFlag;
+    private boolean delFlag;
 
     private Date createTime;
 

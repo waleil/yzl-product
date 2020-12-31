@@ -1,5 +1,6 @@
-package cn.net.yzl.product.model;
+package cn.net.yzl.product.model.db;
 
+import cn.net.yzl.product.model.db.AttributeValueBean;
 import lombok.Data;
 
 import java.io.Serializable;

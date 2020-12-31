@@ -1,6 +1,6 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.ClassifyAttributeBean;
+import cn.net.yzl.product.model.db.ClassifyAttributeBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

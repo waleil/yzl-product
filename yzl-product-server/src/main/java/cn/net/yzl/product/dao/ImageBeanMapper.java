@@ -1,6 +1,6 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.ImageBean;
+import cn.net.yzl.product.model.db.ImageBean;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

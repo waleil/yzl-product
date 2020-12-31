@@ -1,6 +1,6 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.AttributeValueBean;
+import cn.net.yzl.product.model.db.AttributeValueBean;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

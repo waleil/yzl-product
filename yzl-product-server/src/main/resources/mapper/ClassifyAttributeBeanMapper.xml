@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.net.yzl.product.dao.ClassifyAttributeBeanMapper" >
-  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.ClassifyAttributeBean" >
+  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.db.ClassifyAttributeBean" >
     <result column="classify_id" property="classifyId" jdbcType="INTEGER" />
     <result column="attribute_id" property="attributeId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <insert id="insert" parameterType="cn.net.yzl.product.model.ClassifyAttributeBean" >
+  <insert id="insert" parameterType="cn.net.yzl.product.model.db.ClassifyAttributeBean" >
     insert into classify_attribute (classify_id, attribute_id, create_time, 
       update_time)
     values (#{classifyId,jdbcType=INTEGER}, #{attributeId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
@@ -30,7 +30,7 @@
       classify_id = #{id}
   </delete>
 
-  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.ClassifyAttributeBean" >
+  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.db.ClassifyAttributeBean" >
     insert into classify_attribute
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="classifyId != null" >

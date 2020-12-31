@@ -1,7 +1,7 @@
 package cn.net.yzl.product.controller;
 
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.product.model.AttributeBean;
+import cn.net.yzl.product.model.db.AttributeBean;
 import cn.net.yzl.product.service.AttributeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
  * @date: 2020/12/31 9:10 上午
  */
 @RestController
-@RequestMapping("productServer")
 @Api(tags = "商品属性管理")
 public class AttributeController {
 
@@ -29,12 +28,11 @@ public class AttributeController {
      * @return
      */
     @ApiOperation(value = "插入属性")
-    @PostMapping("insertAttribute")
+    @PostMapping("/attribute/v1/insertAttribute")
     public ComResponse insertProductAttribute(@RequestBody AttributeBean attributeBean) {
         attributeService.insertAttribute(attributeBean);
         return ComResponse.success();
     }
-
 
     /**
      * 分页查询商品属性列表
@@ -44,25 +42,25 @@ public class AttributeController {
      * @return
      */
     @ApiOperation(value = "获取属性")
-    @GetMapping("selectPageAttribute")
+    @GetMapping("/attribute/v1/selectPageAttribute")
     public ComResponse selectPageAttribute(int pageNo, int pageSize) {
         return attributeService.selectPageAttribute(pageNo, pageSize);
     }
 
 
     @ApiOperation(value = "通过id精确匹配属性")
-    @GetMapping("selectById")
+    @GetMapping("/attribute/v1/selectById")
     public ComResponse selectById(Integer id) {
         return attributeService.selectById(id);
     }
 
-    @GetMapping("selectByclassifyIdAttribute")
+    @GetMapping("/attribute/v1/selectByclassifyIdAttribute")
     public ComResponse selectByclassifyIdAttribute(Integer id) {
         return attributeService.selectByclassifyIdAttribute(id);
     }
 
     @ApiOperation(value = "更新属性信息")
-    @PostMapping("updateAttribute")
+    @PostMapping("/attribute/v1/updateAttribute")
     public ComResponse updateAttribute(@RequestBody AttributeBean attributeBean) {
         ComResponse comResponse = attributeService.updateAttribute(attributeBean);
         return comResponse;

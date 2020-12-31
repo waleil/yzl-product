@@ -2,7 +2,7 @@ package cn.net.yzl.product.service.impl;
 
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.product.dao.ProductBeanMapper;
-import cn.net.yzl.product.model.ProductBean;
+import cn.net.yzl.product.model.db.ProductBean;
 import cn.net.yzl.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

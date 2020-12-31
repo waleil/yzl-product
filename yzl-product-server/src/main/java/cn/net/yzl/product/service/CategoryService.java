@@ -1,8 +1,8 @@
 package cn.net.yzl.product.service;
 
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.product.model.CategoryBean;
-import cn.net.yzl.product.model.CategoryTO;
+import cn.net.yzl.product.model.db.CategoryBean;
+import cn.net.yzl.product.model.db.CategoryTO;
 
 import java.util.List;
 

@@ -9,19 +9,19 @@
 <!--        <result property="" column=""/>-->
 <!--    </resultMap>-->
 
-    <resultMap id="selectByIdMap" type="cn.net.yzl.product.model.AttributeBean">
+    <resultMap id="selectByIdMap" type="cn.net.yzl.product.model.db.AttributeBean">
         <result column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="retrieval_flag" property="retrievalFlag"/>
         <result column="attribute_type" property="attributeType"/>
         <result column="sort" property="sort"/>
-        <collection property="attributeValueBeanList" ofType="cn.net.yzl.product.model.AttributeValueBean">
+        <collection property="attributeValueBeanList" ofType="cn.net.yzl.product.model.db.AttributeValueBean">
             <id property="id" column="id"/>
             <id property="avalue" column="avalue"/>
         </collection>
     </resultMap>
 
-    <insert id="insertAttribute" parameterType="cn.net.yzl.product.model.AttributeBean" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    <insert id="insertAttribute" parameterType="cn.net.yzl.product.model.db.AttributeBean" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into attribute(`name`,retrieval_flag,attribute_type,sort)
         values(
         #{name},
@@ -42,7 +42,7 @@
         </foreach>
     </insert>
 
-    <select id="selectPageAttribute" resultType="cn.net.yzl.product.model.AttributeBean">
+    <select id="selectPageAttribute" resultType="cn.net.yzl.product.model.db.AttributeBean">
         select att.id id,att.`name`,att.retrieval_flag,att.attribute_type,att.sort,att.create_time,att.update_time,cd.id classifyId,cd.`name` classifyName
         from attribute att
         LEFT JOIN classify_attribute ca ON att.id=ca.attribute_id
@@ -50,14 +50,14 @@
         WHERE att.del_flag=0
     </select>
 
-    <select id="selectAttributeValue" resultType="cn.net.yzl.product.model.AttributeValueBean">
+    <select id="selectAttributeValue" resultType="cn.net.yzl.product.model.db.AttributeValueBean">
         select id,avalue
         from attribute_value
         where attribute_id=#{id} and del_flag=0
     </select>
 
 
-    <select id="selectByClassifyId" resultType="cn.net.yzl.product.model.AttributeBean">
+    <select id="selectByClassifyId" resultType="cn.net.yzl.product.model.db.AttributeBean">
         SELECT att.id,att.`name`,att.retrieval_flag,att.attribute_type,att.sort,att.create_time
         FROM attribute att
         WHERE att.del_flag=0 and att.id in (SELECT ca.attribute_id FROM classify_attribute ca WHERE ca.classify_id=#{classifyId})
@@ -72,7 +72,7 @@
     </select>
 
 
-    <update id="updateAttribute" parameterType="cn.net.yzl.product.model.AttributeBean">
+    <update id="updateAttribute" parameterType="cn.net.yzl.product.model.db.AttributeBean">
         UPDATE attribute
         SET `name`=#{name},retrieval_flag=#{retrievalFlag},attribute_type=#{attributeType},sort=#{sort},update_time=#{updateTime}
         WHERE id=#{id}
