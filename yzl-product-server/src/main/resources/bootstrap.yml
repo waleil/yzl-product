@@ -1,5 +1,9 @@
 spring:
   application:
-    name: yzl-product-mapper
+    name: yzl-product-server
   profiles:
     active: dev
+logging:
+  file:
+    path: /tmp
+  config: classpath:logback.xml

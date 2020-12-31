@@ -1,0 +1,64 @@
+<configuration scan="false" scanPeriod="1800 seconds" debug="false">
+    <property name="USER_HOME" value="${LOG_PATH}" />
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <property scope="context" name="DEFAULT_LOG_FILE_NAME" value="server_log" />
+    <property scope="context" name="SYS_MONITOR_LOG_FILE_NAME" value="request" />
+    <property name="SYS_LOG_HOME" value="${LOG_PATH}" />
+    <timestamp key="byDay" datePattern="yyyy-MM-dd" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!--默认日志-->
+    <appender name="defaultLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${USER_HOME}/${DEFAULT_LOG_FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${USER_HOME}/${byDay}/${DEFAULT_LOG_FILE_NAME}-${byDay}-%i.log.zip</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>20</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>500MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{X-B3-TraceId:-}] [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+
+    </appender>
+    <appender name ="defaultLogAsyncAppender" class= "ch.qos.logback.classic.AsyncAppender">
+        <!-- <discardingThreshold>0</discardingThreshold> -->
+        <queueSize>2048</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref ="defaultLogAppender"/>
+    </appender>
+    <logger name="defaultLogger" level="INFO" additivity="false">
+        <appender-ref ref="defaultLogAsyncAppender" />
+    </logger>
+    <!--请求日志-->
+    <appender name="requestLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${SYS_LOG_HOME}/${SYS_MONITOR_LOG_FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${SYS_LOG_HOME}/${SYS_MONITOR_LOG_FILE_NAME}.%d{yyyy-MM-dd_HH}.log</fileNamePattern>
+            <maxHistory>20</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%m%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="requestLogAsyncAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>2048</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="requestLogAppender"/>
+    </appender>
+    <logger name="requestLogger" level="INFO" additivity="false">
+        <appender-ref ref="requestLogAsyncAppender" />
+    </logger>
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="defaultLogAsyncAppender" />
+    </root>
+</configuration>
