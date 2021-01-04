@@ -1,11 +1,11 @@
 package cn.net.yzl.product.service;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.db.BrandBean;
 import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
 import cn.net.yzl.product.model.vo.brand.BrandDelVo;
 import cn.net.yzl.product.model.vo.brand.BrandVo;
-import com.github.pagehelper.PageInfo;
 
 public interface BrandService {
     /**
@@ -17,7 +17,7 @@ public interface BrandService {
      * @param pageSize:每页限制数量
      * @return: null
      */
-    ComResponse<PageInfo<BrandBeanTO>> getAllBrands(Integer pageNo, Integer pageSize,String keyWord);
+    ComResponse<Page<BrandBeanTO>> getAllBrands(Integer pageNo, Integer pageSize, String keyWord);
 
     /**
      * @author lichanghong

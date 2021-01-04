@@ -1,20 +1,18 @@
 package cn.net.yzl.product.service.impl;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
+import cn.net.yzl.common.util.AssemblerResultUtil;
 import cn.net.yzl.product.dao.BrandBeanMapper;
 import cn.net.yzl.product.model.db.BrandBean;
 import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
 import cn.net.yzl.product.model.vo.brand.BrandDelVo;
 import cn.net.yzl.product.model.vo.brand.BrandVo;
 import cn.net.yzl.product.service.BrandService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class BrandServiceImpl implements BrandService {
@@ -31,19 +29,18 @@ public class BrandServiceImpl implements BrandService {
      * @return: null
      */
     @Override
-    public ComResponse<PageInfo<BrandBeanTO>> getAllBrands(Integer pageNo, Integer pageSize,String keyWord) {
+    public ComResponse<Page<BrandBeanTO>> getAllBrands(Integer pageNo, Integer pageSize, String keyWord) {
         //开启分页
         PageHelper.startPage(pageNo,pageSize);
         //分页查询
-        Page<BrandBeanTO> pageInfo = (Page<BrandBeanTO>)brandBeanMapper.selectList(keyWord);
-       List<BrandBeanTO>  list= pageInfo.getResult();
+        Page<BrandBeanTO> pageInfo = AssemblerResultUtil.resultAssembler(brandBeanMapper.selectList(keyWord));
 //       if(!CollectionUtils.isEmpty(list)){
 //           list.stream().forEach(brandBeanTO -> {
 //               brandBeanTO.setProductCount(brandBeanMapper.selectCountByBid(brandBeanTO.getId()));
 //           });
 //       }
         //提取列表数据，遍历并更改数据类型
-        return ComResponse.success(new PageInfo<BrandBeanTO>(list));
+        return ComResponse.success(pageInfo);
     }
     /**
      * @author lichanghong
