@@ -2,6 +2,7 @@ package cn.net.yzl.product.service;
 
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.product.model.db.ProductBean;
+import cn.net.yzl.product.model.vo.product.ProductBO;
 
 import java.util.List;
 
@@ -11,7 +12,12 @@ public interface ProductService {
 
     ComResponse<Void> deleteRelationOfProductAndImgId(Integer id, Integer type);
 
-    ComResponse<List<ProductBean>> selectByIdList(String productIds);
+    ComResponse selectByIdList(String productIds);
 
 
+    ComResponse selectByCondition(ProductBO productBO);
+
+    ComResponse reduceStock(Integer productNo, Integer stock);
+
+    ComResponse increaseStock(Integer productNo, Integer stock);
 }

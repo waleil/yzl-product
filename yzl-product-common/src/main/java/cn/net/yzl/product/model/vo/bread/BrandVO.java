@@ -1,4 +1,4 @@
-package cn.net.yzl.product.model.vo.brand;
+package cn.net.yzl.product.model.vo.bread;
 
 import cn.net.yzl.product.model.BaseObject;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @Data
 @ApiModel(description = "接收实体")
-public class BrandVo extends BaseObject {
+public class BrandVO extends BaseObject {
     @ApiModelProperty(name = "name", value = "品牌名称")
     @NotEmpty(message = "品牌名称,不能为空!")
     private String name;

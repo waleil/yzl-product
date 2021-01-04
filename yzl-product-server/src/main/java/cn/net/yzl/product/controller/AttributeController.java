@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
  * @date: 2020/12/31 9:10 上午
  */
 @RestController
-@Api(tags = "商品属性管理")
+@Api(tags = "商品属性管理",description = "包含:增删改查")
+@RequestMapping("attribute")
 public class AttributeController {
 
     @Autowired
@@ -28,7 +29,7 @@ public class AttributeController {
      * @return
      */
     @ApiOperation(value = "插入属性")
-    @PostMapping("/attribute/v1/insertAttribute")
+    @PostMapping("/v1/insert")
     public ComResponse insertProductAttribute(@RequestBody AttributeBean attributeBean) {
         attributeService.insertAttribute(attributeBean);
         return ComResponse.success();
@@ -42,25 +43,25 @@ public class AttributeController {
      * @return
      */
     @ApiOperation(value = "获取属性")
-    @GetMapping("/attribute/v1/selectPageAttribute")
+    @GetMapping("v1/selectPage")
     public ComResponse selectPageAttribute(int pageNo, int pageSize) {
         return attributeService.selectPageAttribute(pageNo, pageSize);
     }
 
 
     @ApiOperation(value = "通过id精确匹配属性")
-    @GetMapping("/attribute/v1/selectById")
+    @GetMapping("v1/selectById")
     public ComResponse selectById(Integer id) {
         return attributeService.selectById(id);
     }
 
-    @GetMapping("/attribute/v1/selectByclassifyIdAttribute")
-    public ComResponse selectByclassifyIdAttribute(Integer id) {
+    @GetMapping("v1/selectByClassifyId")
+    public ComResponse selectByClassifyIdAttribute(Integer id) {
         return attributeService.selectByclassifyIdAttribute(id);
     }
 
     @ApiOperation(value = "更新属性信息")
-    @PostMapping("/attribute/v1/updateAttribute")
+    @PostMapping("v1/update")
     public ComResponse updateAttribute(@RequestBody AttributeBean attributeBean) {
         ComResponse comResponse = attributeService.updateAttribute(attributeBean);
         return comResponse;

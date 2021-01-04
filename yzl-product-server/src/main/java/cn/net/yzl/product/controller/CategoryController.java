@@ -6,6 +6,7 @@ import cn.net.yzl.product.model.db.CategoryTO;
 import cn.net.yzl.product.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,52 +21,62 @@ import java.util.List;
  */
 @RestController
 @Api(tags = "商品品牌服务")
+@RequestMapping("category")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
+
     @ApiOperation(value = "通过id字段对category_dict表进行条件检索")
-    @GetMapping("/category/v1/getCategoryById")
+    @GetMapping("v1/selectById")
     public ComResponse<CategoryTO> getCategoryByid(@RequestParam Integer id) {
         return categoryService.getCategoryById(id);
     }
 
-    @PostMapping("/category/v1/insertCategory")
-    public ComResponse<CategoryBean> insertCategory(@RequestBody CategoryTO CategoryTO) {
-        return categoryService.saveOrUpdateCategory(CategoryTO);
+    @ApiOperation(value = "新增分类")
+    @PostMapping("v1/insert")
+    public ComResponse<CategoryBean> insertCategory(@RequestBody CategoryTO categoryTO) {
+        return categoryService.saveOrUpdateCategory(categoryTO);
     }
 
-    @PutMapping("/category/v1/updateCategory")
+    @ApiOperation(value = "修改分类信息")
+    @PutMapping("v1/update")
     public ComResponse<CategoryBean> updateCategory(@RequestBody CategoryTO CategoryTO) {
         return categoryService.saveOrUpdateCategory(CategoryTO);
     }
 
-    @DeleteMapping("/category/v1/deleteCategory")
+    @ApiOperation(value = "逻辑删除分类信息")
+    @DeleteMapping("v1/delete")
     public ComResponse<CategoryBean> deleteCategory(@RequestParam Integer id) {
         return categoryService.deleteCategory(id);
     }
 
-    @PutMapping("/category/v1/changeCategoryStatus")
+    @ApiOperation(value = "修改分类的展示状态")
+    @PutMapping("v1/changeStatus")
     public ComResponse<CategoryBean> changeCategoryStatus(@RequestParam Integer flag, @RequestParam Integer id) {
         return categoryService.chooseCategoryStatus(id, flag);
     }
 
-    @PutMapping("/category/v1/changeCategoryAppStatus")
-    public ComResponse<CategoryBean> changeCategoryAppStatus(@RequestParam Integer flag, @RequestParam Integer id) {
+    @ApiOperation("修改品牌移动端展示状态")
+    @PutMapping("v1/changeAppStatus")
+    public ComResponse changeCategoryAppStatus(@RequestParam Integer flag, @RequestParam Integer id) {
         return categoryService.chooseCategoryAppStatus(id, flag);
     }
 
-    @GetMapping("/category/v1/getCategoriesByPid")
-    public ComResponse<List<CategoryTO>> getCategoriesByPid(@RequestParam Integer pid) {
+    @ApiOperation("根据父id的值查询该父类下的所有子类品牌信息")
+    @GetMapping("v1/getByPid")
+    public ComResponse getCategoriesByPid(@RequestParam Integer pid) {
         return categoryService.getCategoryByPid(pid);
     }
 
-    @PutMapping("/category/v1/transferCategories")
-    public ComResponse<CategoryBean> transferCategories(@RequestParam Integer sourceId, @RequestParam Integer targetId) {
+    @ApiOperation("将一个分类中的商品转移到另一个分类中")
+    @PutMapping("v1/transfer")
+    public ComResponse transferCategories(@RequestParam Integer sourceId, @RequestParam Integer targetId) {
         return categoryService.transferCategories(sourceId, targetId);
     }
 
-    @GetMapping("/category/v1/selectAllCategories")
-    public ComResponse<List<CategoryBean>> selectAllCategories() {
+    @ApiOperation("查询所有分类信息")
+    @GetMapping("v1/selectAll")
+    public ComResponse selectAllCategories() {
         return categoryService.selectAll();
     }
 
