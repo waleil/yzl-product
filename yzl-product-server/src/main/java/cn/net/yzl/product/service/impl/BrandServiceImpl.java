@@ -4,20 +4,17 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.dao.BrandBeanMapper;
 import cn.net.yzl.product.model.db.BrandBean;
-import cn.net.yzl.product.model.vo.bread.BrandBeanTO;
-import cn.net.yzl.product.model.vo.bread.BrandDelVo;
-import cn.net.yzl.product.model.vo.bread.BrandVo;
+import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
+import cn.net.yzl.product.model.vo.brand.BrandDelVo;
+import cn.net.yzl.product.model.vo.brand.BrandVo;
 import cn.net.yzl.product.service.BrandService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BrandServiceImpl implements BrandService {

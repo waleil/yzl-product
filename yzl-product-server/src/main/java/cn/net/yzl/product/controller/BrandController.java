@@ -2,9 +2,9 @@ package cn.net.yzl.product.controller;
 
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.product.model.db.BrandBean;
-import cn.net.yzl.product.model.vo.bread.BrandBeanTO;
-import cn.net.yzl.product.model.vo.bread.BrandDelVo;
-import cn.net.yzl.product.model.vo.bread.BrandVo;
+import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
+import cn.net.yzl.product.model.vo.brand.BrandDelVo;
+import cn.net.yzl.product.model.vo.brand.BrandVo;
 import cn.net.yzl.product.service.BrandService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;

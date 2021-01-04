@@ -15,7 +15,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
-  <resultMap id="ListResultMap" type="cn.net.yzl.product.model.vo.bread.BrandBeanTO" >
+  <resultMap id="ListResultMap" type="cn.net.yzl.product.model.vo.brand.BrandBeanTO" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="BIT" />
@@ -44,7 +44,7 @@
     where id = #{id,jdbcType=INTEGER}
     and del_flag = 0
   </select>
-
+  <!--根据品牌ID查询商品数量-->
   <select id="selectCountByBid" resultType="java.lang.Integer">
     select count(1)
     from product_sku
@@ -71,12 +71,13 @@
     </if>
   </select>
   <!--删除的时候做逻辑删除-->
-  <delete id="deleteByPrimaryKey" parameterType="cn.net.yzl.product.model.vo.bread.BrandDelVo" >
+  <update id="deleteByPrimaryKey" parameterType="cn.net.yzl.product.model.vo.brand.BrandDelVo" >
     update brand
+    set
         del_flag = 1,
         update_no = #{updateNo},
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
   <insert id="insert" parameterType="cn.net.yzl.product.model.db.BrandBean" >
     insert into brand (id, name, status,
       brand_url, del_flag, sort,
@@ -87,7 +88,7 @@
       #{descri,jdbcType=VARCHAR}, #{createNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateNo,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.vo.bread.BrandVo" >
+  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.vo.brand.BrandVo" >
     insert into brand
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -160,7 +161,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.vo.bread.BrandVo" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.vo.brand.BrandVo" >
     update brand
     <set >
       <if test="name != null" >

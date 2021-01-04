@@ -1,9 +1,9 @@
 package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.BrandBean;
-import cn.net.yzl.product.model.vo.bread.BrandBeanTO;
-import cn.net.yzl.product.model.vo.bread.BrandDelVo;
-import cn.net.yzl.product.model.vo.bread.BrandVo;
+import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
+import cn.net.yzl.product.model.vo.brand.BrandDelVo;
+import cn.net.yzl.product.model.vo.brand.BrandVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
