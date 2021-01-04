@@ -32,7 +32,7 @@ public class BrandController {
     private BrandService brandService;
     @GetMapping("v1/getBrandById")
     @ApiOperation(value = "根据主键查询详情", notes = "根据主键查询详情")
-    @ApiImplicitParam(name = "id", value = "主键信息", required = true, dataType = "Integer")
+    @ApiImplicitParam(name = "id", value = "主键信息",paramType="query", required = true, dataType = "Integer")
     public ComResponse<BrandBean> getBrandById(@RequestParam("id") Integer id) {
         return brandService.getBrandById(id);
     }
