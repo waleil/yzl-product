@@ -1,6 +1,7 @@
 package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.ProductBean;
+import cn.net.yzl.product.model.vo.product.ProductBO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,6 +9,8 @@ import java.util.List;
 
 @Mapper
 public interface ProductBeanMapper {
+    int reduceStock(Integer productNo, Integer stock);
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(ProductBean record);
@@ -27,4 +30,8 @@ public interface ProductBeanMapper {
     List<ProductBean> selectByIdList(@Param("ids") String[] ids);
 
     List<ProductBean> getProductByBid(@Param("bid") Integer bid);
+
+    List<ProductBean> select(ProductBO productBO);
+
+    void increaseStock(Integer productNo, Integer stock);
 }

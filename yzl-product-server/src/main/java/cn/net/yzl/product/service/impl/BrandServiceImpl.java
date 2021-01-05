@@ -6,9 +6,9 @@ import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.AssemblerResultUtil;
 import cn.net.yzl.product.dao.BrandBeanMapper;
 import cn.net.yzl.product.model.db.BrandBean;
-import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
-import cn.net.yzl.product.model.vo.brand.BrandDelVo;
-import cn.net.yzl.product.model.vo.brand.BrandVo;
+import cn.net.yzl.product.model.vo.bread.BrandBeanTO;
+import cn.net.yzl.product.model.vo.bread.BrandDelVO;
+import cn.net.yzl.product.model.vo.bread.BrandVO;
 import cn.net.yzl.product.service.BrandService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +78,7 @@ public class BrandServiceImpl implements BrandService {
      * @return: null
      */
     @Override
-    public ComResponse<Void> editBrand(BrandVo brandVo) {
+    public ComResponse<Void> editBrand(BrandVO brandVo) {
         if(brandVo.getId()!=null&&brandVo.getId()>0){
             brandBeanMapper.updateByPrimaryKeySelective(brandVo);
         }else{
@@ -94,7 +94,7 @@ public class BrandServiceImpl implements BrandService {
      * @return: null
      */
     @Override
-    public ComResponse<Void> deleteBrandById(BrandDelVo brandDelVo) {
+    public ComResponse<Void> deleteBrandById(BrandDelVO brandDelVo) {
         if(brandBeanMapper.selectCountByBid(brandDelVo.getId())>0){
             return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(),"存在关联商品，无法删除!");
         }

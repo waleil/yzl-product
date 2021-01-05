@@ -1,4 +1,4 @@
-package cn.net.yzl.product.model.vo.brand;
+package cn.net.yzl.product.model.vo.bread;
 
 import cn.net.yzl.product.model.BaseObject;
 import io.swagger.annotations.ApiModelProperty;

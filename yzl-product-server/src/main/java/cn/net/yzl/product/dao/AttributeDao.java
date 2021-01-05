@@ -2,12 +2,12 @@ package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.AttributeBean;
 import cn.net.yzl.product.model.db.AttributeValueBean;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface AttributeDao{
 
     void insertAttribute(AttributeBean attributeBean);

@@ -57,7 +57,6 @@ public class AttributeServiceImpl implements AttributeService {
         }
     }
 
-
     /**
      * 商品属性查询
      *

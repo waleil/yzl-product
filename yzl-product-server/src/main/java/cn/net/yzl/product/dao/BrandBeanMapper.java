@@ -1,9 +1,9 @@
 package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.BrandBean;
-import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
-import cn.net.yzl.product.model.vo.brand.BrandDelVo;
-import cn.net.yzl.product.model.vo.brand.BrandVo;
+import cn.net.yzl.product.model.vo.bread.BrandBeanTO;
+import cn.net.yzl.product.model.vo.bread.BrandDelVO;
+import cn.net.yzl.product.model.vo.bread.BrandVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +18,7 @@ public interface BrandBeanMapper {
      * @param brandDelVo: 删除实体
      * @return: null 
      */
-    int deleteByPrimaryKey(BrandDelVo brandDelVo);
+    int deleteByPrimaryKey(BrandDelVO brandDelVo);
 
     /**
      * @author lichanghong
@@ -27,7 +27,7 @@ public interface BrandBeanMapper {
      * @param brandVo:
      * @return: null
      */
-    int insertSelective(BrandVo brandVo);
+    int insertSelective(BrandVO brandVo);
     /**
      * @author lichanghong
      * @description 根据主键查询
@@ -35,7 +35,7 @@ public interface BrandBeanMapper {
      * @param id:
      * @return: null
      */
-    BrandBean selectByPrimaryKey(Integer id);
+    BrandBean selectByPrimaryKey(@Param("id") Integer id);
     /**
      * @author lichanghong
      * @description 修改
@@ -43,7 +43,7 @@ public interface BrandBeanMapper {
      * @param brandVo:
      * @return: null
      */
-    int updateByPrimaryKeySelective(BrandVo brandVo);
+    int updateByPrimaryKeySelective(BrandVO brandVo);
     /**
      * @author lichanghong
      * @description 条件查询

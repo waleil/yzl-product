@@ -1,11 +1,11 @@
 package cn.net.yzl.product.service;
 
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.db.BrandBean;
-import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
-import cn.net.yzl.product.model.vo.brand.BrandDelVo;
-import cn.net.yzl.product.model.vo.brand.BrandVo;
+import cn.net.yzl.product.model.vo.bread.BrandBeanTO;
+import cn.net.yzl.product.model.vo.bread.BrandDelVO;
+import cn.net.yzl.product.model.vo.bread.BrandVO;
+import com.github.pagehelper.PageInfo;
 
 public interface BrandService {
     /**
@@ -17,7 +17,7 @@ public interface BrandService {
      * @param pageSize:每页限制数量
      * @return: null
      */
-    ComResponse<Page<BrandBeanTO>> getAllBrands(Integer pageNo, Integer pageSize, String keyWord);
+    ComResponse<PageInfo<BrandBeanTO>> getAllBrands(Integer pageNo, Integer pageSize,String keyWord);
 
     /**
      * @author lichanghong
@@ -43,7 +43,7 @@ public interface BrandService {
      * @param brandVo:
      * @return: null
      */
-    ComResponse<Void> editBrand(BrandVo brandVo);
+    ComResponse<Void> editBrand(BrandVO brandVo);
     /**
      * @author lichanghong
      * @description 删除品牌，逻辑删除
@@ -51,5 +51,5 @@ public interface BrandService {
      * @param brandDelVo:删除实体
      * @return: null
      */
-    ComResponse<Void> deleteBrandById(BrandDelVo brandDelVo);
+    ComResponse<Void> deleteBrandById(BrandDelVO brandDelVo);
 }

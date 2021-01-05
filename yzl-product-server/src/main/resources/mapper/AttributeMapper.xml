@@ -16,7 +16,7 @@
         <result column="attribute_type" property="attributeType"/>
         <result column="sort" property="sort"/>
         <collection property="attributeValueBeanList" ofType="cn.net.yzl.product.model.db.AttributeValueBean">
-            <id property="id" column="id"/>
+            <id property="id" column="avid"/>
             <id property="avalue" column="avalue"/>
         </collection>
     </resultMap>
@@ -65,7 +65,7 @@
 
 
     <select id="selectById" resultMap="selectByIdMap">
-        SELECT att.id,att.`name`,att.retrieval_flag,att.attribute_type,att.sort,av.id,av.avalue
+        SELECT att.id,att.`name`,att.retrieval_flag,att.attribute_type,att.sort,av.id avid,av.avalue
         FROM attribute att
         LEFT JOIN attribute_value av ON att.id = av.attribute_id
         WHERE att.id=#{id}  and att.del_flag=0  and av.del_flag=0

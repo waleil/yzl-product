@@ -22,8 +22,8 @@
 
 
   <sql id="Base_Column_List" >
-    id, name, pid, sort, display_flag, display_app_flag, status, unit, image_url, key_word, 
-    descri, del_flag, create_no, create_time, update_no, update_time
+    id, name, pid, sort, display_flag, display_app_flag, unit, image_url, key_word,
+    descri
   </sql>
 
 

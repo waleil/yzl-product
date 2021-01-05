@@ -24,8 +24,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private ClassifyAttributeBeanMapper classifyAttributeMapper;
 
-
-
     @Autowired
     private AttributeDao attributeDao;
 
