@@ -52,7 +52,6 @@ public class CategoryController {
     public ComResponse<Void> deleteCategory(@RequestBody @Valid CategoryDelVO vo) {
         return categoryService.deleteCategory(vo);
     }
-
     @ApiOperation(value = "修改分类的展示状态")
     @PostMapping("/category/v1/changeCategoryStatus")
     public ComResponse<Void> changeCategoryStatus(@RequestBody @Valid CategoryChangeStatusVO vo) {
