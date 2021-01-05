@@ -1,6 +1,7 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.db.CategoryBean;
+import cn.net.yzl.product.model.db.category.Category;
+import cn.net.yzl.product.model.vo.category.CategoryVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public interface CategoryBeanMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insertSelective(CategoryBean record);
+    int insertSelective(CategoryVO record);
 
-    CategoryBean selectByPrimaryKey(Integer id);
+    Category selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(CategoryBean record);
+    int updateByPrimaryKeySelective(CategoryVO record);
 
-    List<CategoryBean> selectByPid(@Param("pid") Integer pid);
+    List<Category> selectByPid(@Param("pid") Integer pid);
 
     void chooseCategoryStatus(@Param("id") Integer id, @Param("flag") Integer flag);
 
@@ -26,5 +27,5 @@ public interface CategoryBeanMapper {
 
     int getProductCountByCid(@Param("cid") Integer cid);
 
-    List<CategoryBean> selectAll();
+    List<Category> selectAll();
 }

@@ -1,27 +1,27 @@
 package cn.net.yzl.product.service;
 
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.product.model.db.CategoryBean;
-import cn.net.yzl.product.model.db.CategoryTO;
+import cn.net.yzl.product.model.db.category.Category;
+import cn.net.yzl.product.model.vo.category.CategoryVO;
 
 import java.util.List;
 
 public interface CategoryService {
 
-    ComResponse<CategoryTO> getCategoryById(Integer id);
+    ComResponse<CategoryVO> getCategoryById(Integer id);
 
-    ComResponse<CategoryBean> saveOrUpdateCategory(CategoryTO categoryTO);
+    ComResponse<Void> saveOrUpdateCategory(CategoryVO categoryVO);
 
-    ComResponse<CategoryBean> deleteCategory(Integer id);
+    ComResponse<Category> deleteCategory(Integer id);
 
-    ComResponse<CategoryBean> chooseCategoryStatus(Integer id, Integer flag);
+    ComResponse<Category> chooseCategoryStatus(Integer id, Integer flag);
 
-    ComResponse<CategoryBean> chooseCategoryAppStatus(Integer id, Integer flag);
+    ComResponse<Category> chooseCategoryAppStatus(Integer id, Integer flag);
 
-    ComResponse<List<CategoryTO>> getCategoryByPid(Integer pid);
+    ComResponse<List<CategoryVO>> getCategoryByPid(Integer pid);
 
-    ComResponse<CategoryBean> transferCategories(Integer sourceId, Integer targetId);
+    ComResponse<Category> transferCategories(Integer sourceId, Integer targetId);
 
-    ComResponse<List<CategoryBean>> selectAll();
+    ComResponse<List<Category>> selectAll();
 
 }

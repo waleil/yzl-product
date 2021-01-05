@@ -1,12 +1,13 @@
 package cn.net.yzl.product.model.db;
 
+import cn.net.yzl.product.model.BaseObject;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class BrandBean implements Serializable {
+public class BrandBean extends BaseObject {
     private Integer id;
 
     private String name;
