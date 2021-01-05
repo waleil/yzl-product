@@ -1,12 +1,12 @@
 package cn.net.yzl.product.controller;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.db.BrandBean;
 import cn.net.yzl.product.model.vo.bread.BrandBeanTO;
 import cn.net.yzl.product.model.vo.bread.BrandDelVO;
 import cn.net.yzl.product.model.vo.bread.BrandVO;
 import cn.net.yzl.product.service.BrandService;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -69,9 +69,9 @@ public class BrandController {
             @ApiImplicitParam(name = "pageSize",paramType="query", value = "每页显示记录数", dataType = "int",defaultValue = "15")
     })
     @GetMapping("v1/getPage")
-    public ComResponse<PageInfo<BrandBeanTO>> getAllBrands(@RequestParam(required = false,defaultValue = "1")Integer pageNo,
-                                                           @RequestParam(required = false,defaultValue = "15")  Integer pageSize,
-                                                           String keyWord
+    public ComResponse<Page<BrandBeanTO>> getAllBrands(@RequestParam(required = false,defaultValue = "1")Integer pageNo,
+                                                       @RequestParam(required = false,defaultValue = "15")  Integer pageSize,
+                                                       String keyWord
     ) {
         return brandService.getAllBrands(pageNo,pageSize,keyWord);
     }

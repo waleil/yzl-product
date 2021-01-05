@@ -28,6 +28,6 @@ mvnw.cmd
 /nbdist/
 /.nb-gradle/
 build/
-
+.LOG_PATH_IS_UNDEFINED
 ### VS Code ###
 .vscode/
