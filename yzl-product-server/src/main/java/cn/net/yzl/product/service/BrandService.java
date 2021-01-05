@@ -3,9 +3,9 @@ package cn.net.yzl.product.service;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.db.BrandBean;
-import cn.net.yzl.product.model.vo.bread.BrandBeanTO;
-import cn.net.yzl.product.model.vo.bread.BrandDelVO;
-import cn.net.yzl.product.model.vo.bread.BrandVO;
+import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
+import cn.net.yzl.product.model.vo.brand.BrandDelVO;
+import cn.net.yzl.product.model.vo.brand.BrandVO;
 
 public interface BrandService {
     /**

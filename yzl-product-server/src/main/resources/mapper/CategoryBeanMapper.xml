@@ -6,12 +6,9 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="pid" property="pid" jdbcType="INTEGER" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
-    <result column="display_flag" property="displayFlag" jdbcType="BIT" />
     <result column="display_app_flag" property="displayAppFlag" jdbcType="BIT" />
     <result column="status" property="status" jdbcType="BIT" />
-    <result column="unit" property="unit" jdbcType="VARCHAR" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
-    <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
     <result column="descri" property="descri" jdbcType="VARCHAR" />
     <result column="del_flag" property="delFlag" jdbcType="BIT" />
     <result column="create_no" property="createNo" jdbcType="VARCHAR" />
@@ -20,10 +17,20 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
-
+  <resultMap id="ListResultMap" type="cn.net.yzl.product.model.vo.category.CategoryTO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="display_app_flag" property="displayAppFlag" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="descri" property="descri" jdbcType="VARCHAR" />
+    <result column="update_no" property="updateNo" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    id, name, pid, sort, display_flag, display_app_flag, unit, image_url, key_word,
-    descri
+    id, name, pid, sort,  display_app_flag,  image_url, status,
+    descri,update_no
   </sql>
 
 
@@ -34,7 +41,13 @@
     where id = #{id,jdbcType=INTEGER}
     and del_flag=0
   </select>
-
+  <select id="queryPageById" resultMap="ListResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from category_dict
+    where pid = #{pid,jdbcType=INTEGER}
+    and del_flag=0
+  </select>
   <select id="getProductCountByCid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
     select count(1)
     from product_sku
@@ -57,8 +70,8 @@
     where del_flag=0
   </select>
 
-  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    update category_dict set del_flag = 1
+  <update id="deleteByPrimaryKey" parameterType="cn.net.yzl.product.model.vo.category.CategoryDelVO" >
+    update category_dict set del_flag = 1 ,update_no =  #{updateNo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -68,32 +81,18 @@
   </update>
 
 
-  <update id="chooseCategoryStatus">
-    update category_dict set display_flag = #{flag,jdbcType=INTEGER}
+  <update id="chooseCategoryStatus" parameterType="cn.net.yzl.product.model.vo.category.CategoryChangeStatusVO">
+    update category_dict set display_flag = #{flag,jdbcType=INTEGER},
+    update_no =  #{updateNo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
 
-  <update id="chooseCategoryAppStatus">
-    update category_dict set display_app_flag = #{flag,jdbcType=INTEGER}
+  <update id="chooseCategoryAppStatus" parameterType="cn.net.yzl.product.model.vo.category.CategoryChangeStatusVO">
+    update category_dict set display_app_flag = #{flag,jdbcType=INTEGER},
+            update_no =  #{updateNo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-
-  <insert id="insert" parameterType="cn.net.yzl.product.model.db.category.Category" >
-    insert into category_dict (id, name, pid, 
-      sort, display_flag, display_app_flag, 
-      status, unit, image_url, 
-      key_word, descri, del_flag, 
-      create_no, create_time, update_no, 
-      update_time)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, 
-      #{sort,jdbcType=INTEGER}, #{displayFlag,jdbcType=BIT}, #{displayAppFlag,jdbcType=BIT}, 
-      #{status,jdbcType=BIT}, #{unit,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, 
-      #{keyWord,jdbcType=VARCHAR}, #{descri,jdbcType=VARCHAR}, #{delFlag,jdbcType=BIT}, 
-      #{createNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateNo,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
 
   <insert id="insertSelective" parameterType="cn.net.yzl.product.model.vo.category.CategoryVO" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
     insert into category_dict
@@ -176,29 +175,20 @@
       <if test="sort != null" >
         sort = #{sort,jdbcType=INTEGER},
       </if>
-      <if test="displayFlag != null" >
-        display_flag = #{displayFlag,jdbcType=BIT},
-      </if>
       <if test="displayAppFlag != null" >
         display_app_flag = #{displayAppFlag,jdbcType=BIT},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=BIT},
       </if>
-      <if test="unit != null" >
-        unit = #{unit,jdbcType=VARCHAR},
-      </if>
       <if test="imageUrl != null" >
         image_url = #{imageUrl,jdbcType=VARCHAR},
       </if>
-      <if test="keyWord != null" >
-        key_word = #{keyWord,jdbcType=VARCHAR},
+      <if test="imageUrl == null" >
+        image_url = null,
       </if>
       <if test="descri != null" >
         descri = #{descri,jdbcType=VARCHAR},
-      </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=BIT},
       </if>
       <if test="updateNo != null" >
         update_no = #{updateNo,jdbcType=VARCHAR},
@@ -206,27 +196,11 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-
-  <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.db.category.Category" >
-    update category_dict
-    set name = #{name,jdbcType=VARCHAR},
-      pid = #{pid,jdbcType=INTEGER},
-      sort = #{sort,jdbcType=INTEGER},
-      display_flag = #{displayFlag,jdbcType=BIT},
-      display_app_flag = #{displayAppFlag,jdbcType=BIT},
-      status = #{status,jdbcType=BIT},
-      unit = #{unit,jdbcType=VARCHAR},
-      image_url = #{imageUrl,jdbcType=VARCHAR},
-      key_word = #{keyWord,jdbcType=VARCHAR},
-      descri = #{descri,jdbcType=VARCHAR},
-      del_flag = #{delFlag,jdbcType=BIT},
-      create_no = #{createNo,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_no = #{updateNo,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-
+  <select id="query4SelectOption" resultType="cn.net.yzl.product.model.vo.category.CategorySelectTO"  parameterType="java.lang.Integer">
+    select
+    id,name
+    from category_dict
+    where del_flag=0 and pid = #{pid,jdbcType=INTEGER}
+  </select>
 
 </mapper>

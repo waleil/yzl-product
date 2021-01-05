@@ -1,13 +1,10 @@
 package cn.net.yzl.product.model.db.category;
 
 import cn.net.yzl.product.model.BaseObject;
-import cn.net.yzl.product.model.db.AttributeBean;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class Category extends BaseObject {
@@ -19,18 +16,12 @@ public class Category extends BaseObject {
     private Integer pid;//父类id
     @ApiModelProperty(name = "sort", value = "排序")
     private Integer sort;//排序
-    @ApiModelProperty(name = "displayFlag", value = "是否展示")
-    private Boolean displayFlag;//是否展示
     @ApiModelProperty(name = "displayAppFlag", value = "是否在移动端显示：0代表不显示，1代表显示")
     private Boolean displayAppFlag;//是否在移动端显示
     @ApiModelProperty(name = "status", value = "状态（是否启用：0代表未启用，1代表启用）")
     private Boolean status;//状态（是否有效）
-    @ApiModelProperty(name = "unit", value = "计量单位")
-    private String unit;//计量单位
     @ApiModelProperty(name = "imageUrl", value = "分类图标的url")
     private String imageUrl;//分类图标的url
-    @ApiModelProperty(name = "keyWord", value = "关键词")
-    private String keyWord;//关键词
     @ApiModelProperty(name = "descri", value = "描述")
     private String descri;//描述
     @ApiModelProperty(name = "delFlag", value = "是否删除")

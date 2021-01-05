@@ -1,7 +1,7 @@
 package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.category.Category;
-import cn.net.yzl.product.model.vo.category.CategoryVO;
+import cn.net.yzl.product.model.vo.category.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,23 +9,82 @@ import java.util.List;
 
 @Mapper
 public interface CategoryBeanMapper {
-    int deleteByPrimaryKey(Integer id);
 
+    int deleteByPrimaryKey(CategoryDelVO vo);
+    /**
+     * @author lichanghong
+     * @description 新增分类
+     * @date: 2021/1/5 2:26 下午
+     * @param record:
+     * @return: null
+     */
     int insertSelective(CategoryVO record);
-
+    /**
+     * @author lichanghong
+     * @description 根据主键查询分类
+     * @date: 2021/1/5 2:26 下午
+     * @param id:
+     * @return: null
+     */
     Category selectByPrimaryKey(Integer id);
-
+    /**
+     * @author lichanghong
+     * @description 修改分类
+     * @date: 2021/1/5 2:27 下午
+     * @param record:
+     * @return: null
+     */
     int updateByPrimaryKeySelective(CategoryVO record);
-
+    /**
+     * @author lichanghong
+     * @description 根据主键查询子分类
+     * @date: 2021/1/5 2:27 下午
+     * @param pid:
+     * @return: null
+     */
     List<Category> selectByPid(@Param("pid") Integer pid);
-
-    void chooseCategoryStatus(@Param("id") Integer id, @Param("flag") Integer flag);
-
-    void chooseCategoryAppStatus(@Param("id") Integer id, @Param("flag") Integer flag);
+    /**
+     * @author lichanghong
+     * @description 根据主键查询子分类
+     * @date: 2021/1/5 2:27 下午
+     * @param pid:
+     * @return: null
+     */
+    List<CategoryTO> queryPageById(@Param("pid") Integer pid);
+    /**
+     * @author lichanghong
+     * @description 修改分类状态
+     * @date: 2021/1/5 2:28 下午
+     * @param vo:
+     * @return: null
+     */
+    void chooseCategoryStatus(CategoryChangeStatusVO vo);
+    /**
+     * @author lichanghong
+     * @description 修改分类移动端展示
+     * @date: 2021/1/5 2:28 下午
+     * @param vo:
+     * @return: null
+     */
+    void chooseCategoryAppStatus(CategoryChangeStatusVO vo);
 
     void transferCategories(@Param("source") Integer sourceId, @Param("target") Integer targetId);
-
+    /**
+     * @author lichanghong
+     * @description 查询关联商品数量
+     * @date: 2021/1/5 4:33 下午
+     * @param cid:
+     * @return: null
+     */
     int getProductCountByCid(@Param("cid") Integer cid);
 
     List<Category> selectAll();
+    /**
+     * @author lichanghong
+     * @description 下拉列表查询
+     * @date: 2021/1/5 6:09 下午
+     * @param pid:
+     * @return: null
+     */
+    List<CategorySelectTO> query4SelectOption(@Param("pid") Integer pid);
 }

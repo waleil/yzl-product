@@ -1,33 +1,30 @@
 package cn.net.yzl.product.service.impl;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
-import cn.net.yzl.product.dao.AttributeDao;
+import cn.net.yzl.common.util.AssemblerResultUtil;
 import cn.net.yzl.product.dao.CategoryBeanMapper;
-import cn.net.yzl.product.dao.ClassifyAttributeBeanMapper;
-import cn.net.yzl.product.model.db.AttributeBean;
 import cn.net.yzl.product.model.db.category.Category;
-import cn.net.yzl.product.model.vo.category.CategoryVO;
+import cn.net.yzl.product.model.vo.category.*;
 import cn.net.yzl.product.service.CategoryService;
+import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryBeanMapper categoryBeanMapper;
 
-    @Autowired
-    private ClassifyAttributeBeanMapper classifyAttributeMapper;
 
-    @Autowired
-    private AttributeDao attributeDao;
-
-    public ComResponse<CategoryVO> getCategoryById(Integer id) {
+    @Override
+    public ComResponse<Category> getCategoryById(Integer id) {
         if(null == id){
             return ComResponse.fail(ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getMessage());
         }else {
@@ -37,11 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
                 if (null == category) {
                     return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(), ResponseCodeEnums.NO_DATA_CODE.getMessage());
                 }
-                //创建返回结果集
-                CategoryVO categoryVO = new CategoryVO();
-                //
-                List<AttributeBean> list = attributeDao.selectByClassifyId(id);
-                return ComResponse.success(categoryVO);
+                return ComResponse.success(category);
             } catch (Exception e) {
                 return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
             }
@@ -65,80 +58,63 @@ public class CategoryServiceImpl implements CategoryService {
 
     }
 
-
-    public ComResponse<Category> deleteCategory(Integer id) {
-        if (id == null) {
-            return ComResponse.fail(ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getMessage());
-        }else {
+    @Override
+    public ComResponse<Void> deleteCategory(CategoryDelVO vo) {
             try {
-                categoryBeanMapper.deleteByPrimaryKey(id);
-                classifyAttributeMapper.deleteByCid(id);
+                categoryBeanMapper.deleteByPrimaryKey(vo);
                 return ComResponse.success();
             } catch (Exception e) {
                 return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
             }
+    }
+    @Override
+    public ComResponse<Void> chooseCategoryStatus(CategoryChangeStatusVO vo) {
+        try {
+            categoryBeanMapper.chooseCategoryStatus(vo);
+            return ComResponse.success();
+        }catch (Exception ex){
+        log.error("修改分类状态失败,",ex);
+        return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
+        }
+
+    }
+    @Override
+    public ComResponse<Void> chooseCategoryAppStatus(CategoryChangeStatusVO vo) {
+        try {
+            categoryBeanMapper.chooseCategoryAppStatus(vo);
+            return ComResponse.success();
+        }catch (Exception ex){
+            log.error("修改分类APP显示状态失败,",ex);
+            return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
         }
     }
-
-    public ComResponse<Category> chooseCategoryStatus(Integer id, Integer flag) {
-        if (flag == null||!(flag==1||flag==0)||id==null) {
-            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
-        }else {
-            try {
-                categoryBeanMapper.chooseCategoryStatus(id,flag);
-                return ComResponse.success();
-            } catch (Exception e) {
-                return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
-            }
-        }
-    }
-
-    public ComResponse<Category> chooseCategoryAppStatus(Integer id, Integer flag) {
-        if (flag == null||!(flag==1||flag==0)||id==null) {
-            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
-        }else {
-            try {
-                categoryBeanMapper.chooseCategoryAppStatus(id,flag);
-                return ComResponse.success();
-            } catch (Exception e) {
-                return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
-            }
-        }
-    }
-
-    public ComResponse<List<CategoryVO>> getCategoryByPid(Integer pid) {
+    @Override
+    public ComResponse<List<Category>> getCategoryByPid(Integer pid) {
        if (pid == null){
            return ComResponse.fail(ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getMessage());
        }else{
            try {
                List<Category> categories = categoryBeanMapper.selectByPid(pid);
-               List<CategoryVO> list = categories.stream().map(categoryBean -> {
-                   CategoryVO categoryVO = new CategoryVO();
-                   return categoryVO;
-               }).collect(Collectors.toList());
-               return ComResponse.success(list);
+               // TODO: 2021/1/5 缺少查询商品数量
+               return ComResponse.success(categories);
            } catch (Exception e) {
                return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
            }
        }
     }
 
-    public ComResponse<Category> transferCategories(Integer sourceId, Integer targetId) {
-        if (sourceId == null||targetId == null) {
-            return ComResponse.fail(ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getMessage());
-        }else {
-            try {
-                categoryBeanMapper.transferCategories(sourceId, targetId);
-                return ComResponse.success();
-            } catch (Exception e) {
-                return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
-            }
-        }
+    @Override
+    public ComResponse<Page<CategoryTO>> queryPageByPid(Integer pid, Integer pageNo, Integer pageSize) {
+        //开启分页
+        PageHelper.startPage(pageNo,pageSize);
+        //分页查询
+        Page<CategoryTO> pageInfo = AssemblerResultUtil.resultAssembler(categoryBeanMapper.queryPageById(pid));
+        // TODO: 2021/1/5 缺少查询商品数量
+        return ComResponse.success(pageInfo);
     }
 
-    public ComResponse<List<Category>> selectAll(){
-        List<Category> categories = categoryBeanMapper.selectAll();
-        return ComResponse.success(categories);
+    @Override
+    public ComResponse<List<CategorySelectTO>> query4SelectOption(Integer pid) {
+        return ComResponse.success(categoryBeanMapper.query4SelectOption(pid));
     }
-
 }

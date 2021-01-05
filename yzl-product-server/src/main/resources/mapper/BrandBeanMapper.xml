@@ -15,7 +15,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
-  <resultMap id="ListResultMap" type="cn.net.yzl.product.model.vo.bread.BrandBeanTO" >
+  <resultMap id="ListResultMap" type="cn.net.yzl.product.model.vo.brand.BrandBeanTO" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="BIT" />
@@ -62,14 +62,14 @@
         id = #{id}
   </update>
   <!--删除的时候做逻辑删除-->
-  <delete id="deleteByPrimaryKey" parameterType="cn.net.yzl.product.model.vo.bread.BrandDelVO" >
+  <delete id="deleteByPrimaryKey" parameterType="cn.net.yzl.product.model.vo.brand.BrandDelVO" >
     update brand
         del_flag = 1,
         update_no = #{updateNo},
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.vo.bread.BrandVO" >
+  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.vo.brand.BrandVO" >
     insert into brand
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -118,7 +118,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.vo.bread.BrandVO" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.vo.brand.BrandVO" >
     update brand
     <set >
       <if test="name != null" >
