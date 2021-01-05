@@ -43,7 +43,12 @@ public interface BrandBeanMapper {
      * @param brandVo:
      * @return: null
      */
-    int updateByPrimaryKeySelective(BrandVO brandVo);
+    int 
+    
+    
+    
+    
+    updateByPrimaryKeySelective(BrandVO brandVo);
     /**
      * @author lichanghong
      * @description 条件查询

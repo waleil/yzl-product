@@ -1,4 +1,4 @@
-package cn.net.yzl.product.model.db.category;
+package cn.net.yzl.product.model.db;
 
 import cn.net.yzl.product.model.BaseObject;
 import cn.net.yzl.product.model.db.AttributeBean;
@@ -24,7 +24,7 @@ public class Category extends BaseObject {
     @ApiModelProperty(name = "displayAppFlag", value = "是否在移动端显示：0代表不显示，1代表显示")
     private Boolean displayAppFlag;//是否在移动端显示
     @ApiModelProperty(name = "status", value = "状态（是否启用：0代表未启用，1代表启用）")
-    private Boolean status;//状态（是否有效）
+    private Integer status;//状态（是否有效）
     @ApiModelProperty(name = "unit", value = "计量单位")
     private String unit;//计量单位
     @ApiModelProperty(name = "imageUrl", value = "分类图标的url")

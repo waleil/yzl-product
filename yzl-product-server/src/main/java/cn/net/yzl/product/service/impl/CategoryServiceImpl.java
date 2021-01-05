@@ -6,9 +6,11 @@ import cn.net.yzl.product.dao.AttributeDao;
 import cn.net.yzl.product.dao.CategoryBeanMapper;
 import cn.net.yzl.product.dao.ClassifyAttributeBeanMapper;
 import cn.net.yzl.product.model.db.AttributeBean;
-import cn.net.yzl.product.model.db.category.Category;
+import cn.net.yzl.product.model.db.Category;
+import cn.net.yzl.product.model.vo.category.CategoryTO;
 import cn.net.yzl.product.model.vo.category.CategoryVO;
 import cn.net.yzl.product.service.CategoryService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private AttributeDao attributeDao;
 
-    public ComResponse<CategoryVO> getCategoryById(Integer id) {
+    public ComResponse<CategoryTO> getCategoryById(Integer id) {
         if(null == id){
             return ComResponse.fail(ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getMessage());
         }else {
@@ -38,10 +40,9 @@ public class CategoryServiceImpl implements CategoryService {
                     return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(), ResponseCodeEnums.NO_DATA_CODE.getMessage());
                 }
                 //创建返回结果集
-                CategoryVO categoryVO = new CategoryVO();
-                //
-                List<AttributeBean> list = attributeDao.selectByClassifyId(id);
-                return ComResponse.success(categoryVO);
+                CategoryTO categoryTO = new CategoryTO();
+                BeanUtils.copyProperties(category, categoryTO);
+                return ComResponse.success(categoryTO);
             } catch (Exception e) {
                 return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
             }
@@ -114,10 +115,12 @@ public class CategoryServiceImpl implements CategoryService {
                List<Category> categories = categoryBeanMapper.selectByPid(pid);
                List<CategoryVO> list = categories.stream().map(categoryBean -> {
                    CategoryVO categoryVO = new CategoryVO();
+                   BeanUtils.copyProperties(categoryBean, categoryVO);
                    return categoryVO;
                }).collect(Collectors.toList());
                return ComResponse.success(list);
            } catch (Exception e) {
+               e.printStackTrace();
                return ComResponse.fail(ResponseCodeEnums.ERROR.getCode(), ResponseCodeEnums.ERROR.getMessage());
            }
        }
