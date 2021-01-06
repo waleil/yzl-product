@@ -64,8 +64,9 @@
   <!--删除的时候做逻辑删除-->
   <delete id="deleteByPrimaryKey" parameterType="cn.net.yzl.product.model.vo.brand.BrandDelVO" >
     update brand
+        set
         del_flag = 1,
-        update_no = #{updateNo},
+        update_no = #{updateNo}
     where id = #{id,jdbcType=INTEGER}
   </delete>
 

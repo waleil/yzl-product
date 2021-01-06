@@ -1,7 +1,7 @@
 package cn.net.yzl.product.service;
 
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.product.model.db.ProductBean;
+import cn.net.yzl.product.model.db.ProductMainInfoBean;
 import cn.net.yzl.product.model.vo.product.ProductBO;
 
 import java.util.List;
@@ -20,4 +20,6 @@ public interface ProductService {
     ComResponse reduceStock(Integer productNo, Integer stock);
 
     ComResponse increaseStock(Integer productNo, Integer stock);
+
+    List<ProductMainInfoBean> getProductMainInfoPage(Integer pageNo, Integer pageSize);
 }

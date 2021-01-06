@@ -5,6 +5,7 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.dao.ProductBeanMapper;
 import cn.net.yzl.product.model.db.ProductBean;
+import cn.net.yzl.product.model.db.ProductMainInfoBean;
 import cn.net.yzl.product.model.vo.product.ProductBO;
 import cn.net.yzl.product.model.vo.product.ProductTO;
 import cn.net.yzl.product.service.ProductService;
@@ -69,6 +70,11 @@ public class ProductServiceImpl implements ProductService {
     public ComResponse increaseStock(Integer productNo, Integer stock) {
         productBeanMapper.increaseStock(productNo, stock);
         return ComResponse.success();
+    }
+
+    @Override
+    public List<ProductMainInfoBean> getProductMainInfoPage(Integer pageNo, Integer pageSize) {
+        return null;
     }
 
 
