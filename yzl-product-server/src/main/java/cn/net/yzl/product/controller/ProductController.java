@@ -1,11 +1,14 @@
 package cn.net.yzl.product.controller;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.product.model.db.ProductMainInfoBean;
 import cn.net.yzl.product.model.vo.product.ProductBO;
 import cn.net.yzl.product.service.*;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Api(tags = "商品服务")
@@ -50,6 +53,11 @@ public class ProductController {
     @PostMapping
     public ComResponse increaseStock(Integer productNo,Integer stock){
         return productService.increaseStock(productNo, stock);
+    }
+
+    @GetMapping
+    public List<ProductMainInfoBean> getProductMainInfoPage(@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize") Integer pageSize){
+        return productService.getProductMainInfoPage(pageNo, pageSize);
     }
 
 }
