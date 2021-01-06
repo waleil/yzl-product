@@ -2,14 +2,13 @@ package cn.net.yzl.product.controller;
 
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
-import cn.net.yzl.product.model.db.category.Category;
+import cn.net.yzl.product.model.db.Category;
 import cn.net.yzl.product.model.vo.category.*;
 import cn.net.yzl.product.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

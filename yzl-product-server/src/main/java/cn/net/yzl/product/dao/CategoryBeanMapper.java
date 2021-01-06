@@ -1,6 +1,6 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.db.category.Category;
+import cn.net.yzl.product.model.db.Category;
 import cn.net.yzl.product.model.vo.category.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

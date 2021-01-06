@@ -5,7 +5,7 @@ import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.AssemblerResultUtil;
 import cn.net.yzl.product.dao.CategoryBeanMapper;
-import cn.net.yzl.product.model.db.category.Category;
+import cn.net.yzl.product.model.db.Category;
 import cn.net.yzl.product.model.vo.category.*;
 import cn.net.yzl.product.service.CategoryService;
 import com.github.pagehelper.PageHelper;

@@ -1,4 +1,4 @@
-package cn.net.yzl.product.model.db.category;
+package cn.net.yzl.product.model.db;
 
 import cn.net.yzl.product.model.BaseObject;
 import io.swagger.annotations.ApiModelProperty;
