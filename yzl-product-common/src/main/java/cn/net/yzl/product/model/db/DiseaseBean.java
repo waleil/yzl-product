@@ -1,12 +1,11 @@
 package cn.net.yzl.product.model.db;
 
+import cn.net.yzl.product.model.BaseObject;
 import lombok.Data;
-
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class DiseaseBean  implements Serializable {
+public class DiseaseBean  extends BaseObject {
     private int id;
 
     private String name;

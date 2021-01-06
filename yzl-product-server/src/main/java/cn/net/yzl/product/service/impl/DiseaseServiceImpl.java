@@ -1,15 +1,16 @@
 package cn.net.yzl.product.service.impl;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.dao.DiseaseBeanMapper;
-import cn.net.yzl.product.dao.ProductBeanMapper;
 import cn.net.yzl.product.model.db.DiseaseBean;
-import cn.net.yzl.product.model.db.ProductDiseaseBean;
+import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
+import cn.net.yzl.product.model.vo.disease.DiseaseVo;
 import cn.net.yzl.product.service.DiseaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,49 +18,36 @@ public class DiseaseServiceImpl implements DiseaseService {
 
     @Autowired
     private DiseaseBeanMapper diseaseBeanMapper;
-
-    @Autowired
-    private ProductBeanMapper productBeanMapper;
-
+    /**
+     * @author lichanghong
+     * @description 新增病症
+     * @date: 2021/1/5 11:03 下午
+     * @param diseaseVo:
+     * @return: null
+     */
     @Override
-    public ComResponse<Void> insertDisease(DiseaseBean diseaseBean) {
-        diseaseBeanMapper.insertSelective(diseaseBean);
+    public ComResponse<Void> insertDisease(DiseaseVo diseaseVo){
+        diseaseVo.setUpdateTime(null);
+        diseaseBeanMapper.insertSelective(diseaseVo);
+    return ComResponse.success();
+    }
+    @Override
+    public ComResponse<Void> deleteByPrimaryKey(DiseaseDelVo delVo) {
+        //首先判断是否有子集
+        List<DiseaseBean> list = diseaseBeanMapper.selectByPid(delVo.getId());
+        if(!CollectionUtils.isEmpty(list)){
+           return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(),"存在子项，无法删除!");
+        }
+        //判断是否有商品
+        // TODO: 2021/1/5  查询商品信息
+        diseaseBeanMapper.deleteByPrimaryKey(delVo);
         return ComResponse.success();
     }
-    @Override
-    public ComResponse<Void> deleteRelationOfDiseaseAndProduct(Integer did, String pCode) {
-        diseaseBeanMapper.deleteRelationOfDiseaseAndProduct(did, pCode);
-        return ComResponse.success();
-    }
-    @Override
-    public ComResponse<Void> deleteByPrimaryKey(Integer id) {
-        diseaseBeanMapper.deleteByPrimaryKey(id);
-        return ComResponse.success();
-    }
-    @Override
-    public ComResponse<Void> insertRelationOfDiseaseAndProduct(ProductDiseaseBean productDiseaseBean) {
-        diseaseBeanMapper.insertRelationOfDiseaseAndProduct(productDiseaseBean);
-        return null;
-    }
-
     @Override
     public ComResponse<List<DiseaseBean>> selectAllDiseases() {
         List<DiseaseBean> diseaseBeans = diseaseBeanMapper.selectAll();
         return ComResponse.success(diseaseBeans);
     }
-
-    @Override
-    public ComResponse<String> getProductsByDid(Integer id) {
-        List<Integer> list = diseaseBeanMapper.getProductsByDid(id);
-        List<String> result = new ArrayList<>();
-        result.add("");
-        list.forEach(temp ->{
-            result.set(0, result.get(0)+temp+",");
-        });
-        String substring = result.get(0).contains(",")?result.get(0).substring(0, result.get(0).lastIndexOf(",")):result.get(0);
-        return ComResponse.success(substring);
-    }
-
     @Override
     public ComResponse<List<DiseaseBean>> getDiseaseByPid(Integer pid) {
 

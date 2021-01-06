@@ -2,6 +2,8 @@ package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.DiseaseBean;
 import cn.net.yzl.product.model.db.ProductDiseaseBean;
+import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
+import cn.net.yzl.product.model.vo.disease.DiseaseVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,17 +12,20 @@ import java.util.List;
 @Mapper
 public interface DiseaseBeanMapper {
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(DiseaseDelVo delVo);
 
-    int insert(DiseaseBean record);
-
-    int insertSelective(DiseaseBean record);
+    /**
+     * @author lichanghong
+     * @description 新增病症
+     * @date: 2021/1/5 11:03 下午
+     * @param diseaseVo:
+     * @return: null
+     */
+    int insertSelective(DiseaseVo diseaseVo);
 
     DiseaseBean selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(DiseaseBean record);
-
-    int updateByPrimaryKey(DiseaseBean record);
 
     List<DiseaseBean> selectAll();
 
