@@ -29,42 +29,42 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @ApiOperation(value = "通过id字段对category_dict表进行条件检索")
-    @GetMapping("/category/v1/getCategoryById")
+    @GetMapping("/category/v1/getById")
     public ComResponse<Category> getCategoryByid(@RequestParam Integer id) {
         return categoryService.getCategoryById(id);
     }
 
     @ApiOperation(value = "新增分类管理")
-    @PostMapping("/category/v1/insertCategory")
+    @PostMapping("/category/v1/insert")
     public ComResponse<Void> insertCategory(@RequestBody @Valid CategoryVO CategoryVO) {
         return categoryService.saveOrUpdateCategory(CategoryVO);
     }
 
     @ApiOperation(value = "修改分类管理")
-    @PostMapping("/category/v1/updateCategory")
+    @PostMapping("/category/v1/update")
     public ComResponse<Void> updateCategory(@RequestBody @Valid CategoryVO CategoryVO) {
         return categoryService.saveOrUpdateCategory(CategoryVO);
     }
 
     @ApiOperation(value = "逻辑删除分类信息")
-    @PostMapping("/category/v1/deleteCategory")
+    @PostMapping("/category/v1/delete")
     public ComResponse<Void> deleteCategory(@RequestBody @Valid CategoryDelVO vo) {
         return categoryService.deleteCategory(vo);
     }
     @ApiOperation(value = "修改分类的展示状态")
-    @PostMapping("/category/v1/changeCategoryStatus")
+    @PostMapping("/category/v1/changeStatus")
     public ComResponse<Void> changeCategoryStatus(@RequestBody @Valid CategoryChangeStatusVO vo) {
         return categoryService.chooseCategoryStatus(vo);
     }
 
     @ApiOperation("修改品牌移动端展示状态")
-    @PostMapping("/category/v1/changeCategoryAppStatus")
+    @PostMapping("/category/v1/changeAppStatus")
     public ComResponse<Void> changeCategoryAppStatus(@RequestBody @Valid CategoryChangeStatusVO vo) {
         return categoryService.chooseCategoryAppStatus(vo);
     }
 
     @ApiOperation("根据父id的值查询该父类下的所有子类品牌信息")
-    @GetMapping("/category/v1/getCategoriesByPid")
+    @GetMapping("/category/v1/getByPid")
     public ComResponse<List<Category>> getCategoriesByPid(@RequestParam Integer pid) {
         return categoryService.getCategoryByPid(pid);
     }

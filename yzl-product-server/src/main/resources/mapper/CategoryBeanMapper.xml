@@ -82,14 +82,14 @@
 
 
   <update id="chooseCategoryStatus" parameterType="cn.net.yzl.product.model.vo.category.CategoryChangeStatusVO">
-    update category_dict set display_flag = #{flag,jdbcType=INTEGER},
+    update category_dict set display_flag = #{status,jdbcType=INTEGER},
     update_no =  #{updateNo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
 
   <update id="chooseCategoryAppStatus" parameterType="cn.net.yzl.product.model.vo.category.CategoryChangeStatusVO">
-    update category_dict set display_app_flag = #{flag,jdbcType=INTEGER},
+    update category_dict set display_app_flag = #{status,jdbcType=INTEGER},
             update_no =  #{updateNo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -13,9 +13,11 @@ import javax.validation.constraints.NotEmpty;
  */
 @Data
 public class CategoryTO extends BaseObject {
+
     @ApiModelProperty(name = "id", value = "主键")
     private Integer id;
     @ApiModelProperty(name = "name",required = true, value = "分类名称")
+    @NotEmpty(message = "分类名称不能为空！")
     private String name;//分类名称
     @ApiModelProperty(name = "pid", value = "父类id")
     private Integer pid;//父类id
@@ -29,9 +31,7 @@ public class CategoryTO extends BaseObject {
     private String imageUrl;//分类图标的url
     @ApiModelProperty(name = "descri", value = "描述")
     private String descri;//描述
-    @ApiModelProperty(name = "updateNo", required = true,value = "最近更新操作员id")
     private String updateNo;//最近更新操作员id
-    @ApiModelProperty(name = "productCount", value = "商品数量")
-    private int productCount;
+    private int productCount;//商品数量
 
 }
