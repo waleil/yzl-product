@@ -2,6 +2,7 @@ package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.DiseaseBean;
 import cn.net.yzl.product.model.db.ProductDiseaseBean;
+import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
 import cn.net.yzl.product.model.vo.disease.DiseaseVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,9 +34,16 @@ public interface DiseaseBeanMapper {
 
     void deleteRelationOfDiseaseAndProduct(@Param("did") Integer did, @Param("pCode") String pCode);
 
-    void insertRelationOfDiseaseAndProduct(ProductDiseaseBean productDiseaseBean);
 
     List<Integer> getProductsByDid(@Param("id") Integer id);
 
     List<DiseaseBean> selectByPid(@Param("pid") Integer pid);
+    /**
+     * @author lichanghong
+     * @description 查询
+     * @date: 2021/1/6 2:00 下午
+     * @param pid:  父级编号
+     * @return: List<DiseaseDTO>
+     */
+    List<DiseaseDTO> queryByPID(@Param("pid") Integer pid);
 }

@@ -140,4 +140,9 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="queryByPID" parameterType="int" resultType="cn.net.yzl.product.model.vo.disease.DiseaseDTO">
+        select id, name
+        from disease where del_flag=0 and pid = #{pid,jdbcType=INTEGER}
+    </select>
 </mapper>
