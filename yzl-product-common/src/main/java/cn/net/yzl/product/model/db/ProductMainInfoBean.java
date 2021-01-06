@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ProductMainInfoBean  implements Serializable {
 
     private Integer id;
 
     private String name;
 
-    private Boolean type;
+    private String productCode;
+
+    private Integer stock;
 
 }

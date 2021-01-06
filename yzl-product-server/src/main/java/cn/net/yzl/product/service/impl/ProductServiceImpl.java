@@ -77,5 +77,18 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+    @Override
+    public ComResponse<List<ProductMainInfoBean>> getMainInfoByIds(String ids) {
+        List<ProductBean> productBeans = productBeanMapper.selectMainByIdList(ids == null ? null : ids.trim().equals("") ? null : ids);
+        List<ProductMainInfoBean> collect = productBeans.stream().map(productBean -> {
+            ProductMainInfoBean productMainInfoBean = new ProductMainInfoBean();
+            int temp = 0;
+            productBean.setStock((temp = productBean.getStock()==null?0:temp) - (temp = productBean.getWithholdStock()==null?0:temp));
+            BeanUtils.copyProperties(productBean, productMainInfoBean);
+            return productMainInfoBean;
+        }).collect(Collectors.toList());
+        return ComResponse.success(collect);
+    }
+
 
 }

@@ -52,4 +52,12 @@ public interface BrandService {
      * @return: null
      */
     ComResponse<Void> deleteBrandById(BrandDelVO brandDelVo);
+    /**
+     * @author lichanghong
+     * @description 删除品牌，逻辑删除
+     * @date: 2020/12/31 10:54 下午
+     * @param name:名称 type:
+     * @return: null
+     */
+    ComResponse<Boolean> checkUnique(String name, int type);
 }

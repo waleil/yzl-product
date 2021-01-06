@@ -22,4 +22,6 @@ public interface ProductService {
     ComResponse increaseStock(Integer productNo, Integer stock);
 
     List<ProductMainInfoBean> getProductMainInfoPage(Integer pageNo, Integer pageSize);
+
+    ComResponse<List<ProductMainInfoBean>> getMainInfoByIds(String ids);
 }

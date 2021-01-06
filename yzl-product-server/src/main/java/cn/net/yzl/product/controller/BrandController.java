@@ -30,6 +30,16 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
+    @ApiOperation("前端品牌名称blur事件查重接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name",value = "需要查重的名称",required = true,paramType = "query"),
+            @ApiImplicitParam(name = "type",value = "需要声明是修改还是新增",required = true,paramType = "query")
+    })
+    @GetMapping("checkUnique")
+    public ComResponse<Boolean> checkUnique(@RequestParam("name")String name,@RequestParam("type")int type){
+        return brandService.checkUnique(name, type);
+    }
+
     @GetMapping("v1/selectById")
     @ApiOperation(value = "根据主键查询详情", notes = "根据主键查询详情")
     @ApiImplicitParam(name = "id", value = "主键信息", required = true, dataType = "Integer")

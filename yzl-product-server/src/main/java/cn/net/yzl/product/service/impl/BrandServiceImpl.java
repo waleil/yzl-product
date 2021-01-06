@@ -102,5 +102,17 @@ public class BrandServiceImpl implements BrandService {
         return ComResponse.success();
     }
 
+    /**
+     * @author lichanghong
+     * @description TODU:查重功能
+     * @date: 2020/12/31 10:43 下午
+     * @param
+     * @return: null
+     */
+    @Override
+    public ComResponse<Boolean> checkUnique(String name, int type) {
+        return null;
+    }
+
 
 }

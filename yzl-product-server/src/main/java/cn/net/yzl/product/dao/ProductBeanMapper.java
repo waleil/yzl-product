@@ -34,4 +34,6 @@ public interface ProductBeanMapper {
     List<ProductBean> select(ProductBO productBO);
 
     void increaseStock(Integer productNo, Integer stock);
+
+    List<ProductBean> selectMainByIdList(@Param("ids") String ids);
 }

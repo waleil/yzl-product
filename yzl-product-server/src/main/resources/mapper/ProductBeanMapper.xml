@@ -109,6 +109,15 @@
     <select id="select" resultMap="BaseResultMap" >
 
     </select>
+    <select id="selectMainByIdList" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+      select id,product_code,name,stock,withhold_stock
+      from product_sku
+      where del_flag = 0
+      <if test = "ids != null">
+      and id in (#{_parameter})
+      </if>
+    </select>
 
     <delete id="deleteRelationOfProductAndImgId">
     delete from product_image

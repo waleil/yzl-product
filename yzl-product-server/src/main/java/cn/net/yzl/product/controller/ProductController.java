@@ -5,6 +5,8 @@ import cn.net.yzl.product.model.db.ProductMainInfoBean;
 import cn.net.yzl.product.model.vo.product.ProductBO;
 import cn.net.yzl.product.service.*;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,7 @@ public class ProductController {
     private ProductService productService;
 
 
-    @PostMapping("v1/insertProductImgUrl")
+    @PostMapping("/v1/insertProductImgUrl")
     public ComResponse<Void> insertRelationOfProductAndImgUrl(@RequestParam(value = "id",required = false) String id,
                                                               @RequestParam(value = "imgId",required = false)Integer imgId,
                                                               @RequestParam(value = "type",required = false)Integer type){
@@ -28,14 +30,14 @@ public class ProductController {
     }
 
 
-    @DeleteMapping("v1/deleteProductImgId")
+    @DeleteMapping("/v1/deleteProductImgId")
     public ComResponse<Void> deleteRelationOfProductAndImgId(@RequestParam("id")Integer id,
                                                              @RequestParam("type")Integer type){
         return productService.deleteRelationOfProductAndImgId(id, type);
     }
 
 
-    @GetMapping("v1/selectByIdList")
+    @GetMapping("/v1/selectByIdList")
     public ComResponse selectByIdList(String productIds){
         return productService.selectByIdList(productIds);
     }
@@ -58,6 +60,13 @@ public class ProductController {
     @GetMapping
     public List<ProductMainInfoBean> getProductMainInfoPage(@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize") Integer pageSize){
         return productService.getProductMainInfoPage(pageNo, pageSize);
+    }
+    
+    @ApiOperation("提供接口根据id列表查询商品的部分信息")
+    @ApiImplicitParam(name = "ids",value = "id列表，如需查询全部，则键入空值或空字符串",paramType = "query")
+    @GetMapping("/v1/getMainInfoByIds")
+    public ComResponse<List<ProductMainInfoBean>> getMainInfoByIds(@RequestParam("ids") String ids){
+        return productService.getMainInfoByIds(ids);
     }
 
 }
