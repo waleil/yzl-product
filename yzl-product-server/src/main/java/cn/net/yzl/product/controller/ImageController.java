@@ -1,12 +1,12 @@
 package cn.net.yzl.product.controller;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.product.model.db.Image;
 import cn.net.yzl.product.service.ImageService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -17,8 +17,9 @@ public class ImageController {
     private ImageService imageService;
 
     @PostMapping("v1/insert")
-    public ComResponse insertImage(@RequestParam("url")String url, @RequestParam("type") Integer type){
-        Integer id = imageService.insertImage(url,type);
+    @ApiOperation("增加图片")
+    public ComResponse insertImage(@RequestBody Image image){
+        Integer id = imageService.insertImage(image);
         return ComResponse.success(id);
     }
 

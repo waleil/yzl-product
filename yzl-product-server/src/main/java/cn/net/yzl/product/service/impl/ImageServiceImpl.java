@@ -1,7 +1,7 @@
 package cn.net.yzl.product.service.impl;
 
-import cn.net.yzl.product.dao.ImageBeanMapper;
-import cn.net.yzl.product.model.db.ImageBean;
+import cn.net.yzl.product.dao.ImageMapper;
+import cn.net.yzl.product.model.db.Image;
 import cn.net.yzl.product.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,22 +10,15 @@ import org.springframework.stereotype.Service;
 public class ImageServiceImpl implements ImageService {
 
     @Autowired
-    private ImageBeanMapper imageBeanMapper;
+    private ImageMapper imageBeanMapper;
 
 
     @Override
-    public int insertImage(String url, Integer type) {
-        ImageBean imageBean = new ImageBean();
+    public int insertImage(Image image) {
 
-        if (type==1){
-            imageBean.setPictureUrl(url);
-        }else {
-            imageBean.setVideoUrl(url);
-        }
+        imageBeanMapper.insertSelective(image);
 
-        imageBeanMapper.insertSelective(imageBean);
-
-        return imageBean.getId();
+        return image.getId();
 
     }
 }
