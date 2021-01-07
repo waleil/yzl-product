@@ -31,9 +31,6 @@ public interface DiseaseBeanMapper {
 
     List<DiseaseBean> findRoot();
 
-    void deleteRelationOfDiseaseAndProduct(@Param("did") Integer did, @Param("pCode") String pCode);
-
-
     List<Integer> getProductsByDid(@Param("id") Integer id);
 
     List<DiseaseBean> selectByPid(@Param("pid") Integer pid);
@@ -45,4 +42,11 @@ public interface DiseaseBeanMapper {
      * @return: List<DiseaseDTO>
      */
     List<DiseaseDTO> queryByPID(@Param("pid") Integer pid);
+    /**
+     * @Author: lichanghong
+     * @Description: 查询最大主键
+     * @Date: 2021/1/7 6:40 下午
+     * @Return: Integer
+     */
+    int queryMaxId();
 }

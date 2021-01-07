@@ -52,12 +52,13 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public ComResponse<Void> saveOrUpdateCategory(CategoryVO categoryVO) {
-        if(categoryVO.getId()!=null||categoryVO.getId()==0){
-            String cacheKey = CacheKeyUtil.maxCategoryCacheKey();
-           long maxId= redisUtil.incr(cacheKey,1);
-            categoryVO.setId(Integer.parseInt(String.valueOf(maxId)));
+        if(categoryVO.getId()!=null&&categoryVO.getId()>0){
+
             categoryBeanMapper.updateByPrimaryKeySelective(categoryVO);
         }else{
+            String cacheKey = CacheKeyUtil.maxCategoryCacheKey();
+            long maxId= redisUtil.incr(cacheKey,1);
+            categoryVO.setId(Integer.parseInt(String.valueOf(maxId)));
             categoryBeanMapper.insertSelective(categoryVO);
         }
         return ComResponse.success();

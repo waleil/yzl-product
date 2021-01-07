@@ -87,4 +87,11 @@ public interface CategoryBeanMapper {
      * @return: null
      */
     List<CategorySelectTO> query4SelectOption(@Param("pid") Integer pid);
+    /**
+     * @Author: lichanghong
+     * @Description: 查询最大主键
+     * @Date: 2021/1/7 6:40 下午
+     * @Return: Integer
+     */
+    int queryMaxId();
 }

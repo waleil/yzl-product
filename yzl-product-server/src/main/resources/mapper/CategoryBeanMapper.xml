@@ -6,11 +6,11 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="pid" property="pid" jdbcType="INTEGER" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
-    <result column="display_app_flag" property="displayAppFlag" jdbcType="BIT" />
-    <result column="status" property="status" jdbcType="BIT" />
+    <result column="display_app_flag" property="displayAppFlag" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
     <result column="descri" property="descri" jdbcType="VARCHAR" />
-    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
     <result column="create_no" property="createNo" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_no" property="updateNo" jdbcType="VARCHAR" />
@@ -22,8 +22,8 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="pid" property="pid" jdbcType="INTEGER" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
-    <result column="display_app_flag" property="displayAppFlag" jdbcType="BIT" />
-    <result column="status" property="status" jdbcType="BIT" />
+    <result column="display_app_flag" property="displayAppFlag" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
     <result column="descri" property="descri" jdbcType="VARCHAR" />
     <result column="update_no" property="updateNo" jdbcType="VARCHAR" />
@@ -144,10 +144,10 @@
         #{sort,jdbcType=INTEGER},
       </if>
       <if test="displayAppFlag != null" >
-        #{displayAppFlag,jdbcType=BIT},
+        #{displayAppFlag,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="imageUrl != null" >
         #{imageUrl,jdbcType=VARCHAR},
@@ -178,10 +178,10 @@
         sort = #{sort,jdbcType=INTEGER},
       </if>
       <if test="displayAppFlag != null" >
-        display_app_flag = #{displayAppFlag,jdbcType=BIT},
+        display_app_flag = #{displayAppFlag,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="imageUrl != null" >
         image_url = #{imageUrl,jdbcType=VARCHAR},

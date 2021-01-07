@@ -2,6 +2,8 @@ package cn.net.yzl.product.controller;
 
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
+import cn.net.yzl.common.enums.ResponseCodeEnums;
+import cn.net.yzl.common.util.JsonUtil;
 import cn.net.yzl.product.model.db.Category;
 import cn.net.yzl.product.model.vo.category.*;
 import cn.net.yzl.product.service.CategoryService;
@@ -9,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,14 +39,21 @@ public class CategoryController {
 
     @ApiOperation(value = "新增分类管理")
     @PostMapping("/category/v1/insert")
-    public ComResponse<Void> insertCategory(@RequestBody @Valid CategoryVO CategoryVO) {
-        return categoryService.saveOrUpdateCategory(CategoryVO);
+    public ComResponse<Void> insertCategory(@RequestBody @Valid CategoryVO vo) {
+        if(StringUtils.isBlank(vo.getUpdateNo())){
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"操作人编号不能为空!");
+        }
+        return categoryService.saveOrUpdateCategory(vo);
     }
 
     @ApiOperation(value = "修改分类管理")
     @PostMapping("/category/v1/update")
-    public ComResponse<Void> updateCategory(@RequestBody @Valid CategoryVO CategoryVO) {
-        return categoryService.saveOrUpdateCategory(CategoryVO);
+    public ComResponse<Void> updateCategory(@RequestBody @Valid CategoryVO vo) {
+        if(StringUtils.isBlank(vo.getUpdateNo())){
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"操作人编号不能为空!");
+        }
+
+        return categoryService.saveOrUpdateCategory(vo);
     }
 
     @ApiOperation(value = "逻辑删除分类信息")
