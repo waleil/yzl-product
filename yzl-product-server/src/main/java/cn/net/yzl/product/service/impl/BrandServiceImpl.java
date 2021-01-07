@@ -79,10 +79,13 @@ public class BrandServiceImpl implements BrandService {
      */
     @Override
     public ComResponse<Void> editBrand(BrandVO brandVo) {
-        if(brandVo.getId()!=null&&brandVo.getId()>0){
-            brandBeanMapper.updateByPrimaryKeySelective(brandVo);
-        }else{
-            brandBeanMapper.insertSelective(brandVo);
+        Boolean flag = this.checkUnique(brandVo.getName(), brandVo.getId()==null?0:brandVo.getId()).getData();
+        if (flag){
+            if(brandVo.getId()!=null&&brandVo.getId()>0){
+                brandBeanMapper.updateByPrimaryKeySelective(brandVo);
+            }else{
+                brandBeanMapper.insertSelective(brandVo);
+            }
         }
         return ComResponse.success();
     }
