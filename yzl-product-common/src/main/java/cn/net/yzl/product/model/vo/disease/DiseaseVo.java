@@ -18,7 +18,7 @@ import java.util.Date;
 public class DiseaseVo extends BaseObject {
     @ApiModelProperty(name = "id", value = "主键")
     private Integer id;
-    @ApiModelProperty(name = "name", value = "病症名称")
+    @ApiModelProperty(name = "name", value = "病症名称",required = true)
     @NotEmpty(message = "病症名称,不能为空!")
     private String name;
     @ApiModelProperty(name = "pid", value = "上级节点")
