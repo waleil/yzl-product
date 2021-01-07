@@ -117,14 +117,6 @@ public class DiseaseServiceImpl implements DiseaseService {
     }
 
     @Override
-    public ComResponse<List<DiseaseBean>> getDiseaseByPid(Integer pid) {
-
-        List<DiseaseBean> list = diseaseBeanMapper.selectByPid(pid);
-
-        return ComResponse.success(list);
-    }
-
-    @Override
     public List<DiseaseDTO> queryByPID(Integer pid) {
         return diseaseBeanMapper.queryByPID(pid);
     }

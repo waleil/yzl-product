@@ -44,11 +44,6 @@ public class DiseaseController {
     public ComResponse queryTreeNode(){
         return diseaseService.queryTreeNode();
     }
-    @ApiOperation("根据父级编号查询病症")
-    @GetMapping("v1/selectByPid")
-    public ComResponse getDiseaseByPid(@RequestParam("pid") Integer pid){
-        return diseaseService.getDiseaseByPid(pid);
-    }
     /**
      * @author lichanghong
      * @description 查询病症，主要针对下拉列表
