@@ -2,6 +2,9 @@ package cn.net.yzl.product.dao;
 
 
 import cn.net.yzl.product.model.db.Image;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ImageMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,4 +18,6 @@ public interface ImageMapper {
     int updateByPrimaryKeySelective(Image record);
 
     int updateByPrimaryKey(Image record);
+
+    List<Image> selectByStoreId(@Param("id") Integer id);
 }

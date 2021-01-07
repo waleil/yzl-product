@@ -6,7 +6,10 @@ import java.util.Date;
 
 @Data
 public class ImageStore {
+
     private Integer id;
+
+    private String name;
 
     private String imageUrl;
 
@@ -14,8 +17,14 @@ public class ImageStore {
 
     private Integer sort;
 
+    private Byte type;
+
     private Date createTime;
 
     private Date updateTime;
+
+    private String updateNo;
+
+    private String createNo;
 
 }

@@ -17,9 +17,9 @@ public class Category extends BaseObject {
     @ApiModelProperty(name = "sort", value = "排序")
     private Integer sort;//排序
     @ApiModelProperty(name = "displayAppFlag", value = "是否在移动端显示：0代表不显示，1代表显示")
-    private Boolean displayAppFlag;//是否在移动端显示
+    private Integer displayAppFlag;//是否在移动端显示
     @ApiModelProperty(name = "status", value = "状态（是否启用：0代表未启用，1代表启用）")
-    private Boolean status;//状态（是否有效）
+    private Integer status;//状态（是否有效）
     @ApiModelProperty(name = "imageUrl", value = "分类图标的url")
     private String imageUrl;//分类图标的url
     @ApiModelProperty(name = "descri", value = "描述")
