@@ -86,6 +86,8 @@ public class BrandServiceImpl implements BrandService {
             }else{
                 brandBeanMapper.insertSelective(brandVo);
             }
+        }else {
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE,"品牌名称存在重复！");
         }
         return ComResponse.success();
     }
@@ -110,7 +112,7 @@ public class BrandServiceImpl implements BrandService {
      * @description 
      * @author Majinbao
      * @date 2021/1/7 9:05
-     * @param [name, type]
+     * @param name, type
      * @return ComResponse<Boolean>
      */
     @Override
