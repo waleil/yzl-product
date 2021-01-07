@@ -21,8 +21,6 @@ public class CategoryTO extends BaseObject {
     private String name;//分类名称
     @ApiModelProperty(name = "pid", value = "父类id")
     private Integer pid;//父类id
-    @ApiModelProperty(name = "unit", value = "计量单位")
-    private String unit;
     @ApiModelProperty(name = "sort", value = "排序")
     private Integer sort;//排序
     @ApiModelProperty(name = "status", value = "启用状态：true代表启用，false代表不启用")

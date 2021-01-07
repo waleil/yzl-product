@@ -35,7 +35,7 @@ public class BrandController {
             @ApiImplicitParam(name = "name",value = "需要查重的名称",required = true,paramType = "query"),
             @ApiImplicitParam(name = "id",value = "需要输入id，如新增操作则输入0即可",required = true,paramType = "query")
     })
-    @GetMapping("checkUnique")
+    @GetMapping("v1/checkUnique")
     public ComResponse<Boolean> checkUnique(@RequestParam("name")String name,@RequestParam("id")Integer id){
         return brandService.checkUnique(name, id);
     }
