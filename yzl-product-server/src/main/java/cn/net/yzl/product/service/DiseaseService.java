@@ -19,7 +19,7 @@ public interface DiseaseService {
      * @param diseaseVo:
      * @return: null
      */
-    ComResponse<Void> insertDisease(DiseaseVo diseaseVo);
+    ComResponse<Integer> insertDisease(DiseaseVo diseaseVo);
 
 
     ComResponse<Void> deleteByPrimaryKey(DiseaseDelVo delVo);

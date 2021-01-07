@@ -67,7 +67,7 @@
         pid = #{pid}
     </select>
 
-    <insert id="insertSelective" parameterType="cn.net.yzl.product.model.vo.disease.DiseaseVo">
+    <insert id="insertSelective" parameterType="cn.net.yzl.product.model.vo.disease.DiseaseVo" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into disease
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

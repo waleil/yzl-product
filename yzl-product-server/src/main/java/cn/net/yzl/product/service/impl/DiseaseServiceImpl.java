@@ -1,6 +1,5 @@
 package cn.net.yzl.product.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.dao.DiseaseBeanMapper;
@@ -31,10 +30,10 @@ public class DiseaseServiceImpl implements DiseaseService {
      * @return: null
      */
     @Override
-    public ComResponse<Void> insertDisease(DiseaseVo diseaseVo) {
+    public ComResponse<Integer> insertDisease(DiseaseVo diseaseVo) {
         diseaseVo.setUpdateTime(null);
         diseaseBeanMapper.insertSelective(diseaseVo);
-        return ComResponse.success();
+        return ComResponse.success(diseaseVo.getId());
     }
 
     /**

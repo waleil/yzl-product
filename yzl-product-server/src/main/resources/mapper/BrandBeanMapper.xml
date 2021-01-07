@@ -36,6 +36,7 @@
     <if test="keyWord != null">
       and  (name like "%"#{keyWord}"%")
     </if>
+        order by id desc
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
