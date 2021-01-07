@@ -25,15 +25,14 @@ public class CategoryVO extends BaseObject {
     @ApiModelProperty(name = "unit", value = "计量单位")
     private String unit;
     @ApiModelProperty(name = "status", value = "启用状态：1代表启用，0代表不启用")
-    private boolean status;//是否启用
+    private Integer status;//是否启用
     @ApiModelProperty(name = "displayAppFlag", value = "是否在移动端显示：0代表不显示，1代表显示")
-    private boolean displayAppFlag;//是否在移动端显示
+    private Integer displayAppFlag;//是否在移动端显示
     @ApiModelProperty(name = "imageUrl", value = "分类图标的url")
     private String imageUrl;//分类图标的url
     @ApiModelProperty(name = "descri", value = "描述")
     private String descri;//描述
     @ApiModelProperty(name = "updateNo", required = true,value = "最近更新操作员id")
-    @NotEmpty(message = "操作人员不能为空,不能为空!")
     private String updateNo;//最近更新操作员id
     @ApiModelProperty(name = "keyWord" , value = "关键词，多个之间用半角‘,’隔开")
     private String keyWord;
