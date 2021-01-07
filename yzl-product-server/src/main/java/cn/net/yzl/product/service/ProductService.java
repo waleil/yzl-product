@@ -23,5 +23,5 @@ public interface ProductService {
 
     List<ProductMainInfoBean> getProductMainInfoPage(Integer pageNo, Integer pageSize);
 
-    ComResponse<List<ProductMainInfoBean>> getMainInfoByIds(String ids);
+    ComResponse<List<ProductMainInfoBean>> getMainInfoByIds(String ids,Integer status);
 }

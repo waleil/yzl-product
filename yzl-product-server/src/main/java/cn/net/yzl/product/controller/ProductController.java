@@ -6,6 +6,7 @@ import cn.net.yzl.product.model.vo.product.ProductBO;
 import cn.net.yzl.product.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -63,10 +64,13 @@ public class ProductController {
     }
     
     @ApiOperation("提供接口根据id列表查询商品的部分信息")
-    @ApiImplicitParam(name = "ids",value = "id列表，如需查询全部，则键入空值或空字符串",paramType = "query")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ids",value = "id列表，如需查询全部，则键入空值或空字符串",paramType = "query"),
+            @ApiImplicitParam(name = "status",value = "是否上架（0-下架 1-上架）",paramType = "query")
+    })
     @GetMapping("/v1/getMainInfoByIds")
-    public ComResponse<List<ProductMainInfoBean>> getMainInfoByIds(@RequestParam("ids") String ids){
-        return productService.getMainInfoByIds(ids);
+    public ComResponse<List<ProductMainInfoBean>> getMainInfoByIds(@RequestParam("ids") String ids,@RequestParam("status") Integer status){
+        return productService.getMainInfoByIds(ids,status);
     }
 
 }

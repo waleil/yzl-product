@@ -1,8 +1,7 @@
 package cn.net.yzl.product.model.db;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -16,5 +15,9 @@ public class ProductMainInfoBean  implements Serializable {
     private String productCode;
 
     private Integer stock;
+
+    private Byte status;
+
+
 
 }

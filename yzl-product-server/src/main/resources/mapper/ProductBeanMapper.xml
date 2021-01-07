@@ -111,11 +111,17 @@
     </select>
     <select id="selectMainByIdList" resultMap="BaseResultMap"
             parameterType="java.lang.String">
-      select id,product_code,name,stock,withhold_stock
+      select id,product_code,name,stock,withhold_stock,status
       from product_sku
       where del_flag = 0
       <if test = "ids != null">
-      and id in (#{_parameter})
+      and id in
+        <foreach item="item" collection="ids" separator="," open="(" close=")" index="">
+          #{item, jdbcType=INTEGER}
+        </foreach>
+      </if>
+      <if test = "status != null">
+        and status = #{status}
       </if>
     </select>
 
