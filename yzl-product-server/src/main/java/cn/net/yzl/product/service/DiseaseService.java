@@ -35,7 +35,6 @@ public interface DiseaseService {
      */
     ComResponse<List<DiseaseTreeNode>> queryTreeNode();
 
-    ComResponse<List<DiseaseBean>> getDiseaseByPid(Integer pid);
     /**
      * @author lichanghong
      * @description 查询下拉列表为其他服务提供
