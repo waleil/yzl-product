@@ -74,4 +74,13 @@ public interface BrandBeanMapper {
      * @return: null
      */
     void changeBrandStatus(@Param("flag") int flag, @Param("id") int id);
+
+    /**
+     * @description 根据名称查询数据
+     * @author Majinbao
+     * @date 2021/1/7 9:10
+     * @param [name]
+     * @return cn.net.yzl.product.model.db.BrandBean
+     */
+    Integer selectByName(@Param("name") String name);
 }

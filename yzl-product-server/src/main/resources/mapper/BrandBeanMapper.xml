@@ -52,6 +52,12 @@
     where brand_no = #{bid}
     and del_flag = 0
   </select>
+  <select id="selectByName" resultType="java.lang.Integer"
+          parameterType="java.lang.String">
+    select id
+    from brand
+    where name = #{name}
+  </select>
 
   <update id="changeBrandStatus">
     update

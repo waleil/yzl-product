@@ -102,16 +102,24 @@ public class BrandServiceImpl implements BrandService {
         return ComResponse.success();
     }
 
+    
     /**
-     * @author lichanghong
-     * @description TODU:查重功能
-     * @date: 2020/12/31 10:43 下午
-     * @param
-     * @return: null
+     * @description 
+     * @author Majinbao
+     * @date 2021/1/7 9:05
+     * @param [name, type]
+     * @return ComResponse<Boolean>
      */
     @Override
-    public ComResponse<Boolean> checkUnique(String name, int type) {
-        return null;
+    public ComResponse<Boolean> checkUnique(String name, int id) {
+        Integer i = brandBeanMapper.selectByName(name);
+        if (i == null) {
+            return ComResponse.success(true);
+        }
+        if(i.equals(id)){
+            return ComResponse.success(true);
+        }
+        return ComResponse.success(false);
     }
 
 
