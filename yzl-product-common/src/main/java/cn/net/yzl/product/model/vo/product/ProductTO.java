@@ -1,12 +1,13 @@
 package cn.net.yzl.product.model.vo.product;
 
+import cn.net.yzl.product.model.BaseObject;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class ProductTO {
+public class ProductTO extends BaseObject {
 
     @ApiModelProperty(name = "id",value = "商品id")
     private Integer id;

@@ -29,7 +29,7 @@
     <result column="update_no" property="updateNo" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, pid, sort,  display_app_flag,  image_url, status,
+    old_id as id, name, pid, sort,  display_app_flag,  image_url, status,
     descri,update_no
   </sql>
 
@@ -38,7 +38,7 @@
     select 
     <include refid="Base_Column_List" />
     from category_dict
-    where id = #{id,jdbcType=INTEGER}
+    where old_id = #{id,jdbcType=INTEGER}
     and del_flag=0
   </select>
   <select id="queryPageById" resultMap="ListResultMap" parameterType="java.lang.Integer" >
@@ -59,7 +59,7 @@
     select
     <include refid="Base_Column_List" />
     from category_dict
-    where pid = #{pid}
+    where old_id = #{pid}
     and del_flag=0
   </select>
 
@@ -72,7 +72,7 @@
 
   <update id="deleteByPrimaryKey" parameterType="cn.net.yzl.product.model.vo.category.CategoryDelVO" >
     update category_dict set del_flag = 1 ,update_no =  #{updateNo,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where old_id = #{id,jdbcType=INTEGER}
   </update>
 
   <update id="transferCategories">
@@ -84,14 +84,14 @@
   <update id="chooseCategoryStatus" parameterType="cn.net.yzl.product.model.vo.category.CategoryChangeStatusVO">
     update category_dict set status = #{status,jdbcType=INTEGER},
     update_no =  #{updateNo,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where old_id = #{id,jdbcType=INTEGER}
   </update>
 
 
   <update id="chooseCategoryAppStatus" parameterType="cn.net.yzl.product.model.vo.category.CategoryChangeStatusVO">
     update category_dict set display_app_flag = #{status,jdbcType=INTEGER},
             update_no =  #{updateNo,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where old_id = #{id,jdbcType=INTEGER}
   </update>
 
 
@@ -100,7 +100,7 @@
     insert into category_dict
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        id,
+        old_id,
       </if>
       <if test="name != null" >
         name,
@@ -196,13 +196,16 @@
         update_no = #{updateNo,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where old_id = #{id,jdbcType=INTEGER}
   </update>
   <select id="query4SelectOption" resultType="cn.net.yzl.product.model.vo.category.CategorySelectTO"  parameterType="java.lang.Integer">
     select
-    id,name
+    old_id as id ,name
     from category_dict
     where del_flag=0 and pid = #{pid,jdbcType=INTEGER}
   </select>
-
+  <!--查询最大主键编号-->
+  <select id="queryMaxId" resultType="int">
+        select max(old_id) as maxId from  category_dict;
+    </select>
 </mapper>

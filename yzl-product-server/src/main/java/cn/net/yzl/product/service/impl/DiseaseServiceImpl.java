@@ -9,7 +9,8 @@ import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
 import cn.net.yzl.product.model.vo.disease.DiseaseTreeNode;
 import cn.net.yzl.product.model.vo.disease.DiseaseVo;
 import cn.net.yzl.product.service.DiseaseService;
-import org.springframework.beans.BeanUtils;
+import cn.net.yzl.product.utils.CacheKeyUtil;
+import cn.net.yzl.product.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -22,6 +23,8 @@ public class DiseaseServiceImpl implements DiseaseService {
 
     @Autowired
     private DiseaseBeanMapper diseaseBeanMapper;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * @param diseaseVo:
@@ -32,9 +35,12 @@ public class DiseaseServiceImpl implements DiseaseService {
      */
     @Override
     public ComResponse<Integer> insertDisease(DiseaseVo diseaseVo) {
+        String cacheKey = CacheKeyUtil.maxDiseaseCacheKey();
+        long maxId= redisUtil.incr(cacheKey,1);
+        diseaseVo.setId(Integer.parseInt(String.valueOf(maxId)));
         diseaseVo.setUpdateTime(null);
         diseaseBeanMapper.insertSelective(diseaseVo);
-        return ComResponse.success(diseaseVo.getId());
+        return ComResponse.success(Integer.parseInt(String.valueOf(maxId)));
     }
 
     /**

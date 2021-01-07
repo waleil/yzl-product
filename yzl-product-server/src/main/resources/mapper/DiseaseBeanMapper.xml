@@ -13,24 +13,24 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, pid, sort, create_no, update_no, del_flag, create_time, update_time
+         name, pid, sort, create_no, update_no, del_flag, create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
-        <include refid="Base_Column_List"/>
+        old_id as id ,name, pid, sort, create_no, update_no, del_flag, create_time, update_time
         from disease
-        where id = #{id,jdbcType=INTEGER}
+        where old_id = #{id,jdbcType=INTEGER}
         and del_flag = 0
     </select>
     <select id="selectAll" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+       old_id as id ,name, pid, sort, create_no, update_no, del_flag, create_time, update_time
         from disease
         where del_flag = 0
     </select>
     <select id="findRoot" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+       old_id as id ,name, pid, sort, create_no, update_no, del_flag, create_time, update_time
         from disease
         where pid = 0
         and del_flag = 0
@@ -40,14 +40,9 @@
     <update id="deleteByPrimaryKey" parameterType="cn.net.yzl.product.model.vo.disease.DiseaseDelVo">
     update disease
     set del_flag = 1,update_no = #{updateNo,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where old_id = #{id,jdbcType=INTEGER}
   </update>
 
-    <delete id="deleteRelationOfDiseaseAndProduct">
-    delete from product_disease
-    where product_code = #{pCode}
-    and disease_id = #{did}
-  </delete>
 
     <select id="getProductsByDid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select
@@ -60,7 +55,7 @@
 
     <select id="selectByPid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+       old_id as id ,name, pid, sort, create_no, update_no, del_flag, create_time, update_time
         from
         disease
         where
@@ -71,7 +66,7 @@
         insert into disease
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
-                id,
+                old_id,
             </if>
             <if test="name != null">
                 name,
@@ -138,11 +133,15 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where old_id = #{id,jdbcType=INTEGER}
     </update>
 
     <select id="queryByPID" parameterType="int" resultType="cn.net.yzl.product.model.vo.disease.DiseaseDTO">
-        select id, name
+        select old_id as id, name
         from disease where del_flag=0 and pid = #{pid,jdbcType=INTEGER}
+    </select>
+    <!--查询最大主键编号-->
+    <select id="queryMaxId" resultType="int">
+        select max(old_id) as maxId  from disease;
     </select>
 </mapper>

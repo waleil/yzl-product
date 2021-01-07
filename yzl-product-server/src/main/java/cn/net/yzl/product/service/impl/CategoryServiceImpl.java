@@ -8,6 +8,8 @@ import cn.net.yzl.product.dao.CategoryBeanMapper;
 import cn.net.yzl.product.model.db.Category;
 import cn.net.yzl.product.model.vo.category.*;
 import cn.net.yzl.product.service.CategoryService;
+import cn.net.yzl.product.utils.CacheKeyUtil;
+import cn.net.yzl.product.utils.RedisUtil;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryBeanMapper categoryBeanMapper;
 
-
+    @Autowired
+    private RedisUtil redisUtil;
     @Override
     public ComResponse<Category> getCategoryById(Integer id) {
         if(null == id){
@@ -49,7 +52,10 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public ComResponse<Void> saveOrUpdateCategory(CategoryVO categoryVO) {
-        if(categoryVO.getId()!=null){
+        if(categoryVO.getId()!=null||categoryVO.getId()==0){
+            String cacheKey = CacheKeyUtil.maxCategoryCacheKey();
+           long maxId= redisUtil.incr(cacheKey,1);
+            categoryVO.setId(Integer.parseInt(String.valueOf(maxId)));
             categoryBeanMapper.updateByPrimaryKeySelective(categoryVO);
         }else{
             categoryBeanMapper.insertSelective(categoryVO);

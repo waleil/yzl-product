@@ -12,7 +12,7 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 public class RedisConfig {
 
     @Bean("redisTemplate")
-    public RedisTemplate redisTemplate(@Lazy RedisConnectionFactory connectionFactory) {
+    public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate redis = new RedisTemplate();
         GenericToStringSerializer<String> keySerializer = new GenericToStringSerializer<String>(String.class);
         redis.setKeySerializer(keySerializer);
