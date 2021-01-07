@@ -1,7 +1,6 @@
 package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.DiseaseBean;
-import cn.net.yzl.product.model.db.ProductDiseaseBean;
 import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
 import cn.net.yzl.product.model.vo.disease.DiseaseVo;
@@ -19,7 +18,7 @@ public interface DiseaseBeanMapper {
      * @author lichanghong
      * @description 新增病症
      * @date: 2021/1/5 11:03 下午
-     * @param diseaseVo:
+     * @param diseaseVo :
      * @return: null
      */
     int insertSelective(DiseaseVo diseaseVo);
