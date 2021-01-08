@@ -12,6 +12,15 @@ public class ProductImage {
     private Date createTime;
 
     private Date updateTime;
+    private Integer mainFlag;
+
+    public Integer getMainFlag() {
+        return mainFlag;
+    }
+
+    public void setMainFlag(Integer mainFlag) {
+        this.mainFlag = mainFlag;
+    }
 
     public String getProductCode() {
         return productCode;

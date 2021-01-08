@@ -1,8 +1,6 @@
 package cn.net.yzl.product.model.pojo.product;
 
 import cn.net.yzl.product.model.BaseObject;
-import cn.net.yzl.product.model.vo.product.vo.ProductDiseaseVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductImageVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,7 +8,6 @@ import lombok.Data;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author lichanghong
@@ -207,6 +204,7 @@ public class Product extends BaseObject {
 
     @ApiModelProperty(name = "imageUrl", value = "商品主图")
     private String imageUrl;
+
     @ApiModelProperty(name = "updateTime", value = "修改时间")
     private Date updateTime;
 }
