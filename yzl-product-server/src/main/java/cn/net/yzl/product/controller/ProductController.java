@@ -1,77 +1,104 @@
 package cn.net.yzl.product.controller;
 
+
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.product.model.db.ProductMainInfoBean;
-import cn.net.yzl.product.model.vo.product.ProductBO;
-import cn.net.yzl.product.service.*;
+import cn.net.yzl.common.entity.Page;
+import cn.net.yzl.common.enums.ResponseCodeEnums;
+import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
+import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
+import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
+import cn.net.yzl.product.model.vo.product.vo.ProductVO;
+import cn.net.yzl.product.service.product.ProductService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * @author lichanghong
+ */
 @RestController
 @Api(tags = "商品服务")
 @RequestMapping("product")
 public class ProductController {
-
-
     @Autowired
     private ProductService productService;
-
-
-    @PostMapping("/v1/insertProductImgUrl")
-    public ComResponse<Void> insertRelationOfProductAndImgUrl(@RequestParam(value = "id",required = false) String id,
-                                                              @RequestParam(value = "imgId",required = false)Integer imgId,
-                                                              @RequestParam(value = "type",required = false)Integer type){
-        return productService.insertRelationOfProductAndImgUrl(id, imgId,type);
+    /**
+     * @Author: lichanghong
+     * @Description:
+     * @Date: 2021/1/7 10:39 下午
+     * @param
+     * @Return: cn.net.yzl.common.entity.ComResponse<java.util.List<cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO>>
+     */
+    @GetMapping(value = "v1/queryCountByStatus")
+    @ApiOperation("按照上下架状态查询商品数量")
+    public ComResponse<List<ProductStatusCountDTO>> queryCountByStatus(){
+        List<ProductStatusCountDTO> list = productService.queryCountByStatus();
+        return ComResponse.success(list);
     }
-
-
-    @DeleteMapping("/v1/deleteProductImgId")
-    public ComResponse<Void> deleteRelationOfProductAndImgId(@RequestParam("id")Integer id,
-                                                             @RequestParam("type")Integer type){
-        return productService.deleteRelationOfProductAndImgId(id, type);
+    @GetMapping(value = "v1/queryPageProduct")
+    @ApiOperation("分页查询商品列表")
+    public ComResponse<Page<ProductListDTO>> queryListProduct(ProductSelectVO vo){
+        //价格必须成对出现
+        if((vo.getPriceUp()!=null && vo.getPriceDown()==null)
+                ||(vo.getPriceUp()==null && vo.getPriceDown()!=null)){
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
+        }
+        if(vo.getPriceUp()!=null){
+            vo.setUpPrice((int) (vo.getPriceUp()*100));
+        }
+        if(vo.getPriceDown()!=null){
+            vo.setDownPrice((int) (vo.getPriceDown()*100));
+        }
+        if(vo.getPageNo()==null){
+            vo.setPageNo(1);
+        }
+        if(vo.getPageSize()==null){
+            vo.setPageSize(15);
+        }
+        if(vo.getPageSize()>50){
+            vo.setPageSize(50);
+        }
+        if(StringUtils.isNotBlank(vo.getKeyword())){
+            String str = vo.getKeyword();
+            vo.setKeyword(str.replace("%", "\\%"));
+        }
+      return productService.queryListProduct(vo);
     }
-
-
-    @GetMapping("/v1/selectByIdList")
-    public ComResponse selectByIdList(String productIds){
-        return productService.selectByIdList(productIds);
+    /**
+     * @Author: lichanghong
+     * @Description: 编辑商品
+     * @Date: 2021/1/8 10:45 上午
+     * @param vo
+     * @Return: cn.net.yzl.common.entity.ComResponse
+     */
+    @PostMapping(value = "v1/edit")
+    @ApiOperation("编辑商品")
+    public ComResponse<Void> editProduct(@RequestBody @Valid ProductVO vo){
+    if(!StringUtils.isNotBlank(vo.getUpdateNo())){
+        return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"编辑员工工号不能为空!");
     }
-
-    @GetMapping("selectByCondition")
-    public ComResponse selectByCondition(ProductBO productBO){
-        return productService.selectByCondition(productBO);
+    return productService.editProduct(vo);
     }
-
-    @PostMapping("reduceStock")
-    public ComResponse reduceStock(Integer productNo,Integer stock){
-        return productService.reduceStock(productNo, stock);
+    /**
+     * @Author: lichanghong
+     * @Description:    参数校验
+     * @Date: 2021/1/8 11:15 上午
+     * @param vo
+     * @Return: java.lang.String
+     */
+    public String checkParams(ProductVO vo){
+        if(vo.getCostPriceD()==null){
+            return "市场价价格不能为空";
+        }if(vo.getSalePriceD()==null){
+            return "市场价价格不能为空";
+        }
+        return null;
     }
-
-    @PostMapping
-    public ComResponse increaseStock(Integer productNo,Integer stock){
-        return productService.increaseStock(productNo, stock);
-    }
-
-    @GetMapping
-    public List<ProductMainInfoBean> getProductMainInfoPage(@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize") Integer pageSize){
-        return productService.getProductMainInfoPage(pageNo, pageSize);
-    }
-    
-    @ApiOperation("提供接口根据id列表查询商品的部分信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ids",value = "id列表，如需查询全部，则键入空值或空字符串",paramType = "query"),
-            @ApiImplicitParam(name = "status",value = "是否上架（0-下架 1-上架）",paramType = "query")
-    })
-    @GetMapping("/v1/getMainInfoByIds")
-    public ComResponse<List<ProductMainInfoBean>> getMainInfoByIds(@RequestParam("ids") String ids,@RequestParam("status") Integer status){
-        return productService.getMainInfoByIds(ids,status);
-    }
-
 }
 

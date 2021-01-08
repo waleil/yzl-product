@@ -1,8 +1,6 @@
 package cn.net.yzl.product.service.impl;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.dao.ProductBeanMapper;
 import cn.net.yzl.product.model.db.ProductBean;
 import cn.net.yzl.product.model.db.ProductMainInfoBean;
@@ -11,12 +9,10 @@ import cn.net.yzl.product.model.vo.product.ProductTO;
 import cn.net.yzl.product.service.ProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
 public class ProductServiceImpl implements ProductService {
 
     @Autowired

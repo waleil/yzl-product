@@ -1,4 +1,4 @@
-package cn.net.yzl.product.model.vo.product;
+package cn.net.yzl.product.model.vo.product.dto;
 
 import cn.net.yzl.product.model.BaseObject;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,4 +21,6 @@ public class ProductDTO extends BaseObject {
     private Integer source;
     @ApiModelProperty(name = "imageUrl", value = "图片地址")
     private String imageUrl;
+
+
 }

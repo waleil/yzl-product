@@ -1,7 +1,7 @@
 package cn.net.yzl.product.model.vo.disease;
 
 import cn.net.yzl.product.model.BaseObject;
-import cn.net.yzl.product.model.vo.product.ProductDTO;
+import cn.net.yzl.product.model.vo.product.dto.ProductDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
