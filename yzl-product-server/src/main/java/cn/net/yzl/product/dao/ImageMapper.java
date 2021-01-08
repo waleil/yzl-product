@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ImageMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(@Param("id") Integer id,@Param("userId") String userId);
 
     int insertSelective(ImageVO record);
 
@@ -20,4 +20,6 @@ public interface ImageMapper {
     List<ImageDTO> selectByStoreId(@Param("id") Integer id,@Param("pageNo") Integer pageNo,@Param("pageSize") Integer pageSize);
 
     int selectQuoteById(Integer id);
+
+    int selectQuoteByStoreId(Integer id);
 }

@@ -62,14 +62,25 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ComResponse deleteById(Integer id, String userId) {
-        imageBeanMapper.selectQuoteById(id);
-        imageBeanMapper.deleteByPrimaryKey(id);
-        return ComResponse.success().setMessage("未完成");
+        if(imageBeanMapper.selectQuoteById(id)>0){
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"当前图片存在关联商品无法删除!");
+        }
+        imageBeanMapper.deleteByPrimaryKey(id,userId);
+        return ComResponse.success();
     }
 
     @Override
     public ComResponse<List<ImageStoreDTO>> selectStores(Integer type) {
         List<ImageStoreDTO> list = imageStoreMapper.selectByType(type);
         return ComResponse.success(list);
+    }
+
+    @Override
+    public ComResponse deleteStoreById(Integer id, String userId) {
+        if(imageBeanMapper.selectQuoteByStoreId(id)>0){
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"当前图片库内存在图片无法删除!");
+        }
+        imageStoreMapper.deleteByPrimaryKey(id,userId);
+        return ComResponse.success();
     }
 }

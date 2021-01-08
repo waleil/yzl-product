@@ -10,6 +10,7 @@ import cn.net.yzl.product.model.vo.imageStore.ImageStoreDTO;
 import cn.net.yzl.product.model.vo.imageStore.ImageStoreVO;
 import cn.net.yzl.product.service.ImageService;
 import io.swagger.annotations.ApiOperation;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +59,12 @@ public class ImageController {
     @GetMapping("v1/selectStores")
     public ComResponse<List<ImageStoreDTO>> selectStores(@RequestParam Integer type){
         return imageService.selectStores(type);
+    }
+    
+    @ApiOperation("删除图片库")
+    @GetMapping("v1/deleteStoreById")
+    public ComResponse deleteStoreById(@RequestParam("id") Integer id,String userId) {
+        return imageService.deleteStoreById(id,userId);
     }
 
 }

@@ -25,18 +25,9 @@
           parameterType="java.lang.Integer">
     select id ,name from image_store where type = #{type} and del_flag = 0
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from image_store
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="cn.net.yzl.product.model.db.ImageStore" >
-    insert into image_store (id, image_url, descri, 
-      sort, create_time, update_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR}, #{descri,jdbcType=VARCHAR}, 
-      #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
+  <update id="deleteByPrimaryKey" >
+    update image_store set del_flag = 1 , update_no = #{userId} where id = #{id}
+  </update>
   <insert id="insertSelective" parameterType="cn.net.yzl.product.model.db.ImageStore" >
     insert into image_store
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -51,9 +42,6 @@
       </if>
       <if test="sort != null" >
         sort,
-      </if>
-      <if test="createTime != null" >
-        create_time,
       </if>
       <if test="type != null" >
         type,
@@ -81,9 +69,6 @@
       <if test="sort != null" >
         #{sort,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="type != null" >
         #{type,jdbcType=TINYINT},
       </if>
@@ -110,22 +95,10 @@
       <if test="sort != null" >
         sort = #{sort,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.db.ImageStore" >
-    update image_store
-    set image_url = #{imageUrl,jdbcType=VARCHAR},
-      descri = #{descri,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

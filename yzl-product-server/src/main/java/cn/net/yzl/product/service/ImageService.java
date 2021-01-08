@@ -19,4 +19,6 @@ public interface ImageService {
     ComResponse deleteById(Integer id, String userId);
 
     ComResponse<List<ImageStoreDTO>> selectStores(Integer type);
+
+    ComResponse deleteStoreById(Integer id, String userId);
 }
