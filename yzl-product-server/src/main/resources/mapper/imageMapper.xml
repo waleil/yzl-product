@@ -21,7 +21,7 @@
     from image
     where id = #{id,jdbcType=INTEGER}
   </select>
-    <select id="selectByStoreId" resultMap="BaseResultMap"
+    <select id="selectByStoreId" resultType="cn.net.yzl.product.model.vo.ImageDTO"
             parameterType="java.lang.Integer">
       select id,url from image where image_store_id = #{id} order by id desc
     </select>

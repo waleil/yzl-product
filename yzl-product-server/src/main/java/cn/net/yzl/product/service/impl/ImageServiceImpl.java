@@ -11,6 +11,7 @@ import cn.net.yzl.product.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,7 +41,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ComResponse selectByStoreId(Integer id) {
-        List<ImageDTO> list =  imageBeanMapper.selectByStoreId(id);
+        List<ImageDTO> list  = imageBeanMapper.selectByStoreId(id);
         if (list == null || list.size() == 0){
             return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE,"该图片库下还没有图片");
         }
