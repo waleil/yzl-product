@@ -39,6 +39,7 @@ public class ImageController {
         return imageService.selectTypeById(id);
     }
 
+    @ApiOperation("通过id删除图片【未完成】")
     @GetMapping("v1/deleteById")
     public ComResponse deleteById(@RequestParam("id") Integer id){
         return imageService.deleteById(id);
