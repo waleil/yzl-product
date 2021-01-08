@@ -15,4 +15,6 @@ public interface ImageStoreMapper {
     int updateByPrimaryKeySelective(ImageStore record);
 
     int updateByPrimaryKey(ImageStore record);
+
+    Integer selectTypeById(Integer id);
 }

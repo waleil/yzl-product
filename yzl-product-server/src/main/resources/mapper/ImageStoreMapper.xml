@@ -18,7 +18,10 @@
     from image_store
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectTypeById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+      select type from image_store where id = #{id}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from image_store
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -48,8 +51,14 @@
       <if test="createTime != null" >
         create_time,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
       <if test="updateTime != null" >
         update_time,
+      </if>
+      <if test="createNo != null" >
+        create_no,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -68,8 +77,14 @@
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createNo != null" >
+        #{createNo,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

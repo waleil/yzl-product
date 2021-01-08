@@ -2,6 +2,7 @@ package cn.net.yzl.product.dao;
 
 
 import cn.net.yzl.product.model.db.Image;
+import cn.net.yzl.product.model.vo.ImageDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,5 +20,5 @@ public interface ImageMapper {
 
     int updateByPrimaryKey(Image record);
 
-    List<Image> selectByStoreId(@Param("id") Integer id);
+    List<ImageDTO> selectByStoreId(@Param("id") Integer id);
 }
