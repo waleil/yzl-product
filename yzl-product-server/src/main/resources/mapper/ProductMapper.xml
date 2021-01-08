@@ -1,90 +1,115 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.net.yzl.product.dao.ProductMapper" >
-  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.pojo.Product" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
-    <result column="product_no" property="productNo" jdbcType="VARCHAR" />
-    <result column="business_code" property="businessCode" jdbcType="VARCHAR" />
-    <result column="quick_search_code" property="quickSearchCode" jdbcType="VARCHAR" />
-    <result column="prove" property="prove" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="withhold_stock" property="withholdStock" jdbcType="INTEGER" />
-    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
-    <result column="eng_name" property="engName" jdbcType="VARCHAR" />
-    <result column="goods_source" property="goodsSource" jdbcType="INTEGER" />
-    <result column="brand_no" property="brandNo" jdbcType="INTEGER" />
-    <result column="category_dict_code" property="categoryDictCode" jdbcType="INTEGER" />
-    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
-    <result column="gift_flag" property="giftFlag" jdbcType="INTEGER" />
-    <result column="jf_exchange_flag" property="jfExchangeFlag" jdbcType="INTEGER" />
-    <result column="jf_price" property="jfPrice" jdbcType="INTEGER" />
-    <result column="sale_price" property="salePrice" jdbcType="INTEGER" />
-    <result column="member_price" property="memberPrice" jdbcType="INTEGER" />
-    <result column="cost_price" property="costPrice" jdbcType="INTEGER" />
-    <result column="best_price" property="bestPrice" jdbcType="INTEGER" />
-    <result column="limit_down_price" property="limitDownPrice" jdbcType="INTEGER" />
-    <result column="yk_price" property="ykPrice" jdbcType="INTEGER" />
-    <result column="jk_price" property="jkPrice" jdbcType="INTEGER" />
-    <result column="zk_price" property="zkPrice" jdbcType="INTEGER" />
-    <result column="stock" property="stock" jdbcType="INTEGER" />
-    <result column="stock_threshold" property="stockThreshold" jdbcType="INTEGER" />
-    <result column="sale_pattern" property="salePattern" jdbcType="INTEGER" />
-    <result column="marketing_rule" property="marketingRule" jdbcType="VARCHAR" />
-    <result column="sale_start_time" property="saleStartTime" jdbcType="TIMESTAMP" />
-    <result column="sale_end_time" property="saleEndTime" jdbcType="TIMESTAMP" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-    <result column="patent_code" property="patentCode" jdbcType="VARCHAR" />
-    <result column="approval_number" property="approvalNumber" jdbcType="VARCHAR" />
-    <result column="approval_type" property="approvalType" jdbcType="TINYINT" />
-    <result column="weight" property="weight" jdbcType="INTEGER" />
-    <result column="import_flag" property="importFlag" jdbcType="INTEGER" />
-    <result column="production_time" property="productionTime" jdbcType="TIMESTAMP" />
-    <result column="expiration_date" property="expirationDate" jdbcType="INTEGER" />
-    <result column="valid_date" property="validDate" jdbcType="TIMESTAMP" />
-    <result column="unit" property="unit" jdbcType="VARCHAR" />
-    <result column="total_use_num" property="totalUseNum" jdbcType="INTEGER" />
-    <result column="one_use_num" property="oneUseNum" jdbcType="INTEGER" />
-    <result column="one_to_times" property="oneToTimes" jdbcType="INTEGER" />
-    <result column="cj_name" property="cjName" jdbcType="VARCHAR" />
-    <result column="cj_country_no" property="cjCountryNo" jdbcType="INTEGER" />
-    <result column="cj_province_no" property="cjProvinceNo" jdbcType="INTEGER" />
-    <result column="cj_city_no" property="cjCityNo" jdbcType="INTEGER" />
-    <result column="cj_area_no" property="cjAreaNo" jdbcType="INTEGER" />
-    <result column="cj_addr" property="cjAddr" jdbcType="VARCHAR" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
-    <result column="old_id" property="oldId" jdbcType="INTEGER" />
-    <result column="create_no" property="createNo" jdbcType="VARCHAR" />
-    <result column="create_name" property="createName" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_no" property="updateNo" jdbcType="VARCHAR" />
-    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="descri" property="descri" jdbcType="VARCHAR" />
-    <result column="applicable" property="applicable" jdbcType="VARCHAR" />
-    <result column="forbidden" property="forbidden" jdbcType="VARCHAR" />
-    <result column="raw_stock" property="rawStock" jdbcType="VARCHAR" />
-    <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
-    <result column="finance_code" property="financeCode" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    product_code, product_no, business_code, quick_search_code, prove, name, withhold_stock,
-    nickname, eng_name, goods_source, brand_no, category_dict_code, bar_code, gift_flag, 
-    jf_exchange_flag, jf_price, sale_price, member_price, cost_price, best_price, limit_down_price, 
-    yk_price, jk_price, zk_price, stock, stock_threshold, sale_pattern, marketing_rule, 
-    sale_start_time, sale_end_time, status, patent_code, approval_number, approval_type, 
-    weight, import_flag, production_time, expiration_date, valid_date, unit, total_use_num, 
-    one_use_num, one_to_times, cj_name, cj_country_no, cj_province_no, cj_city_no, cj_area_no, 
-    cj_addr, del_flag, old_id, create_no, create_name, create_time, update_no, update_name, 
-    update_time, descri, applicable, forbidden, raw_stock,video_url,finance_code
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from product
-    where id = #{id,jdbcType=INTEGER}
+<!--  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.pojo.product.Product" >-->
+<!--    <result column="product_code" property="productCode" jdbcType="VARCHAR" />-->
+<!--    <result column="product_no" property="productNo" jdbcType="VARCHAR" />-->
+<!--    <result column="business_code" property="businessCode" jdbcType="VARCHAR" />-->
+<!--    <result column="quick_search_code" property="quickSearchCode" jdbcType="VARCHAR" />-->
+<!--    <result column="prove" property="prove" jdbcType="VARCHAR" />-->
+<!--    <result column="name" property="name" jdbcType="VARCHAR" />-->
+<!--    <result column="nickname" property="nickname" jdbcType="VARCHAR" />-->
+<!--    <result column="eng_name" property="engName" jdbcType="VARCHAR" />-->
+<!--    <result column="goods_source" property="goodsSource" jdbcType="INTEGER" />-->
+<!--    <result column="brand_no" property="brandNo" jdbcType="INTEGER" />-->
+<!--    <result column="category_dict_code" property="categoryDictCode" jdbcType="INTEGER" />-->
+<!--    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />-->
+<!--    <result column="gift_flag" property="giftFlag" jdbcType="INTEGER" />-->
+<!--    <result column="jf_exchange_flag" property="jfExchangeFlag" jdbcType="INTEGER" />-->
+<!--    <result column="jf_price" property="jfPrice" jdbcType="INTEGER" />-->
+<!--    <result column="sale_price" property="salePrice" jdbcType="INTEGER" />-->
+<!--    <result column="member_price" property="memberPrice" jdbcType="INTEGER" />-->
+<!--    <result column="cost_price" property="costPrice" jdbcType="INTEGER" />-->
+<!--    <result column="best_price" property="bestPrice" jdbcType="INTEGER" />-->
+<!--    <result column="limit_down_price" property="limitDownPrice" jdbcType="INTEGER" />-->
+<!--    <result column="yk_price" property="ykPrice" jdbcType="INTEGER" />-->
+<!--    <result column="jk_price" property="jkPrice" jdbcType="INTEGER" />-->
+<!--    <result column="zk_price" property="zkPrice" jdbcType="INTEGER" />-->
+<!--    <result column="stock" property="stock" jdbcType="INTEGER" />-->
+<!--    <result column="stock_threshold" property="stockThreshold" jdbcType="INTEGER" />-->
+<!--    <result column="sale_pattern" property="salePattern" jdbcType="INTEGER" />-->
+<!--    <result column="marketing_rule" property="marketingRule" jdbcType="VARCHAR" />-->
+<!--    <result column="sale_start_time" property="saleStartTime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="sale_end_time" property="saleEndTime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="status" property="status" jdbcType="TINYINT" />-->
+<!--    <result column="patent_code" property="patentCode" jdbcType="VARCHAR" />-->
+<!--    <result column="approval_number" property="approvalNumber" jdbcType="VARCHAR" />-->
+<!--    <result column="approval_type" property="approvalType" jdbcType="TINYINT" />-->
+<!--    <result column="weight" property="weight" jdbcType="INTEGER" />-->
+<!--    <result column="import_flag" property="importFlag" jdbcType="INTEGER" />-->
+<!--    <result column="production_time" property="productionTime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="expiration_date" property="expirationDate" jdbcType="INTEGER" />-->
+<!--    <result column="valid_date" property="validDate" jdbcType="TIMESTAMP" />-->
+<!--    <result column="unit" property="unit" jdbcType="VARCHAR" />-->
+<!--    <result column="total_use_num" property="totalUseNum" jdbcType="INTEGER" />-->
+<!--    <result column="one_use_num" property="oneUseNum" jdbcType="INTEGER" />-->
+<!--    <result column="one_to_times" property="oneToTimes" jdbcType="INTEGER" />-->
+<!--    <result column="cj_name" property="cjName" jdbcType="VARCHAR" />-->
+<!--    <result column="cj_country_no" property="cjCountryNo" jdbcType="INTEGER" />-->
+<!--    <result column="cj_province_no" property="cjProvinceNo" jdbcType="INTEGER" />-->
+<!--    <result column="cj_city_no" property="cjCityNo" jdbcType="INTEGER" />-->
+<!--    <result column="cj_area_no" property="cjAreaNo" jdbcType="INTEGER" />-->
+<!--    <result column="cj_addr" property="cjAddr" jdbcType="VARCHAR" />-->
+<!--    <result column="update_no" property="updateNo" jdbcType="VARCHAR" />-->
+<!--    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="descri" property="descri" jdbcType="VARCHAR" />-->
+<!--    <result column="applicable" property="applicable" jdbcType="VARCHAR" />-->
+<!--    <result column="forbidden" property="forbidden" jdbcType="VARCHAR" />-->
+<!--    <result column="raw_stock" property="rawStock" jdbcType="VARCHAR" />-->
+<!--    <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />-->
+<!--    <result column="finance_code" property="financeCode" jdbcType="VARCHAR" />-->
+<!--    <result column="disease_id" property="diseaseId" jdbcType="VARCHAR" />-->
+<!--    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />-->
+<!--  </resultMap>-->
+
+  <!--查询商品列表-->
+  <select id="queryListProduct" resultType="cn.net.yzl.product.model.vo.product.dto.ProductListDTO"
+          parameterType="cn.net.yzl.product.model.vo.product.vo.ProductSelectVO">
+    select
+    product_code as productCode,
+    product_no as productNo,
+    `name` as name,
+    brand_no as brandNo,
+    category_dict_code as categoryDictCode,
+    sale_price as salePrice,
+    stock as stock,
+    `status` as status,
+    create_time as createTime,
+    image_url as imageUrl,
+    disease_id as diseaseId
+    from
+    product
+    where 1=1
+    and del_flag=0
+    <if test="keyword != null and keyword != ''">
+      AND (`name` LIKE  CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%')
+      OR product_code LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%'))
+    </if>
+    <if test="categoryDictCode != null ">
+      AND category_dict_code = #{categoryDictCode}
+    </if>
+
+    <if test="categoryDictCode != null ">
+      AND category_dict_code = #{categoryDictCode}
+    </if>
+    <if test="diseaseId != null ">
+      AND disease_id = #{diseaseId}
+    </if>
+     <if test="brandNo != null ">
+      AND brand_no = #{brandNo}
+    </if>
+    <if test="status != null ">
+      AND status = #{status}
+    </if>
+    <if test="upPrice != null ">
+      <if test="downPrice != null ">
+        AND sale_price BETWEEN #{downPrice} AND #{upPrice}
+      </if>
+    </if>
+    order by create_time desc
+
   </select>
-  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.vo.product.ProductVO" >
+  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.pojo.product.Product" >
     insert into product
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -260,6 +285,15 @@
       </if>
       <if test="videoUrl != null" >
         video_url,
+      </if>
+      <if test="diseaseId != null" >
+        disease_id,
+      </if>
+      <if test="imageUrl != null" >
+        image_url,
+      </if>
+       <if test="financeCode != null" >
+         finance_code,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -437,10 +471,19 @@
       <if test="videoUrl != null" >
         #{videoUrl,jdbcType=VARCHAR},
       </if>
+      <if test="diseaseId != null" >
+        #{diseaseId,jdbcType=INTEGER},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="financeCode != null" >
+        #{financeCode,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.vo.product.ProductVO" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.pojo.product.Product" >
     update product
     <set >
       <if test="productNo != null" >
@@ -611,11 +654,34 @@
       <if test="videoUrl == null" >
         video_url = null,
       </if>
+      <if test="diseaseId != null" >
+        disease_id = #{diseaseId,jdbcType=INTEGER},
+      </if>
+      <if test="diseaseId == null" >
+        disease_id = null,
+      </if>
+      <if test="financeCode != null" >
+        finance_code = #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="financeCode == null" >
+        finance_code = null,
+      </if>
+      <if test="imageUrl != null" >
+        image_url = #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl == null" >
+        image_url = null,
+      </if>
     </set>
     where product_code = #{productCode,jdbcType=VARCHAR}
   </update>
 
   <select id="queryMaxProductCode" resultType="string">
     SELECT max(product_code) as maxCode FROM product ;
+  </select>
+
+  <!--按照上下架查询-->
+  <select id="queryCountByStatus" resultType="map">
+    SELECT count(`status`) AS cnt ,`status` AS status FROM product WHERE del_flag = 0 GROUP BY status;
   </select>
 </mapper>

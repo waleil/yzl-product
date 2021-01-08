@@ -7,3 +7,6 @@ logging:
   file:
     path: /tmp
   config: classpath:logback.xml
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

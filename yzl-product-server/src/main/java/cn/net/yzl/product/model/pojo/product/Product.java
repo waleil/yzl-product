@@ -1,7 +1,8 @@
-package cn.net.yzl.product.model.vo.product;
+package cn.net.yzl.product.model.pojo.product;
 
 import cn.net.yzl.product.model.BaseObject;
-import com.fasterxml.jackson.annotation.JsonFilter;
+import cn.net.yzl.product.model.vo.product.vo.ProductDiseaseVO;
+import cn.net.yzl.product.model.vo.product.vo.ProductImageVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.Data;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author lichanghong
@@ -18,8 +20,8 @@ import java.util.Date;
  * @date: 2021/1/7 4:32 下午
  */
 @Data
-public class ProductVO extends BaseObject {
-    @ApiModelProperty(name = "productCode",value = "商品code(product唯一标识)")
+public class Product extends BaseObject {
+    @ApiModelProperty(name = "productCode",value = "商品ID(product唯一标识)")
     private String productCode;
 
     @ApiModelProperty(name = "productNo",value = "商品编号")
@@ -52,7 +54,7 @@ public class ProductVO extends BaseObject {
     private Integer brandNo;
 
     @ApiModelProperty(name = "categoryDictCode", value = "商品分类")
-    @NotEmpty(message = "商品分类不能为空")
+    @DecimalMin(value = "1",message = "商品分类不能为空")
     private Integer categoryDictCode;
 
     @ApiModelProperty(name = "barCode", value = "商品条形码")
@@ -67,16 +69,13 @@ public class ProductVO extends BaseObject {
     @ApiModelProperty(name = "jfPrice", value = "兑换所需积分")
     private Integer jfPrice;
 
-    @DecimalMin(value = "0",message = "售卖价不能为负数")
-    @NotEmpty(message = "售卖价不能为空")
-    @ApiModelProperty(name = "salePrice", value = "市场价(售卖价)")
+    @ApiModelProperty(name = "salePrice", value = "市场价(售卖价)以分为单位")
     private Integer salePrice;
 
     @ApiModelProperty(name = "memberPrice", value = "会员价,以分为单位")
     private Integer memberPrice;
 
     @ApiModelProperty(name = "costPrice", value = "成本价,以分为单位")
-    @NotEmpty(message = "售卖价不能为空")
     private Integer costPrice;
 
     @ApiModelProperty(name = "bestPrice", value = "特惠价,以分为单位")
@@ -85,15 +84,16 @@ public class ProductVO extends BaseObject {
     @ApiModelProperty(name = "limitDownPrice", value = "最低价格,所有的优惠扣减不能低于此价格,以分为单位")
     private Integer limitDownPrice;
 
-    @ApiModelProperty(name = "ykPrice", value = "银卡价")
+    @ApiModelProperty(name = "ykPrice", value = "银卡价,以分为单位")
     private Integer ykPrice;
 
-    @ApiModelProperty(name = "jkPrice", value = "金卡价")
+    @ApiModelProperty(name = "jkPrice", value = "金卡价,以分为单位")
     private Integer jkPrice;
 
-    @ApiModelProperty(name = "zkPrice", value = "钻卡价")
+    @ApiModelProperty(name = "zkPrice", value = "钻卡价,以元为单位")
     private Integer zkPrice;
-
+    @ApiModelProperty(name = "zkPrice", value = "钻卡价,以元为单位")
+    private Double zkPriceD;
     @ApiModelProperty(name = "stock", value = "库存,-1代表不限制库存")
     private Integer stock;
 
@@ -107,9 +107,11 @@ public class ProductVO extends BaseObject {
     private String marketingRule;
 
     @ApiModelProperty(name = "saleStartTime", value = "销售开始日期")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date saleStartTime;
 
     @ApiModelProperty(name = "saleEndTime", value = "销售结束日期")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date saleEndTime;
 
     @ApiModelProperty(name = "status", value = "上下架状态：0-下架 1-上架")
@@ -131,16 +133,14 @@ public class ProductVO extends BaseObject {
     private Integer importFlag;
 
     @ApiModelProperty(name = "productionTime", value = "生产日期")
-    @NotEmpty(message = "生产日期不能为空")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date productionTime;
 
     @ApiModelProperty(name = "expirationDate", value = "保质期")
-    @NotEmpty(message = "保质期为空")
+    @DecimalMin(value = "1",message = "保质期为空")
     private Integer expirationDate;
 
     @ApiModelProperty(name = "validDate", value = "有效期至")
-    @NotEmpty(message = "有效期不能为空")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validDate;
 
@@ -148,15 +148,15 @@ public class ProductVO extends BaseObject {
     private String unit;
 
     @ApiModelProperty(name = "totalUseNum", value = "规格")
-    @NotEmpty(message = "规格不能为空")
+    @DecimalMin(value = "1",message = "规格不能为空")
     private Integer totalUseNum;
 
     @ApiModelProperty(name = "oneUseNum", value = "每次数量")
-    @NotEmpty(message = "每次数量不能为空")
+    @DecimalMin(value = "1",message = "每次数量不能为空")
     private Integer oneUseNum;
 
     @ApiModelProperty(name = "oneToTimes", value = "每日几次")
-    @NotEmpty(message = "每日几次不能为空")
+    @DecimalMin(value = "1",message = "每日几次不能为空")
     private Integer oneToTimes;
 
     @ApiModelProperty(name = "cjName", value = "厂家名称")
@@ -202,4 +202,11 @@ public class ProductVO extends BaseObject {
     @ApiModelProperty(name = "financeCode", value = "财务编码")
     private String financeCode;
 
+    @ApiModelProperty(name = "diseaseId", value = "商品主治病症")
+    private Integer diseaseId;
+
+    @ApiModelProperty(name = "imageUrl", value = "商品主图")
+    private String imageUrl;
+    @ApiModelProperty(name = "updateTime", value = "修改时间")
+    private Date updateTime;
 }

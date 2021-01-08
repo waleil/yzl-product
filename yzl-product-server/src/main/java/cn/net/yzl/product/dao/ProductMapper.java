@@ -1,16 +1,23 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.vo.product.ProductVO;
+import cn.net.yzl.product.model.pojo.product.Product;
+import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
+import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
+import cn.net.yzl.product.model.vo.product.vo.ProductVO;
+import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
+
+import java.util.List;
+
 public interface ProductMapper {
 
-    int insertSelective(ProductVO record);
+    int insertSelective(Product product);
 
 
-    ProductVO selectByPrimaryKey(Integer id);
+    ProductVO selectByPrimaryKey(String productCode);
 
 
 
-    int updateByPrimaryKeySelective(ProductVO record);
+    int updateByPrimaryKeySelective(Product product);
     /**
      * @Author: lichanghong
      * @Description: 查询最大商品编号
@@ -18,5 +25,9 @@ public interface ProductMapper {
      * @Return: java.util.String
      */
     String queryMaxProductCode();
+
+    List<ProductStatusCountDTO> queryCountByStatus();
+
+    List<ProductListDTO> queryListProduct(ProductSelectVO vo);
 
 }
