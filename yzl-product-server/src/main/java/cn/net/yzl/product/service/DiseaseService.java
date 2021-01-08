@@ -43,4 +43,6 @@ public interface DiseaseService {
      * @return: List<DiseaseDTO>
      */
     List<DiseaseDTO> queryByPID(@Param("pid") Integer pid);
+
+    ComResponse changeDiseaseName(Integer id, String name, String userId);
 }

@@ -23,9 +23,10 @@ public interface DiseaseBeanMapper {
      */
     int insertSelective(DiseaseVo diseaseVo);
 
-    DiseaseBean selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(DiseaseBean record);
+    Integer selectPid(Integer id);
+
+    int updateByPrimaryKeySelective(@Param("id") Integer id,@Param("name") String name,@Param("userId")String userId);
 
     List<DiseaseBean> selectAll();
 

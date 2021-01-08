@@ -15,9 +15,9 @@
     <sql id="Base_Column_List">
          name, pid, sort, create_no, update_no, del_flag, create_time, update_time
   </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectPid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select
-        old_id as id ,name, pid, sort, create_no, update_no, del_flag, create_time, update_time
+        pid
         from disease
         where old_id = #{id,jdbcType=INTEGER}
         and del_flag = 0
@@ -105,34 +105,9 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.db.DiseaseBean">
+    <update id="updateByPrimaryKeySelective">
         update disease
-        <set>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="pid != null">
-                pid = #{pid,jdbcType=INTEGER},
-            </if>
-            <if test="sort != null">
-                sort = #{sort,jdbcType=INTEGER},
-            </if>
-            <if test="createNo != null">
-                create_no = #{createNo,jdbcType=VARCHAR},
-            </if>
-            <if test="updateNo != null">
-                update_no = #{updateNo,jdbcType=VARCHAR},
-            </if>
-            <if test="delFlag != null">
-                del_flag = #{delFlag,jdbcType=BIT},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-        </set>
+        set name = #{name,jdbcType=VARCHAR},update_no = #{userId,jdbcType=VARCHAR}
         where old_id = #{id,jdbcType=INTEGER}
     </update>
 

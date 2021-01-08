@@ -144,4 +144,17 @@ public class DiseaseServiceImpl implements DiseaseService {
         return diseaseBeanMapper.queryByPID(pid);
     }
 
+    @Override
+    public ComResponse changeDiseaseName(Integer id, String name, String userId) {
+        Integer pid = diseaseBeanMapper.selectPid(id);
+        if (null==pid){
+            return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(),"目标数据为空");
+        }
+        if (pid != 0){
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"暂时只支持修改一级分类");
+        }
+        diseaseBeanMapper.updateByPrimaryKeySelective(id, name, userId);
+        return ComResponse.success();
+    }
+
 }
