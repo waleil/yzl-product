@@ -19,7 +19,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
     <select id="selectTypeById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-      select type from image_store where id = #{id}
+      select type from image_store where id = #{id} and del_flag = 0
     </select>
   <select id="selectByType" resultType="cn.net.yzl.product.model.vo.imageStore.ImageStoreDTO"
           parameterType="java.lang.Integer">

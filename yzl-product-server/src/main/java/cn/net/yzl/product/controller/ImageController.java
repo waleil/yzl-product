@@ -2,15 +2,12 @@ package cn.net.yzl.product.controller;
 
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
-import cn.net.yzl.product.model.db.Image;
-import cn.net.yzl.product.model.db.ImageStore;
 import cn.net.yzl.product.model.vo.image.ImageDTO;
 import cn.net.yzl.product.model.vo.image.ImageVO;
 import cn.net.yzl.product.model.vo.imageStore.ImageStoreDTO;
 import cn.net.yzl.product.model.vo.imageStore.ImageStoreVO;
 import cn.net.yzl.product.service.ImageService;
 import io.swagger.annotations.ApiOperation;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,7 +48,7 @@ public class ImageController {
 
     @ApiOperation("删除图片")
     @GetMapping("v1/deleteById")
-    public ComResponse deleteById(@RequestParam("id") Integer id,String userId){
+    public ComResponse deleteById(@RequestParam("id") Integer id,@RequestParam("userId") String userId){
         return imageService.deleteById(id,userId);
     }
 
@@ -63,7 +60,7 @@ public class ImageController {
     
     @ApiOperation("删除图片库")
     @GetMapping("v1/deleteStoreById")
-    public ComResponse deleteStoreById(@RequestParam("id") Integer id,String userId) {
+    public ComResponse deleteStoreById(@RequestParam("id") Integer id,@RequestParam("userId") String userId) {
         return imageService.deleteStoreById(id,userId);
     }
 
