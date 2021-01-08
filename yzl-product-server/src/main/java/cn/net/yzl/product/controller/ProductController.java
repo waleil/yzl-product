@@ -4,6 +4,7 @@ package cn.net.yzl.product.controller;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
+import cn.net.yzl.product.model.vo.product.dto.ProductAtlasDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
@@ -11,8 +12,11 @@ import cn.net.yzl.product.model.vo.product.vo.ProductVO;
 import cn.net.yzl.product.service.product.ProductService;
 import io.swagger.annotations.Api;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -100,5 +104,17 @@ public class ProductController {
         }
         return null;
     }
+
+
+    @ApiOperation("查询商品图谱")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "productName", value = "商品名称", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "id", value = "病症id", required = true, dataType = "Int", paramType = "query")
+    })
+    @GetMapping("v1/queryProductListAtlas")
+    public ComResponse<ProductAtlasDTO> queryProductListAtlas(@RequestParam("productName") String productName, @RequestParam("id") Integer id){
+        return productService.queryProductListAtlas(productName,id);
+    }
+
 }
 
