@@ -119,6 +119,7 @@ public class DiseaseServiceImpl implements DiseaseService {
         treeNode.setId(node.getId());
         treeNode.setPid(node.getPid());
         treeNode.setName(node.getName());
+        treeNode.setNodeList(new ArrayList<>());
         return treeNode;
     }
 

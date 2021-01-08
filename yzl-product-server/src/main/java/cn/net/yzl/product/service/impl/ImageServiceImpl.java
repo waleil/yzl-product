@@ -1,17 +1,20 @@
 package cn.net.yzl.product.service.impl;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
+import cn.net.yzl.common.util.AssemblerResultUtil;
 import cn.net.yzl.product.dao.ImageMapper;
 import cn.net.yzl.product.dao.ImageStoreMapper;
-import cn.net.yzl.product.model.db.Image;
-import cn.net.yzl.product.model.db.ImageStore;
-import cn.net.yzl.product.model.vo.ImageDTO;
+import cn.net.yzl.product.model.vo.image.ImageDTO;
+import cn.net.yzl.product.model.vo.image.ImageVO;
+import cn.net.yzl.product.model.vo.imageStore.ImageStoreDTO;
+import cn.net.yzl.product.model.vo.imageStore.ImageStoreVO;
 import cn.net.yzl.product.service.ImageService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,7 +28,7 @@ public class ImageServiceImpl implements ImageService {
 
 
     @Override
-    public int insertImage(Image image) {
+    public int insertImage(ImageVO image) {
 
         imageBeanMapper.insertSelective(image);
 
@@ -34,18 +37,21 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public ComResponse createAlbum(ImageStore imageStore) {
+    public ComResponse createAlbum(ImageStoreVO imageStore) {
         imageStoreMapper.insertSelective(imageStore);
         return ComResponse.success();
     }
 
     @Override
-    public ComResponse selectByStoreId(Integer id) {
-        List<ImageDTO> list  = imageBeanMapper.selectByStoreId(id);
+    public ComResponse selectByStoreId(Integer id, Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+
+        List<ImageDTO> list  = imageBeanMapper.selectByStoreId(id,pageNo,pageSize);
         if (list == null || list.size() == 0){
             return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE,"该图片库下还没有图片");
         }
-        return ComResponse.success(list);
+        Page<ImageDTO> page = AssemblerResultUtil.resultAssembler(list);
+        return ComResponse.success(page);
     }
 
     @Override
@@ -55,8 +61,15 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public ComResponse deleteById(Integer id) {
+    public ComResponse deleteById(Integer id, String userId) {
+        imageBeanMapper.selectQuoteById(id);
         imageBeanMapper.deleteByPrimaryKey(id);
-        return null;
+        return ComResponse.success().setMessage("未完成");
+    }
+
+    @Override
+    public ComResponse<List<ImageStoreDTO>> selectStores(Integer type) {
+        List<ImageStoreDTO> list = imageStoreMapper.selectByType(type);
+        return ComResponse.success(list);
     }
 }

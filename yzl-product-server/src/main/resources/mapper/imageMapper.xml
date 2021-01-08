@@ -22,10 +22,13 @@
     where id = #{id,jdbcType=INTEGER}
     and del_flag = 0
   </select>
-    <select id="selectByStoreId" resultType="cn.net.yzl.product.model.vo.ImageDTO"
+    <select id="selectByStoreId" resultType="cn.net.yzl.product.model.vo.image.ImageDTO"
             parameterType="java.lang.Integer">
       select id,url from image where image_store_id = #{id} and del_flag = 0 order by id desc
     </select>
+  <select id="selectQuoteById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select count(id) from
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from image
     where id = #{id,jdbcType=INTEGER}
