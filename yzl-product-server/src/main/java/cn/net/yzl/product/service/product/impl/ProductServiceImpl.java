@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.util.AssemblerResultUtil;
+import cn.net.yzl.product.config.FastDFSConfig;
 import cn.net.yzl.product.dao.ProductDiseaseMapper;
 import cn.net.yzl.product.dao.ProductImageMapper;
 import cn.net.yzl.product.dao.ProductMapper;
@@ -46,6 +47,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDiseaseMapper productDiseaseMapper;
     @Autowired
     private ProductImageMapper productImageMapper;
+    @Autowired
+    private FastDFSConfig dfsConfig;
     /**
      * @Author: lichanghong
      * @Description: 按照上下架查询商品数量
@@ -66,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
             for(ProductListDTO dto:list){
                 dto.setSalePriceD(new BigDecimal(String.valueOf(dto.getSalePrice()/100d))
                         .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                dto.setFastDFSUrl(dfsConfig.getUrl());
             }
         }
         //分页查询
