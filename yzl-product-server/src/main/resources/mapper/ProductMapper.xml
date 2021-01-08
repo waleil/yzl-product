@@ -662,4 +662,25 @@
   <select id="queryCountByStatus" resultType="map">
     SELECT count(`status`) AS cnt ,`status` AS status FROM product WHERE del_flag = 0 GROUP BY status;
   </select>
+
+
+  <!--查询商品图谱-->
+  <select id="queryProductListAtlas" resultType="cn.net.yzl.product.model.db.ProductAtlasBean">
+    SELECT
+    p.product_code productCode,
+    p.`name`,
+    p.image_url imageUrl,
+    p.sale_price salePrice,
+    p.goods_source goodsSource,
+    p.unit,
+    b.id,
+    b.`name` brandName
+    FROM product p
+    LEFT JOIN brand b ON b.id = p.brand_no
+    WHERE p.status=1 AND disease_id=#{diseaseId} AND p.`name` LIKE CONCAT('%',#{productName},'%')
+  </select>
+
 </mapper>
+
+
+

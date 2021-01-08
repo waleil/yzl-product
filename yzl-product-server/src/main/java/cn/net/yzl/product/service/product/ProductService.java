@@ -2,6 +2,7 @@ package cn.net.yzl.product.service.product;
 
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
+import cn.net.yzl.product.model.vo.product.dto.ProductAtlasDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
@@ -32,5 +33,14 @@ public interface ProductService {
      * @Return:
      */
      ComResponse editProduct(ProductVO vo);
+
+    /**
+     * 查询商品图谱
+     * 商品图谱
+     * @param productName 商品名称(模糊查询)
+     * @param id 病症id
+     * @return
+     */
+    ComResponse<ProductAtlasDTO> queryProductListAtlas(String productName, Integer id);
 
 }
