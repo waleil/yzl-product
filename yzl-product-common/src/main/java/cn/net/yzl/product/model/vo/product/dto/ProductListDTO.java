@@ -60,5 +60,7 @@ public class ProductListDTO extends BaseObject {
     private String imageUrl;
     @ApiModelProperty(name = "diseaseId", value = "商品主治病症")
     private Integer diseaseId;
+    @ApiModelProperty(name = "fastDFSUrl", value = "图片库地址,需要把imageUrl进行拼接")
+    private String fastDFSUrl;
 
 }
