@@ -3,8 +3,8 @@ package cn.net.yzl.product.controller;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.product.model.db.Image;
 import cn.net.yzl.product.model.db.ImageStore;
+import cn.net.yzl.product.model.vo.ImageDTO;
 import cn.net.yzl.product.service.ImageService;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +30,19 @@ public class ImageController {
     }
 
     @GetMapping("v1/selectByStoreId")
-    public ComResponse  selectByStoreId(@RequestParam Integer id){
+    public ComResponse<ImageDTO>  selectByStoreId(@RequestParam Integer id){
         return imageService.selectByStoreId(id);
+    }
+
+    @GetMapping("v1/selectTypeById")
+    public ComResponse selectTypeById(@RequestParam("id") Integer id ){
+        return imageService.selectTypeById(id);
+    }
+
+    @ApiOperation("通过id删除图片【未完成】")
+    @GetMapping("v1/deleteById")
+    public ComResponse deleteById(@RequestParam("id") Integer id){
+        return imageService.deleteById(id);
     }
 
 }

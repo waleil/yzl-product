@@ -10,4 +10,8 @@ public interface ImageService {
     ComResponse createAlbum(ImageStore imageStore);
 
     ComResponse selectByStoreId(Integer id);
+
+    ComResponse selectTypeById(Integer id);
+
+    ComResponse deleteById(Integer id);
 }

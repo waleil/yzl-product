@@ -20,23 +20,16 @@
     <include refid="Base_Column_List" />
     from image
     where id = #{id,jdbcType=INTEGER}
+    and del_flag = 0
   </select>
-    <select id="selectByStoreId" resultMap="BaseResultMap"
+    <select id="selectByStoreId" resultType="cn.net.yzl.product.model.vo.ImageDTO"
             parameterType="java.lang.Integer">
-      select id,url from image where image_store_id = #{id}
+      select id,url from image where image_store_id = #{id} and del_flag = 0 order by id desc
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from image
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.net.yzl.product.model.db.Image" >
-    insert into image (id, image_store_id, url, 
-      del_flag, create_time, update_time, 
-      creator, updator, type)
-    values (#{id,jdbcType=INTEGER}, #{imageStoreId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
-      #{delFlag,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{type,jdbcType=BIT})
-  </insert>
   <insert id="insertSelective" parameterType="cn.net.yzl.product.model.db.Image" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
     insert into image
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -126,18 +119,6 @@
         type = #{type,jdbcType=BIT},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.db.Image" >
-    update image
-    set image_store_id = #{imageStoreId,jdbcType=INTEGER},
-      url = #{url,jdbcType=VARCHAR},
-      del_flag = #{delFlag,jdbcType=BIT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      creator = #{creator,jdbcType=VARCHAR},
-      updator = #{updator,jdbcType=VARCHAR},
-      type = #{type,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
