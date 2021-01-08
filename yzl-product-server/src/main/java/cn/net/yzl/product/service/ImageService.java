@@ -13,4 +13,5 @@ public interface ImageService {
 
     ComResponse selectTypeById(Integer id);
 
+    ComResponse deleteById(Integer id);
 }

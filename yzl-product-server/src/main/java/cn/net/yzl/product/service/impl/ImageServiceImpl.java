@@ -53,4 +53,10 @@ public class ImageServiceImpl implements ImageService {
         Integer type = imageStoreMapper.selectTypeById(id);
         return ComResponse.success(type);
     }
+
+    @Override
+    public ComResponse deleteById(Integer id) {
+        imageBeanMapper.deleteByPrimaryKey(id);
+        return null;
+    }
 }

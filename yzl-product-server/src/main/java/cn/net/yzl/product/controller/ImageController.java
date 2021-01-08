@@ -39,4 +39,9 @@ public class ImageController {
         return imageService.selectTypeById(id);
     }
 
+    @GetMapping("v1/deleteById")
+    public ComResponse deleteById(@RequestParam("id") Integer id){
+        return imageService.deleteById(id);
+    }
+
 }
