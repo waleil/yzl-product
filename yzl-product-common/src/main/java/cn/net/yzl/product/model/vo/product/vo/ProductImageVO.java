@@ -17,4 +17,6 @@ public class ProductImageVO extends BaseObject {
     private String productCode;
     @ApiModelProperty(name = "imageUrl", value = "图片地址")
     private String imageUrl;
+    @ApiModelProperty(name = "mainFlag", value = "是否为主图：0代表不是，1代表是")
+    private Integer mainFlag;
 }

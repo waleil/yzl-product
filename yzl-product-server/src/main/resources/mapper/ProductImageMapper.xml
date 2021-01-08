@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.pojo.product.ProductImage" >
     <result column="product_code" property="productCode" jdbcType="VARCHAR" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="main_flag" property="mainFlag" jdbcType="INTEGER" />
     <result column="meal_no" property="mealNo" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -32,6 +33,9 @@
       <if test="mealNo != null" >
         meal_no,
       </if>
+      <if test="mainFlag != null" >
+        main_flag,
+      </if>
       <if test="createTime != null" >
         create_time,
       </if>
@@ -49,6 +53,9 @@
       <if test="mealNo != null" >
         #{mealNo,jdbcType=INTEGER},
       </if>
+      <if test="mainFlag != null" >
+        #{mainFlag,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -59,12 +66,13 @@
   </insert>
 
   <insert id="insertArray" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductImageVO" >
-    insert into product_image (product_code, image_url
+    insert into product_image (product_code, image_url,main_flag
       )
     <foreach item="item" collection="list" separator=",">
     values (
         #{item.productCode,jdbcType=VARCHAR},
-        #{item.imageUrl,jdbcType=INTEGER}
+        #{item.imageUrl,jdbcType=VARCHAR}
+        #{item.mainFlag,jdbcType=INTEGER}
       )
       </foreach>
   </insert>
