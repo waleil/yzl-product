@@ -169,5 +169,6 @@ public class ProductVO extends BaseObject {
     private List<ProductDiseaseVO> diseaseVOS;
 
     @ApiModelProperty(name = "updateTime", value = "修改时间")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 }

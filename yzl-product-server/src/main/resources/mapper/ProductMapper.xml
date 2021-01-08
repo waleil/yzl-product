@@ -112,9 +112,6 @@
   <insert id="insertSelective" parameterType="cn.net.yzl.product.model.pojo.product.Product" >
     insert into product
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="productCode != null" >
         product_code,
       </if>
@@ -132,9 +129,6 @@
       </if>
       <if test="name != null" >
         name,
-      </if>
-      <if test="withholdStock != null" >
-        withhold_stock,
       </if>
       <if test="nickname != null" >
         nickname,
@@ -262,9 +256,7 @@
       <if test="cjAddr != null" >
         cj_addr,
       </if>
-      <if test="oldId != null" >
-        old_id,
-      </if>
+
       <if test="updateNo != null" >
         create_no,
       </if>
@@ -297,9 +289,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="productCode != null" >
         #{productCode,jdbcType=VARCHAR},
       </if>
@@ -317,9 +306,6 @@
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="withholdStock != null" >
-        #{withholdStock,jdbcType=INTEGER},
       </if>
       <if test="nickname != null" >
         #{nickname,jdbcType=VARCHAR},
@@ -447,9 +433,7 @@
       <if test="cjAddr != null" >
         #{cjAddr,jdbcType=VARCHAR},
       </if>
-      <if test="oldId != null" >
-        #{oldId,jdbcType=INTEGER},
-      </if>
+
       <if test="updateNo != null" >
         #{updateNo,jdbcType=VARCHAR},
       </if>
@@ -500,9 +484,6 @@
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="withholdStock != null" >
-        withhold_stock = #{withholdStock,jdbcType=INTEGER},
       </if>
       <if test="nickname != null" >
         nickname = #{nickname,jdbcType=VARCHAR},
@@ -629,9 +610,6 @@
       </if>
       <if test="cjAddr != null" >
         cj_addr = #{cjAddr,jdbcType=VARCHAR},
-      </if>
-      <if test="oldId != null" >
-        old_id = #{oldId,jdbcType=INTEGER},
       </if>
       <if test="updateNo != null" >
         update_no = #{updateNo,jdbcType=VARCHAR},

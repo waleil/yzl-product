@@ -4,11 +4,15 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.util.AssemblerResultUtil;
+import cn.net.yzl.product.dao.ProductDiseaseMapper;
+import cn.net.yzl.product.dao.ProductImageMapper;
 import cn.net.yzl.product.dao.ProductMapper;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
+import cn.net.yzl.product.model.vo.product.vo.ProductDiseaseVO;
+import cn.net.yzl.product.model.vo.product.vo.ProductImageVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductVO;
 import cn.net.yzl.product.service.product.ProductService;
@@ -22,7 +26,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author lichanghong
@@ -37,6 +42,10 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private ProductDiseaseMapper productDiseaseMapper;
+    @Autowired
+    private ProductImageMapper productImageMapper;
     /**
      * @Author: lichanghong
      * @Description: 按照上下架查询商品数量
@@ -73,24 +82,90 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public ComResponse editProduct(ProductVO vo) {
-
         //处理金额
         Product product = translateProduct(vo);
+        String productCode=vo.getProductCode();
+        Map<Integer,List<ProductImageVO>> integerListMap = translateImages(vo.getImages());
+        String mainImage = null;
+        //判断图片
+        if(!CollectionUtils.isEmpty(integerListMap.get(1))){
+            List<ProductImageVO> list =integerListMap.get(1);
+            if(!CollectionUtils.isEmpty(list)){
+                mainImage = list.get(0).getImageUrl();
+            }
+        }
+        product.setImageUrl(mainImage);
         //代表新增
-        if(StringUtils.isEmpty(vo.getProductCode())){
+        if(StringUtils.isEmpty(productCode)){
             //获取商品ID
             String cacheKey = CacheKeyUtil.maxProductCacheKey();
             long maxProductCode=redisUtil.incr(cacheKey,1);
-            product.setProductCode(String.valueOf(maxProductCode));
-
-            if(!CollectionUtils.isEmpty(vo.getDiseaseVOS())){
-
-            }
+             productCode = String.valueOf(maxProductCode);
+            product.setProductCode(productCode);
+            productMapper.insertSelective(product);
         }else{
          //修改
-
+            productMapper.updateByPrimaryKeySelective(product);
+            productDiseaseMapper.deleteByProductCode(productCode);
+            productImageMapper.deleteByProductCode(productCode);
         }
-        return null;
+
+
+        //新增关联病症
+        if(!CollectionUtils.isEmpty(vo.getDiseaseVOS())){
+            List<ProductDiseaseVO> tempVOS=vo.getDiseaseVOS().stream().filter(d->d.getDiseaseId()!=null).collect(Collectors.toList());
+            for (ProductDiseaseVO diseaseVO:tempVOS){
+                diseaseVO.setProductCode(productCode);
+            }
+            productDiseaseMapper.insertArray(tempVOS);
+        }
+        if(!CollectionUtils.isEmpty(integerListMap)){
+            List<ProductImageVO> list = new ArrayList();
+            integerListMap.keySet().forEach(key->{
+                List<ProductImageVO> tt= integerListMap.get(key);
+                if(!CollectionUtils.isEmpty(tt)){
+                    list.addAll(tt.stream().filter(t->StringUtils.hasText(t.getImageUrl())).collect(Collectors.toList()));
+                }
+            });
+            for(ProductImageVO productImageVO:list){
+                productImageVO.setProductCode(productCode);
+                if(productImageVO.getMainFlag()==null){
+                    productImageVO.setMainFlag(0);
+                }
+            }
+            productImageMapper.insertArray(list);
+        }
+        return ComResponse.success();
+    }
+    /**
+     * @Author: lichanghong
+     * @Description: 转换图片
+     * @Date: 2021/1/8 3:36 下午
+     * @param list
+     * @Return: java.util.Map<java.lang.Integer,java.util.List<cn.net.yzl.product.model.vo.product.vo.ProductImageVO>>
+     */
+    private Map<Integer,List<ProductImageVO>> translateImages(List<ProductImageVO> list){
+
+        if(!CollectionUtils.isEmpty(list)){
+            Map<Integer,List<ProductImageVO>> temp = new HashMap<>();
+            List<ProductImageVO> mainList = new ArrayList<>();
+            List<ProductImageVO> otherList = new ArrayList<>();
+            for(ProductImageVO productImageVO:list){
+                if(productImageVO.getImageUrl()==null){
+                    continue;
+                }
+                if(productImageVO.getMainFlag()!=null&&productImageVO.getMainFlag()==1){
+                    mainList.add(productImageVO);
+                }else{
+                    otherList.add(productImageVO);
+                }
+            }
+            temp.put(1,mainList);
+            temp.put(0,otherList);
+            return temp;
+        }else{
+            return Collections.EMPTY_MAP;
+        }
     }
     /**
      * @Author: lichanghong

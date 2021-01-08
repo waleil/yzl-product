@@ -66,12 +66,11 @@
   </insert>
 
   <insert id="insertArray" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductImageVO" >
-    insert into product_image (product_code, image_url,main_flag
-      )
+    insert into product_image (product_code, image_url,main_flag)
     <foreach item="item" collection="list" separator=",">
     values (
         #{item.productCode,jdbcType=VARCHAR},
-        #{item.imageUrl,jdbcType=VARCHAR}
+        #{item.imageUrl,jdbcType=VARCHAR},
         #{item.mainFlag,jdbcType=INTEGER}
       )
       </foreach>
