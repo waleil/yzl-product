@@ -662,4 +662,19 @@
   <select id="queryCountByStatus" resultType="map">
     SELECT count(`status`) AS cnt ,`status` AS status FROM product WHERE del_flag = 0 GROUP BY status;
   </select>
+  <!--根据商品编码查询商品上下架状态及最后修改时间-->
+  <select id="queryProductStatusByProductCode" parameterType="string" resultType="cn.net.yzl.product.model.pojo.product.ProductStatus">
+    select product_code as productCode,
+    status as status,
+    update_time as updateTime
+    from product where product_code = #{productCode,jdbcType=VARCHAR}
+  </select>
+  <update id="updateStatusByProductCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO">
+    update product
+    set `status`= #{status,jdbcType=INTEGER},
+        update_no = #{updateNo,jdbcType=VARCHAR}
+    where
+        product_code = #{productCode,jdbcType=VARCHAR}
+
+  </update>
 </mapper>
