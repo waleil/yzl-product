@@ -9,8 +9,8 @@
     <result column="discount_price" property="discountPrice" jdbcType="INTEGER" />
     <result column="integral" property="integral" jdbcType="INTEGER" />
     <result column="descri" property="descri" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="BIT" />
-    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
     <result column="old_id" property="oldId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -39,7 +39,7 @@
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{mealNo,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{price,jdbcType=INTEGER}, #{discountPrice,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, 
-      #{descri,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{delFlag,jdbcType=BIT}, #{oldId,jdbcType=INTEGER}, 
+      #{descri,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{delFlag,jdbcType=INTEGER}, #{oldId,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.net.yzl.product.model.pojo.product.Meal" >
@@ -105,10 +105,10 @@
         #{descri,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="delFlag != null" >
-        #{delFlag,jdbcType=BIT},
+        #{delFlag,jdbcType=INTEGER},
       </if>
       <if test="oldId != null" >
         #{oldId,jdbcType=INTEGER},
@@ -144,10 +144,10 @@
         descri = #{descri,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=BIT},
+        del_flag = #{delFlag,jdbcType=INTEGER},
       </if>
       <if test="oldId != null" >
         old_id = #{oldId,jdbcType=INTEGER},
@@ -169,8 +169,8 @@
       discount_price = #{discountPrice,jdbcType=INTEGER},
       integral = #{integral,jdbcType=INTEGER},
       descri = #{descri,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
-      del_flag = #{delFlag,jdbcType=BIT},
+      status = #{status,jdbcType=INTEGER},
+      del_flag = #{delFlag,jdbcType=INTEGER},
       old_id = #{oldId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

@@ -17,9 +17,9 @@ public class Meal {
 
     private String descri;
 
-    private Boolean status;
+    private Integer status;
 
-    private Boolean delFlag;
+    private Integer delFlag;
 
     private Integer oldId;
 
@@ -83,19 +83,19 @@ public class Meal {
         this.descri = descri == null ? null : descri.trim();
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Boolean getDelFlag() {
+    public Integer getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(Boolean delFlag) {
+    public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
     }
 
