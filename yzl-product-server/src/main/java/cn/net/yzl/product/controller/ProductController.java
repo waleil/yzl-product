@@ -9,6 +9,7 @@ import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
+import cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductVO;
 import cn.net.yzl.product.service.product.ProductService;
 import com.alibaba.nacos.common.utils.CollectionUtils;
@@ -20,6 +21,8 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -144,6 +147,29 @@ public class ProductController {
     @GetMapping("v1/queryProductListAtlas")
     public ComResponse<ProductAtlasDTO> queryProductListAtlas(@RequestParam("productName") String productName, @RequestParam("id") Integer id) {
         return productService.queryProductListAtlas(productName, id);
+    }
+
+    /**
+     * @param vo
+     * @Author: wanghuasheng
+     * @Description: 修改商品售卖时间
+     * @Date: 2021/1/9 13:00 下午
+     * @Return: cn.net.yzl.common.entity.ComResponse
+     */
+    @PostMapping(value = "v1/updateTime")
+    @ApiOperation("修改商品售卖时间")
+    ComResponse updateTimeByProductCode(@RequestBody @Valid ProductUpdateTimeVO vo, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder sb = new StringBuilder();
+            for (ObjectError error : result.getAllErrors()) {
+                sb.append(error.getDefaultMessage() + ",");
+            }
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), sb.toString());
+        }
+        if (CollectionUtils.isEmpty(vo.getProductCodeList())) {
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getCode(), "商品code不能为空");
+        }
+        return productService.updateTimeByProductCode(vo);
     }
 
 }
