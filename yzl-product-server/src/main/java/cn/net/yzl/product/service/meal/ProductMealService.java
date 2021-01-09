@@ -1,6 +1,10 @@
 package cn.net.yzl.product.service.meal;
 
+import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.common.entity.Page;
+import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
+import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 
 import java.util.List;
 
@@ -19,5 +23,9 @@ public interface ProductMealService {
      * @Return:
      */
     List<ProductStatusCountDTO> queryCountByStatus();
+
+    ComResponse<Page<ProductMealDTO>> queryListProductMeal(ProductMealVO vo);
+
+    ComResponse<ProductMealDTO> queryProductMealPortray(Integer mealNo);
 
 }
