@@ -55,4 +55,10 @@ public class DiseaseController {
         return ComResponse.success(list);
     }
 
+    
+    @ApiOperation("修改病症名称")
+    @GetMapping("v1/changeName")
+    public ComResponse changeName(@RequestParam("id") Integer id, @RequestParam("name") String name,@RequestParam("userId") String userId){
+        return diseaseService.changeDiseaseName(id,name,userId);
+    }
 }

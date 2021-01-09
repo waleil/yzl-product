@@ -8,6 +8,8 @@ import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
 import cn.net.yzl.product.model.vo.disease.DiseaseTreeNode;
 import cn.net.yzl.product.model.vo.disease.DiseaseVo;
+import cn.net.yzl.product.model.vo.product.dto.ProductDTO;
+import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.service.DiseaseService;
 import cn.net.yzl.product.utils.CacheKeyUtil;
 import cn.net.yzl.product.utils.RedisUtil;
@@ -119,13 +121,40 @@ public class DiseaseServiceImpl implements DiseaseService {
         treeNode.setId(node.getId());
         treeNode.setPid(node.getPid());
         treeNode.setName(node.getName());
-        treeNode.setNodeList(new ArrayList<>());
+        if(treeNode.getPid()==0) {
+            treeNode.setNodeList(new ArrayList<>());
+        }
+        if (node.getPid() != 0) {
+            List<ProductDTO>  list = new ArrayList<>();
+            ProductDTO dto = new ProductDTO();
+            dto.setName("商品名称");
+            dto.setCode("1000001");
+            dto.setImageUrl("http://fast.staff.yuzhilin.net.cn/group1/M00/00/01/wKggg1_4IDGAU5tUAAAWIYXlGys238.png");
+            dto.setSource(1);
+            for(int i = 0; i<2; i++){
+                list.add(dto);
+            }
+            treeNode.setProductDTOList(list);
+        }
         return treeNode;
     }
 
     @Override
     public List<DiseaseDTO> queryByPID(Integer pid) {
         return diseaseBeanMapper.queryByPID(pid);
+    }
+
+    @Override
+    public ComResponse changeDiseaseName(Integer id, String name, String userId) {
+        Integer pid = diseaseBeanMapper.selectPid(id);
+        if (null==pid){
+            return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(),"目标数据为空");
+        }
+        if (pid != 0){
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"暂时只支持修改一级分类");
+        }
+        diseaseBeanMapper.updateByPrimaryKeySelective(id, name, userId);
+        return ComResponse.success();
     }
 
 }

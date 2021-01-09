@@ -5,12 +5,11 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
     <result column="descri" property="descri" jdbcType="VARCHAR" />
-    <result column="sort" property="sort" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, image_url, descri, sort, create_time, update_time
+    id, image_url, descri, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -40,9 +39,6 @@
       <if test="descri != null" >
         descri,
       </if>
-      <if test="sort != null" >
-        sort,
-      </if>
       <if test="type != null" >
         type,
       </if>
@@ -66,9 +62,6 @@
       <if test="descri != null" >
         #{descri,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null" >
-        #{sort,jdbcType=INTEGER},
-      </if>
       <if test="type != null" >
         #{type,jdbcType=TINYINT},
       </if>
@@ -91,9 +84,6 @@
       </if>
       <if test="descri != null" >
         descri = #{descri,jdbcType=VARCHAR},
-      </if>
-      <if test="sort != null" >
-        sort = #{sort,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
