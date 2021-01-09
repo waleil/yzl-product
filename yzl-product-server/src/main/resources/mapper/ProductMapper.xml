@@ -694,7 +694,14 @@
     b.`name` brandName
     FROM product p
     LEFT JOIN brand b ON b.id = p.brand_no
-    WHERE p.status=1 AND disease_id=#{diseaseId} AND p.`name` LIKE CONCAT('%',#{productName},'%')
+    WHERE p.status=1
+    <if test="diseaseId != null">
+      AND disease_id=#{diseaseId}
+    </if>
+
+    <if test="productName != null">
+      AND p.`name` LIKE CONCAT('%',#{productName},'%')
+    </if>
   </select>
 
   <update id="updateTimeByProductCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO">

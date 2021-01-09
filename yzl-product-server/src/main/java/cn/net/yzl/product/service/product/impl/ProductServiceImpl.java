@@ -252,8 +252,8 @@ public class ProductServiceImpl implements ProductService {
      * @return
      */
     @Override
-    public ComResponse<ProductAtlasDTO> queryProductListAtlas(String productName, Integer id) {
-        if (productName == null || id == null)
+    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(String productName, Integer id) {
+        if (productName == null && id == null)
             return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
 
         //查询商品数据(商品图谱)
@@ -262,6 +262,25 @@ public class ProductServiceImpl implements ProductService {
         //判断是否有数据
         if (productAtlasBeanList == null || productAtlasBeanList.size() == 0)
             return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(), ResponseCodeEnums.NO_DATA_CODE.getMessage());
+
+
+
+        /*假如只传商品名称，有可能出现不同病症    病症分组*/
+        Map<Integer,List<ProductAtlasBean>> mapResult = new HashMap<>();
+        if (id == null){
+            for (ProductAtlasBean productAtlasBean : productAtlasBeanList) {
+                //病症id
+                Integer disId = productAtlasBean.getId();
+                if (mapResult.get(disId) == null) {
+                    List<ProductAtlasBean> atlasBeanList = new ArrayList<>();
+                    mapResult.put(disId, atlasBeanList);
+                }
+                mapResult.get(disId).add(productAtlasBean);
+            }
+        }else {
+            mapResult.put(id,productAtlasBeanList);
+        }
+
 
         /**
          * 组装数据
@@ -272,12 +291,10 @@ public class ProductServiceImpl implements ProductService {
          */
 
 
-        /**
-         * 大map   存储横轴 同一病症    key：商品品牌+商品名称
-         * 小map     key：1代表自营   2代表第三方
-         *list    存储纵轴商品数据
-         */
-        Map<String, Map<Integer, List<ProductAtlasBean>>> productAtlasListMap = new HashMap<>();
+
+        //最终封装后的结果
+        List<ProductAtlasDTO> productAtlasDTOListResult = new ArrayList<>();
+
 
         //拼接商品品牌名称和商品名称前四个字
         StringBuffer brandProductKeyBuffer = new StringBuffer();
@@ -285,64 +302,75 @@ public class ProductServiceImpl implements ProductService {
         Map<Integer, List<ProductAtlasBean>> productsourceMap = null;
         List<ProductAtlasBean> productAtlasBeanListCopy = null;
 
-        for (ProductAtlasBean productAtlasBean : productAtlasBeanList) {
-            //商品市场价(分转元)
-            productAtlasBean.setSalePriceD(new BigDecimal(String.valueOf(productAtlasBean.getSalePrice() / 100d))
-                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-            //商品来源
-            Integer goodsSource = productAtlasBean.getGoodsSource();
-            //商品品牌名称
-            String brandName = productAtlasBean.getBrandName();
-            //商品名称(前四位)
-            String name = productAtlasBean.getName();
-            if (name != null && name.length() >= 4) {
-                name = productAtlasBean.getName().substring(0, 4);
-            }
-            //根据商品品牌名称+商品名称(前四位)=key进行分组
-            String key = brandProductKeyBuffer.append(brandName).append(name).toString();
-            brandProductKeyBuffer.setLength(0);
-
-            if (productAtlasListMap.get(key) == null) {
-                productsourceMap = new HashMap<>();
-                productAtlasListMap.put(key, productsourceMap);
-            }
-
-            if (productsourceMap.get(goodsSource) == null) {
-                productAtlasBeanListCopy = new ArrayList<>();
-                productsourceMap.put(goodsSource, productAtlasBeanListCopy);
-            }
-
-            productAtlasBeanListCopy.add(productAtlasBean);
-
-        }
+        for (List<ProductAtlasBean> atlasBeanList : mapResult.values()) {
+            /**
+             * 大map   存储横轴 同一病症    key：商品品牌+商品名称
+             * 小map     key：1代表自营   2代表第三方
+             *list    存储纵轴商品数据
+             */
+            Map<String, Map<Integer, List<ProductAtlasBean>>> productAtlasListMap = new HashMap<>();
 
 
-        //排好序的结果
-        List<Map<Integer, List<ProductAtlasBean>>> productAtlasResult = new ArrayList<>();
-
-        /**
-         * 排序    价格 自营 由大到小
-         *              第三方 由小到大
-         */
-        for (String key : productAtlasListMap.keySet()) {
-            productsourceMap = productAtlasListMap.get(key);
-            for (Integer goodSource : productsourceMap.keySet()) {
-                productAtlasBeanList = productsourceMap.get(goodSource);
-                if (goodSource == 1) {//自营
-                    productAtlasBeanList.sort(Comparator.comparing(ProductAtlasBean::getSalePriceD).reversed());//反序
-                } else {//第三方
-                    productAtlasBeanList.sort(Comparator.comparing(ProductAtlasBean::getSalePriceD));//正序
+            for (ProductAtlasBean productAtlasBean : atlasBeanList) {
+                //商品市场价(分转元)
+                productAtlasBean.setSalePriceD(new BigDecimal(String.valueOf(productAtlasBean.getSalePrice() / 100d))
+                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                //商品来源
+                Integer goodsSource = productAtlasBean.getGoodsSource();
+                //商品品牌名称
+                String brandName = productAtlasBean.getBrandName();
+                //商品名称(前四位)
+                String name = productAtlasBean.getName();
+                if (name != null && name.length() >= 4) {
+                    name = productAtlasBean.getName().substring(0, 4);
                 }
+                //根据商品品牌名称+商品名称(前四位)=key进行分组
+                String key = brandProductKeyBuffer.append(brandName).append(name).toString();
+                brandProductKeyBuffer.setLength(0);
+
+                if (productAtlasListMap.get(key) == null) {
+                    productsourceMap = new HashMap<>();
+                    productAtlasListMap.put(key, productsourceMap);
+                }
+
+                if (productsourceMap.get(goodsSource) == null) {
+                    productAtlasBeanListCopy = new ArrayList<>();
+                    productsourceMap.put(goodsSource, productAtlasBeanListCopy);
+                }
+
+                productAtlasBeanListCopy.add(productAtlasBean);
+
             }
-            productAtlasResult.add(productsourceMap);
+
+            //排好序的结果
+            List<Map<Integer, List<ProductAtlasBean>>> productAtlasResult = new ArrayList<>();
+
+            /**
+             * 排序    价格 自营 由大到小
+             *              第三方 由小到大
+             */
+            for (String key : productAtlasListMap.keySet()) {
+                productsourceMap = productAtlasListMap.get(key);
+                for (Integer goodSource : productsourceMap.keySet()) {
+                    productAtlasBeanList = productsourceMap.get(goodSource);
+                    if (goodSource == 1) {//自营
+                        productAtlasBeanList.sort(Comparator.comparing(ProductAtlasBean::getSalePriceD).reversed());//反序
+                    } else {//第三方
+                        productAtlasBeanList.sort(Comparator.comparing(ProductAtlasBean::getSalePriceD));//正序
+                    }
+                }
+                productAtlasResult.add(productsourceMap);
+            }
+
+
+            //包装
+            ProductAtlasDTO productAtlasDTO = new ProductAtlasDTO();
+            productAtlasDTO.setProductAtlasResult(productAtlasResult);
+            productAtlasDTOListResult.add(productAtlasDTO);
+
         }
 
-
-        //包装
-        ProductAtlasDTO productAtlasDTO = new ProductAtlasDTO();
-        productAtlasDTO.setProductAtlasResult(productAtlasResult);
-
-        return ComResponse.success(productAtlasDTO);
+        return ComResponse.success(productAtlasDTOListResult);
     }
 
     //修改商品售卖时间
