@@ -299,10 +299,10 @@ public class ProductServiceImpl implements ProductService {
 
 
         //包装
-        ProductAtlasDTO ProductAtlasDTO = new ProductAtlasDTO();
-        ProductAtlasDTO.setProductAtlasResult(productAtlasResult);
+        ProductAtlasDTO productAtlasDTO = new ProductAtlasDTO();
+        productAtlasDTO.setProductAtlasResult(productAtlasResult);
 
-        return ComResponse.success(ProductAtlasDTO);
+        return ComResponse.success(productAtlasDTO);
     }
 
 
