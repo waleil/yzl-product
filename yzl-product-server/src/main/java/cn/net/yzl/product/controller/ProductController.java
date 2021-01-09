@@ -11,6 +11,7 @@ import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductVO;
 import cn.net.yzl.product.service.product.ProductService;
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import io.swagger.annotations.Api;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -88,8 +89,8 @@ public class ProductController {
     @PostMapping(value = "v1/edit")
     @ApiOperation("编辑商品")
     public ComResponse<Void> editProduct(@RequestBody @Valid ProductVO vo) {
-        String str=checkParams(vo);
-        if(StringUtils.isNotBlank(str)){
+        String str = checkParams(vo);
+        if (StringUtils.isNotBlank(str)) {
             return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), str);
         }
         return productService.editProduct(vo);
@@ -105,6 +106,9 @@ public class ProductController {
     @PostMapping(value = "v1/updateStatus")
     @ApiOperation("修改商品上下架状态")
     ComResponse updateStatusByProductCode(@RequestBody @Valid ProductUpdateStatusVO vo) {
+        if (CollectionUtils.isEmpty(vo.getProductCodeList())) {
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getCode(), "商品code不能为空");
+        }
         return productService.updateStatusByProductCode(vo);
     }
 
@@ -122,10 +126,10 @@ public class ProductController {
         if (vo.getSalePriceD() == null) {
             return "市场价价格不能为空";
         }
-        if(vo.getUpdateTime()==null){
+        if (vo.getUpdateTime() == null) {
             return "最后修改时间不能为空!";
         }
-        if(vo.getUpdateNo()==null){
+        if (vo.getUpdateNo() == null) {
             return "编辑员工编码不能为空!";
         }
         return null;
@@ -138,8 +142,8 @@ public class ProductController {
             @ApiImplicitParam(name = "id", value = "病症id", required = true, dataType = "Int", paramType = "query")
     })
     @GetMapping("v1/queryProductListAtlas")
-    public ComResponse<ProductAtlasDTO> queryProductListAtlas(@RequestParam("productName") String productName, @RequestParam("id") Integer id){
-        return productService.queryProductListAtlas(productName,id);
+    public ComResponse<ProductAtlasDTO> queryProductListAtlas(@RequestParam("productName") String productName, @RequestParam("id") Integer id) {
+        return productService.queryProductListAtlas(productName, id);
     }
 
 }

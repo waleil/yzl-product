@@ -674,8 +674,10 @@
     set `status`= #{status,jdbcType=INTEGER},
         update_no = #{updateNo,jdbcType=VARCHAR}
     where
-        product_code = #{productCode,jdbcType=VARCHAR}
-
+        product_code in
+    <foreach item="item" index="index" collection="productCodeList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
   </update>
 
 
