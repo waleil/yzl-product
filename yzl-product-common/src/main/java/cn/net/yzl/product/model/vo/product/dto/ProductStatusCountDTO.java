@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Data
 public class ProductStatusCountDTO extends BaseObject {
-    @ApiModelProperty(name = "status", value = "0代表下架，1代表上架")
+    @ApiModelProperty(name = "status", value = "商品上架状态字段：0代表未上架，1代表已上架")
     private Integer status;
     @ApiModelProperty(name = "cnt", value = "商品（套餐）总数")
     private int cnt;

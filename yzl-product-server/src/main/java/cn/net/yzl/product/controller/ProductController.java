@@ -145,7 +145,7 @@ public class ProductController {
             @ApiImplicitParam(name = "id", value = "病症id", dataType = "Int", paramType = "query")
     })
     @GetMapping("v1/queryProductListAtlas")
-    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(@RequestParam("productName") String productName, @RequestParam("id") Integer id) {
+    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(@RequestParam(value = "productName",required = false) String productName, @RequestParam(value = "id",required = false) Integer id) {
         return productService.queryProductListAtlas(productName, id);
     }
 
