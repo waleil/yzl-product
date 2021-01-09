@@ -92,13 +92,14 @@ public class ProductDetailVO extends BaseObject {
     private Integer importFlag;
 
     @ApiModelProperty(name = "productionTime", required = true, value = "生产日期")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date productionTime;
 
     @ApiModelProperty(name = "expirationDate", required = true, value = "保质期")
-    @DecimalMin(value = "1",message = "保质期为空")
     private Integer expirationDate;
 
     @ApiModelProperty(name = "validDate", required = true, value = "有效期至")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date validDate;
 
     @ApiModelProperty(name = "unit", value = "计量单位")
