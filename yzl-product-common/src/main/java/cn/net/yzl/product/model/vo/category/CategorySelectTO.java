@@ -4,6 +4,8 @@ import cn.net.yzl.product.model.BaseObject;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author lichanghong
  * @description 用来接收传入的实体对象
