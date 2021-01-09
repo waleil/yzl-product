@@ -1,11 +1,16 @@
 package cn.net.yzl.product.service.meal;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.product.model.pojo.product.Meal;
+import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
+import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
+import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -28,4 +33,42 @@ public interface ProductMealService {
 
     ComResponse<ProductMealDTO> queryProductMealPortray(Integer mealNo);
 
+    /**
+     * @Description: 修改套餐上下架状态
+     * @Author: dongjunmei
+     * @Date: 2021-01-09 13:18 下午
+     * @param vo:
+     * @return: cn.net.yzl.common.entity.ComResponse
+     **/
+
+    ComResponse updateStatusByMealCode(ProductMealUpdateStatusVO vo);
+
+    /**
+     * @Description: 修改套餐售卖时间
+     * @Author: dongjunmei
+     * @Date: 2021-01-09 13:26
+     * @param vo :
+     * @return: cn.net.yzl.common.entity.ComResponse
+     **/
+    ComResponse updateTimeByMealCode(ProductMealUpdateTimeVO vo);
+
+
+    /**
+     * @Description: 编辑套餐
+     * @Author: dongjunmei
+     * @Date: 2021-01-09 13:48
+     * @param vo:
+     * @return: cn.net.yzl.common.entity.ComResponse<java.lang.Void>
+     **/
+    ComResponse editProductMeal(ProductMealVO vo);
+
+
+    /**
+     * @Description: 查看套餐
+     * @Author: dongjunmei
+     * @Date: 2021-01-09 15:41
+     * @param:
+     * @return: cn.net.yzl.common.entity.ComResponse
+     **/
+    ComResponse<ProductMealDetailVO> queryMealDetail(Meal meal);
 }

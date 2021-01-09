@@ -211,4 +211,49 @@
       del_flag delFlag, old_id oldId, create_time createTime, update_time updateTime
       from meal where 1=1 and del_flag=0 and meal_no = #{mealNo,jdbcType=INTEGER}
     </select>
+
+
+  <!-- 修改上下架的状态 -->
+  <update id="updateStatusByMealCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealUpdateStatusVO">
+    update meal
+    set `status`= #{status,jdbcType=INTEGER}
+    where
+    meal_no in
+    <foreach item="item" index="index" collection="mealNoList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
+
+  <!-- 修改套餐售卖时间 -->
+  <update id="updateTimeByMealCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealUpdateTimeVO">
+    update meal
+    set
+    create_time = #{saleStartTime,jdbcType=TIMESTAMP},
+    update_time = #{saleEndTime,jdbcType=TIMESTAMP}
+    where
+    meal_no in
+    <foreach item="item" index="index" collection="mealNoList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
+
+<!--套餐查看-->
+  <select id="selectBymealNo" resultType="cn.net.yzl.product.model.vo.product.vo.ProductMealDetailVO">
+    select
+      p.meal_no,
+      p.name,
+      p.price,
+      p.integral,
+      p.discount_price,
+      p.integral,
+      p.descri,
+      p.status,
+      p.del_flag,
+      p.old_id,
+      p.create_time,
+      p.update_time
+         from meal p
+    where meal_no = #{mealNo,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

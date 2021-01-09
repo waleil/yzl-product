@@ -1,8 +1,10 @@
 package cn.net.yzl.product.model.pojo.product;
 
+import cn.net.yzl.product.model.BaseObject;
+
 import java.util.Date;
 
-public class Meal {
+public class Meal extends BaseObject {
     private Integer id;
 
     private Long mealNo;

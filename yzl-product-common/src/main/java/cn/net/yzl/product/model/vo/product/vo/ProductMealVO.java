@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author wujianing
  * @version 1.0
@@ -39,4 +41,27 @@ public class ProductMealVO extends BaseObject {
 
     @ApiModelProperty(name = "status", value = "上下架状态：0代表下架，1代表上架，null代表全部")
     private Integer status;
+
+    @ApiModelProperty(name = "name", value = "套餐名称")
+    private String name;
+
+    @ApiModelProperty(name = "pirce", value = "套餐价格")
+    private Integer price;
+
+    @ApiModelProperty(name = "discountPrice", value = "套餐优惠折扣价")
+    private Integer discountPrice;
+
+    @ApiModelProperty(name = "mealNo", value = "套餐ID")
+    private Long mealNo;
+
+
+    @ApiModelProperty(name = " descri", value = "套餐描述")
+    private String  descri;
+
+
+    @ApiModelProperty(name = "createTime", value = "创建时间")
+    private Date createTime;
+
+    @ApiModelProperty(name = "updateTime", value = "更新时间")
+    private Date updateTime;
 }
