@@ -1,12 +1,13 @@
 package cn.net.yzl.product.dao;
 
+import cn.net.yzl.product.model.db.ProductAtlasBean;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -39,6 +40,8 @@ public interface ProductMapper {
      * @Return:
      */
     ProductStatus queryProductStatusByProductCode(String productCode);
+
+    List<ProductAtlasBean> queryProductListAtlas(@Param("productName") String productName, @Param("diseaseId") Integer diseaseId);
 
     /**
      * @Author: lichanghong
