@@ -674,8 +674,10 @@
     set `status`= #{status,jdbcType=INTEGER},
         update_no = #{updateNo,jdbcType=VARCHAR}
     where
-        product_code = #{productCode,jdbcType=VARCHAR}
-
+        product_code in
+    <foreach item="item" index="index" collection="productCodeList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
   </update>
 
 
@@ -695,6 +697,17 @@
     WHERE p.status=1 AND disease_id=#{diseaseId} AND p.`name` LIKE CONCAT('%',#{productName},'%')
   </select>
 
+  <update id="updateTimeByProductCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO">
+    update product
+    set
+      sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
+      sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP}
+    where
+    product_code in
+    <foreach item="item" index="index" collection="productCodeList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
 </mapper>
 
 

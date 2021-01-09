@@ -345,5 +345,17 @@ public class ProductServiceImpl implements ProductService {
         return ComResponse.success(productAtlasDTO);
     }
 
+    //修改商品售卖时间
+    @Override
+    public ComResponse updateTimeByProductCode(ProductUpdateTimeVO vo) {
+        try {
+            productMapper.updateTimeByProductCode(vo);
+            return ComResponse.success();
+        }catch (Exception ex){
+            log.error("修改商品售卖时间失败,",ex);
+        }
+        return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(),"修改商品售卖时间失败");
+    }
+
 
 }

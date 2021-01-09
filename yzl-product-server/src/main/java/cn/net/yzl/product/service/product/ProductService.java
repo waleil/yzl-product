@@ -7,6 +7,7 @@ import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
+import cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductVO;
 
 import java.util.List;
@@ -52,4 +53,12 @@ public interface ProductService {
      */
     ComResponse<ProductAtlasDTO> queryProductListAtlas(String productName, Integer id);
 
+    /**
+     * @Author: wanghuasheng
+     * @Description: 修改商品售卖时间
+     * @Date: 2021/1/9 13:00 下午
+     * @param vo
+     * @Return:
+     */
+    ComResponse updateTimeByProductCode(ProductUpdateTimeVO vo);
 }
