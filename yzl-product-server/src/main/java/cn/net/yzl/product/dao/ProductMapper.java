@@ -3,6 +3,7 @@ package cn.net.yzl.product.dao;
 import cn.net.yzl.product.model.db.ProductAtlasBean;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
+import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
@@ -18,7 +19,7 @@ public interface ProductMapper {
     int insertSelective(Product product);
 
 
-    ProductVO selectByPrimaryKey(String productCode);
+    ProductDetailVO selectByProductCode(String productCode);
 
 
     int updateByPrimaryKeySelective(Product product);

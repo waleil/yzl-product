@@ -701,13 +701,62 @@
     update product
     set
       sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
-      sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP}
+      sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
+      update_no = #{updateNo,jdbcType=VARCHAR}
     where
     product_code in
     <foreach item="item" index="index" collection="productCodeList" open="(" separator="," close=")">
       #{item}
     </foreach>
   </update>
+  <select id="selectByProductCode" resultType="cn.net.yzl.product.model.vo.product.dto.ProductDetailVO">
+    select
+      p.product_code,
+      p.product_no,
+      p.quick_search_code,
+      p.`name`,
+      p.nickname,
+      p.eng_name,
+      p.goods_source,
+      p.brand_no,
+      p.category_dict_code,
+      p.sale_price,
+      p.cost_price,
+      p.limit_down_price,
+      p.stock,
+      p.stock_threshold,
+      p.sale_pattern,
+      p.marketing_rule,
+      p.sale_start_time,
+      p.sale_end_time,
+      p.patent_code,
+      p.approval_number,
+      p.approval_type,
+      p.import_flag,
+      p.production_time,
+      p.expiration_date,
+      p.valid_date,
+      p.unit,
+      p.total_use_num,
+      p.one_use_num,
+      p.one_to_times,
+      p.cj_name,
+      p.cj_country_no,
+      p.cj_province_no,
+      p.cj_city_no,
+      p.cj_area_no,
+      p.cj_addr,
+      p.descri,
+      p.applicable,
+      p.forbidden,
+      p.raw_stock,
+      p.video_url,
+      p.disease_id,
+      p.image_url
+    from product p
+    where product_code = #{productCode,jdbcType=VARCHAR}
+  </select>
+
 </mapper>
 
 

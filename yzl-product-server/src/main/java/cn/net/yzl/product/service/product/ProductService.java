@@ -3,6 +3,7 @@ package cn.net.yzl.product.service.product;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.vo.product.dto.ProductAtlasDTO;
+import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
@@ -61,4 +62,13 @@ public interface ProductService {
      * @Return:
      */
     ComResponse updateTimeByProductCode(ProductUpdateTimeVO vo);
+
+    /**
+     * @Author: wanghuasheng
+     * @Description: 查询商品详情信息
+     * @Date: 2021/1/9 13:00 下午
+     * @param productCode
+     * @Return:
+     */
+    ComResponse<ProductDetailVO> queryProducDetail(String productCode);
 }

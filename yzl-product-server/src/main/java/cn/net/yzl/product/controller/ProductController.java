@@ -4,7 +4,9 @@ package cn.net.yzl.product.controller;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
+import cn.net.yzl.common.util.DateFormatUtil;
 import cn.net.yzl.product.model.vo.product.dto.ProductAtlasDTO;
+import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
@@ -169,8 +171,16 @@ public class ProductController {
         if (CollectionUtils.isEmpty(vo.getProductCodeList())) {
             return ComResponse.fail(ResponseCodeEnums.PARAMS_EMPTY_ERROR_CODE.getCode(), "商品code不能为空");
         }
+        if (vo.getSaleEndTime().compareTo(vo.getSaleStartTime()) < 0) {
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), "日期错误");
+        }
         return productService.updateTimeByProductCode(vo);
     }
 
+    @GetMapping(value = "v1/queryProductDetail")
+    @ApiOperation("查询商品详情")
+    public ComResponse<ProductDetailVO> queryProductDetail(@RequestParam("productCode") String productCode) {
+        return productService.queryProducDetail(productCode);
+    }
 }
 

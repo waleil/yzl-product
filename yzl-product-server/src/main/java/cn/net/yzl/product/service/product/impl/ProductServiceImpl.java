@@ -14,6 +14,7 @@ import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
 import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductAtlasDTO;
+import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.*;
@@ -52,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductImageMapper productImageMapper;
     @Autowired
     private FastDFSConfig dfsConfig;
+
     /**
      * @Author: lichanghong
      * @Description: 按照上下架查询商品数量
@@ -82,10 +84,10 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * @param vo
+     * @param vo
      * @Author: lichanghong
      * @Description: 编辑商品信息/包含新增
      * @Date: 2021/1/8 10:39 上午
-     * @param vo
      * @Return: cn.net.yzl.common.entity.ComResponse
      */
     @Override
@@ -113,12 +115,12 @@ public class ProductServiceImpl implements ProductService {
             product.setProductCode(productCode);
             productMapper.insertSelective(product);
         } else {
-            ProductStatus productStatus= productMapper.queryProductStatusByProductCode(productCode);
-            if(productStatus==null){
-                return ComResponse.fail(ResponseCodeEnums.NO_MATCHING_RESULT_CODE.getCode(),ResponseCodeEnums.NO_MATCHING_RESULT_CODE.getMessage());
+            ProductStatus productStatus = productMapper.queryProductStatusByProductCode(productCode);
+            if (productStatus == null) {
+                return ComResponse.fail(ResponseCodeEnums.NO_MATCHING_RESULT_CODE.getCode(), ResponseCodeEnums.NO_MATCHING_RESULT_CODE.getMessage());
             }
-            if(productStatus.getUpdateTime().getTime()>vo.getUpdateTime().getTime()){
-                return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
+            if (productStatus.getUpdateTime().getTime() > vo.getUpdateTime().getTime()) {
+                return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
             }
             //修改
             productMapper.updateByPrimaryKeySelective(product);
@@ -135,10 +137,10 @@ public class ProductServiceImpl implements ProductService {
         try {
             productMapper.updateStatusByProductCode(vo);
             return ComResponse.success();
-        }catch (Exception ex){
-        log.error("修改商品上下架状态失败,",ex);
+        } catch (Exception ex) {
+            log.error("修改商品上下架状态失败,", ex);
         }
-        return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(),"修改失败");
+        return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(), "修改失败");
     }
 
     /**
@@ -244,11 +246,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
     /**
      * 查询商品图谱
+     *
      * @param productName 商品名称(模糊查询)
-     * @param id 病症id
+     * @param id          病症id
      * @return
      */
     @Override
@@ -351,10 +353,21 @@ public class ProductServiceImpl implements ProductService {
         try {
             productMapper.updateTimeByProductCode(vo);
             return ComResponse.success();
-        }catch (Exception ex){
-            log.error("修改商品售卖时间失败,",ex);
+        } catch (Exception ex) {
+            log.error("修改商品售卖时间失败,", ex);
         }
-        return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(),"修改商品售卖时间失败");
+        return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(), "修改商品售卖时间失败");
+    }
+
+    @Override
+    public ComResponse<ProductDetailVO> queryProducDetail(String productCode) {
+        try {
+            ProductDetailVO productVO = productMapper.selectByProductCode(productCode);
+            return ComResponse.success(productVO);
+        } catch (Exception ex) {
+            log.error("查询商品详情信息失败,", ex);
+        }
+        return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(), "查询商品详情信息失败");
     }
 
 
