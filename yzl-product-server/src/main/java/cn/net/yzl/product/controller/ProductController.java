@@ -131,9 +131,9 @@ public class ProductController {
         if (vo.getSalePriceD() == null) {
             return "市场价价格不能为空";
         }
-        if (vo.getUpdateTime() == null) {
-            return "最后修改时间不能为空!";
-        }
+//        if (vo.getUpdateTime() == null) {
+//            return "最后修改时间不能为空!";
+//        }
         if (vo.getUpdateNo() == null) {
             return "编辑员工编码不能为空!";
         }

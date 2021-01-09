@@ -3,6 +3,7 @@ package cn.net.yzl.product.service.impl;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.dao.DiseaseBeanMapper;
+import cn.net.yzl.product.dao.ProductBeanMapper;
 import cn.net.yzl.product.model.db.DiseaseBean;
 import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
@@ -27,6 +28,9 @@ public class DiseaseServiceImpl implements DiseaseService {
     private DiseaseBeanMapper diseaseBeanMapper;
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private ProductBeanMapper productBeanMapper;
 
     /**
      * @param diseaseVo:
@@ -101,6 +105,7 @@ public class DiseaseServiceImpl implements DiseaseService {
                     subList.forEach(suNode->{
                         DiseaseTreeNode subTreeNode = transform(suNode);
                         //TODO 查询商品信息
+                        productBeanMapper.selectByDid(suNode.getId());
                         treeNodes.add(subTreeNode);
                     });
                     treeNode.setNodeList(treeNodes);
