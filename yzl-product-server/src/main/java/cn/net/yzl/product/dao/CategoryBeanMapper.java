@@ -68,17 +68,6 @@ public interface CategoryBeanMapper {
      */
     void chooseCategoryAppStatus(CategoryChangeStatusVO vo);
 
-    void transferCategories(@Param("source") Integer sourceId, @Param("target") Integer targetId);
-    /**
-     * @author lichanghong
-     * @description 查询关联商品数量
-     * @date: 2021/1/5 4:33 下午
-     * @param cid:
-     * @return: null
-     */
-    int getProductCountByCid(@Param("cid") Integer cid);
-
-    List<Category> selectAll();
     /**
      * @author lichanghong
      * @description 下拉列表查询
@@ -94,4 +83,6 @@ public interface CategoryBeanMapper {
      * @Return: Integer
      */
     int queryMaxId();
+
+    cn.net.yzl.product.model.pojo.category.Category queryById(@Param("id") Integer id);
 }

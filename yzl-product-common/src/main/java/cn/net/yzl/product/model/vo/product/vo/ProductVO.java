@@ -161,6 +161,9 @@ public class ProductVO extends BaseObject {
     @ApiModelProperty(name = "diseaseId", value = "商品主治病症")
     private Integer diseaseId;
 
+    @ApiModelProperty(name = "diseasePid", value = "主治病症上级主键")
+    private Integer diseasePid;
+
     @ApiModelProperty(name = "imageUrl", value = "商品主图")
     private String imageUrl;
     @ApiModelProperty(name = "images", value = "商品图片")

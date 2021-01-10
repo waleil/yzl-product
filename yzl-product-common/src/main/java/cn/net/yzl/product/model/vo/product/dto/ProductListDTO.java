@@ -18,21 +18,19 @@ import java.util.Date;
  */
 @Data
 public class ProductListDTO extends BaseObject {
-    @ApiModelProperty(name = "productCode",value = "商品ID(product唯一标识)")
+    @ApiModelProperty(name = "productCode", value = "商品ID(product唯一标识)")
     private String productCode;
 
-    @ApiModelProperty(name = "productNo",value = "商品编号")
+    @ApiModelProperty(name = "productNo", value = "商品编号")
     private String productNo;
 
     @ApiModelProperty(name = "name", value = "商品名称")
-    @NotEmpty(message = "商品名称不能为空")
     private String name;
 
     @ApiModelProperty(name = "engName", value = "英文名称")
     private String engName;
 
     @ApiModelProperty(name = "goodsSource", value = "商品来源：1-自营 2-三方")
-    @DecimalMin(value = "1",message = "最小只能为1")
     private Integer goodsSource;
 
     @ApiModelProperty(name = "brandNo", value = "品牌编号")
@@ -52,15 +50,27 @@ public class ProductListDTO extends BaseObject {
 
     @ApiModelProperty(name = "status", value = "上下架状态：0-下架 1-上架")
     private int status;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(name = "createTime", value = "创建时间")
     private Date createTime;
 
     @ApiModelProperty(name = "imageUrl", value = "商品主图片")
     private String imageUrl;
+
     @ApiModelProperty(name = "diseaseId", value = "商品主治病症")
     private Integer diseaseId;
+
+    @ApiModelProperty(name = "diseasePid", value = "主治病症上级主键")
+    private Integer diseasePid;
+
     @ApiModelProperty(name = "fastDFSUrl", value = "图片库地址,需要把imageUrl进行拼接")
     private String fastDFSUrl;
+
+    @ApiModelProperty(name = "diseaseStr", value = "关联的主治病症名称")
+    private String diseaseStr;
+
+    @ApiModelProperty(name = "categoryStr", value = "关联的类目名称")
+    private String categoryStr;
 
 }

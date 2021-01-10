@@ -18,6 +18,8 @@ import java.util.Date;
 public class DiseaseDelVo extends BaseObject {
     @ApiModelProperty(name = "id", value = "主键")
     private Integer id;
+    @ApiModelProperty(name = "pId", value = "上级主键")
+    private Integer pId;
     @ApiModelProperty(name = "updateNo", value = "员工编号")
     private String updateNo;
 }
