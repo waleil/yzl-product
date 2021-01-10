@@ -1,15 +1,13 @@
 package cn.net.yzl.product.service.meal;
 
 import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.product.model.pojo.product.Meal;
+import cn.net.yzl.product.model.db.Meal;
 import cn.net.yzl.product.model.vo.product.dto.MealDTO;
-import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**

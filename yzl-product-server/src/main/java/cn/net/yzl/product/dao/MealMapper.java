@@ -1,8 +1,7 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.pojo.product.Meal;
+import cn.net.yzl.product.model.db.Meal;
 import cn.net.yzl.product.model.pojo.product.MealStatus;
-import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.*;

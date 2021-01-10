@@ -1,6 +1,6 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.pojo.product.MealProduct;
+import cn.net.yzl.product.model.db.MealProduct;
 import cn.net.yzl.product.model.vo.product.dto.MealListProductDTO;
 import io.lettuce.core.dynamic.annotation.Param;
 
@@ -28,5 +28,5 @@ public interface MealProductMapper {
 
     void deleteByMealNo(Long mealNo);
 
-    void insertSelectiveList(List<cn.net.yzl.product.model.pojo.product.MealProduct> mealProductList);
+    void insertSelectiveList(List<MealProduct> mealProductList);
 }

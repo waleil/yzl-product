@@ -5,22 +5,18 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.AssemblerResultUtil;
-import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.dao.DiseaseBeanMapper;
 import cn.net.yzl.product.config.FastDFSConfig;
 import cn.net.yzl.product.dao.MealMapper;
 import cn.net.yzl.product.dao.MealProductMapper;
 import cn.net.yzl.product.dao.ProductMapper;
+import cn.net.yzl.product.model.db.Meal;
 import cn.net.yzl.product.model.db.MealProduct;
 import cn.net.yzl.product.model.pojo.disease.Disease;
-import cn.net.yzl.product.model.pojo.product.Meal;
 import cn.net.yzl.product.model.vo.disease.DiseaseAllDTO;
 import cn.net.yzl.product.model.vo.product.dto.MealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
-import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
-//import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 import cn.net.yzl.product.model.pojo.product.*;
 import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.vo.product.vo.*;
@@ -30,16 +26,11 @@ import cn.net.yzl.product.utils.CacheKeyUtil;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import cn.net.yzl.product.utils.RedisUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
-import javax.naming.Name;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -138,7 +129,7 @@ public class ProductMealServiceImpl implements ProductMealService {
             mealMapper.insertSelective(meal);
             //套餐商品新增
             List<MealProductVO> mealProducts = vo.getMealProducts();
-            List<cn.net.yzl.product.model.pojo.product.MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, cn.net.yzl.product.model.pojo.product.MealProduct::new);
+            List<MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, MealProduct::new);
             mealProductList.stream().forEach(n -> n.setMealNo(maxProductCode));
             mealProductMapper.insertSelectiveList(mealProductList);
         } else {
@@ -153,7 +144,7 @@ public class ProductMealServiceImpl implements ProductMealService {
             mealMapper.updateByPrimaryKeySelective(meal);
             mealProductMapper.deleteByMealNo(mealNo);
             List<MealProductVO> mealProducts = vo.getMealProducts();
-            List<cn.net.yzl.product.model.pojo.product.MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, cn.net.yzl.product.model.pojo.product.MealProduct::new);
+            List<MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, MealProduct::new);
             mealProductList.stream().forEach(n -> {
                         n.setMealNo(mealStatus.getMealNo());
                         n.setUpdateTime(mealStatus.getUpdateTime());
@@ -197,11 +188,7 @@ public class ProductMealServiceImpl implements ProductMealService {
     }
 
 
-    /**
-     * 查询套餐详情信息
-     * @param mealNo  套餐编号
-     * @return
-     */
+
     //查询商品套餐列表
     @Override
     public ComResponse<Page<ProductMealListDTO>> queryProductMealList(ProductMealSelectVO vo) {
