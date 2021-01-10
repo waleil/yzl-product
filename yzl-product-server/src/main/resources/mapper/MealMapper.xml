@@ -222,7 +222,8 @@
   <!-- 修改上下架的状态 -->
   <update id="updateStatusByMealCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealUpdateStatusVO">
     update meal
-    set `status`= #{status,jdbcType=INTEGER}
+    set `status`= #{status,jdbcType=INTEGER},
+      update_no = #{updateNo,jdbcType=VARCHAR}
     where
     meal_no in
     <foreach item="item" index="index" collection="mealNoList" open="(" separator="," close=")">
