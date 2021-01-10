@@ -33,6 +33,14 @@
     descri,update_no
   </sql>
 
+  <select id="queryProductCount" resultType="map" parameterType="list">
+    select category_dict_code as category,count(1) from product where
+    category_dict_code in
+    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    group by category_dict_code
+  </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

@@ -16,10 +16,7 @@ import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
 import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
-import cn.net.yzl.product.model.vo.product.dto.ProductAtlasDTO;
-import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
-import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
-import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
+import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.service.CategoryService;
 import cn.net.yzl.product.service.DiseaseService;
@@ -464,6 +461,25 @@ public class ProductServiceImpl implements ProductService {
             log.error("查询商品详情信息失败,", ex);
         }
         return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(), "查询商品详情信息失败");
+    }
+
+    @Override
+    public ProductPortraitDTO queryProductPortrait(String productCode) {
+        ProductDetailVO productVO = productMapper.selectByProductCode(productCode);
+
+        return null;
+    }
+
+    private ProductPortraitDTO transformProductPortraitDTO(ProductDetailVO productVO){
+        ProductPortraitDTO dto = BeanUtil.copyProperties(productVO, ProductPortraitDTO.class);
+            //处理价格
+        dto.setSalePriceD(new BigDecimal(String.valueOf(productVO.getSalePrice() / 100d))
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        dto.setCostPriceD(new BigDecimal(String.valueOf(productVO.getCostPrice() / 100d))
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        dto.setLimitDownPriceD(new BigDecimal(String.valueOf(productVO.getLimitDownPrice() / 100d))
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return dto;
     }
 
 

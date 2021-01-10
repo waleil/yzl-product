@@ -172,6 +172,18 @@ public class Product extends BaseObject {
     @ApiModelProperty(name = "cjAreaNo", value = "厂家区/县")
     private Integer cjAreaNo;
 
+    @ApiModelProperty(name = "cjCountryName", value = "厂家国家名称")
+    private String cjCountryName;
+
+    @ApiModelProperty(name = "cjProvinceName", value = "厂家省名称")
+    private String cjProvinceName;
+
+    @ApiModelProperty(name = "cjCityName", value = "厂家市名称")
+    private String cjCityName;
+
+    @ApiModelProperty(name = "cjAreaName", value = "厂家区/县名称")
+    private String cjAreaName;
+
     @ApiModelProperty(name = "cjAddr", value = "厂家详细地址")
     private String cjAddr;
 

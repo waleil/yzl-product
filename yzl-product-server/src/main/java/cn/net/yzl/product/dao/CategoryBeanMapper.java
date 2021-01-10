@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CategoryBeanMapper {
@@ -85,4 +86,6 @@ public interface CategoryBeanMapper {
     int queryMaxId();
 
     cn.net.yzl.product.model.pojo.category.Category queryById(@Param("id") Integer id);
+
+    Map<Integer, Integer> queryProductCount(List<Integer> ids);
 }

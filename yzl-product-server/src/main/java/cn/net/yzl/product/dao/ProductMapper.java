@@ -8,7 +8,6 @@ import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,736 +1,798 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.net.yzl.product.dao.ProductMapper" >
-<!--  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.pojo.product.Product" >-->
-<!--    <result column="product_code" property="productCode" jdbcType="VARCHAR" />-->
-<!--    <result column="product_no" property="productNo" jdbcType="VARCHAR" />-->
-<!--    <result column="business_code" property="businessCode" jdbcType="VARCHAR" />-->
-<!--    <result column="quick_search_code" property="quickSearchCode" jdbcType="VARCHAR" />-->
-<!--    <result column="prove" property="prove" jdbcType="VARCHAR" />-->
-<!--    <result column="name" property="name" jdbcType="VARCHAR" />-->
-<!--    <result column="nickname" property="nickname" jdbcType="VARCHAR" />-->
-<!--    <result column="eng_name" property="engName" jdbcType="VARCHAR" />-->
-<!--    <result column="goods_source" property="goodsSource" jdbcType="INTEGER" />-->
-<!--    <result column="brand_no" property="brandNo" jdbcType="INTEGER" />-->
-<!--    <result column="category_dict_code" property="categoryDictCode" jdbcType="INTEGER" />-->
-<!--    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />-->
-<!--    <result column="gift_flag" property="giftFlag" jdbcType="INTEGER" />-->
-<!--    <result column="jf_exchange_flag" property="jfExchangeFlag" jdbcType="INTEGER" />-->
-<!--    <result column="jf_price" property="jfPrice" jdbcType="INTEGER" />-->
-<!--    <result column="sale_price" property="salePrice" jdbcType="INTEGER" />-->
-<!--    <result column="member_price" property="memberPrice" jdbcType="INTEGER" />-->
-<!--    <result column="cost_price" property="costPrice" jdbcType="INTEGER" />-->
-<!--    <result column="best_price" property="bestPrice" jdbcType="INTEGER" />-->
-<!--    <result column="limit_down_price" property="limitDownPrice" jdbcType="INTEGER" />-->
-<!--    <result column="yk_price" property="ykPrice" jdbcType="INTEGER" />-->
-<!--    <result column="jk_price" property="jkPrice" jdbcType="INTEGER" />-->
-<!--    <result column="zk_price" property="zkPrice" jdbcType="INTEGER" />-->
-<!--    <result column="stock" property="stock" jdbcType="INTEGER" />-->
-<!--    <result column="stock_threshold" property="stockThreshold" jdbcType="INTEGER" />-->
-<!--    <result column="sale_pattern" property="salePattern" jdbcType="INTEGER" />-->
-<!--    <result column="marketing_rule" property="marketingRule" jdbcType="VARCHAR" />-->
-<!--    <result column="sale_start_time" property="saleStartTime" jdbcType="TIMESTAMP" />-->
-<!--    <result column="sale_end_time" property="saleEndTime" jdbcType="TIMESTAMP" />-->
-<!--    <result column="status" property="status" jdbcType="TINYINT" />-->
-<!--    <result column="patent_code" property="patentCode" jdbcType="VARCHAR" />-->
-<!--    <result column="approval_number" property="approvalNumber" jdbcType="VARCHAR" />-->
-<!--    <result column="approval_type" property="approvalType" jdbcType="TINYINT" />-->
-<!--    <result column="weight" property="weight" jdbcType="INTEGER" />-->
-<!--    <result column="import_flag" property="importFlag" jdbcType="INTEGER" />-->
-<!--    <result column="production_time" property="productionTime" jdbcType="TIMESTAMP" />-->
-<!--    <result column="expiration_date" property="expirationDate" jdbcType="INTEGER" />-->
-<!--    <result column="valid_date" property="validDate" jdbcType="TIMESTAMP" />-->
-<!--    <result column="unit" property="unit" jdbcType="VARCHAR" />-->
-<!--    <result column="total_use_num" property="totalUseNum" jdbcType="INTEGER" />-->
-<!--    <result column="one_use_num" property="oneUseNum" jdbcType="INTEGER" />-->
-<!--    <result column="one_to_times" property="oneToTimes" jdbcType="INTEGER" />-->
-<!--    <result column="cj_name" property="cjName" jdbcType="VARCHAR" />-->
-<!--    <result column="cj_country_no" property="cjCountryNo" jdbcType="INTEGER" />-->
-<!--    <result column="cj_province_no" property="cjProvinceNo" jdbcType="INTEGER" />-->
-<!--    <result column="cj_city_no" property="cjCityNo" jdbcType="INTEGER" />-->
-<!--    <result column="cj_area_no" property="cjAreaNo" jdbcType="INTEGER" />-->
-<!--    <result column="cj_addr" property="cjAddr" jdbcType="VARCHAR" />-->
-<!--    <result column="update_no" property="updateNo" jdbcType="VARCHAR" />-->
-<!--    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />-->
-<!--    <result column="descri" property="descri" jdbcType="VARCHAR" />-->
-<!--    <result column="applicable" property="applicable" jdbcType="VARCHAR" />-->
-<!--    <result column="forbidden" property="forbidden" jdbcType="VARCHAR" />-->
-<!--    <result column="raw_stock" property="rawStock" jdbcType="VARCHAR" />-->
-<!--    <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />-->
-<!--    <result column="finance_code" property="financeCode" jdbcType="VARCHAR" />-->
-<!--    <result column="disease_id" property="diseaseId" jdbcType="VARCHAR" />-->
-<!--    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />-->
-<!--  </resultMap>-->
+<mapper namespace="cn.net.yzl.product.dao.ProductMapper">
+    <!--  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.pojo.product.Product" >-->
+    <!--    <result column="product_code" property="productCode" jdbcType="VARCHAR" />-->
+    <!--    <result column="product_no" property="productNo" jdbcType="VARCHAR" />-->
+    <!--    <result column="business_code" property="businessCode" jdbcType="VARCHAR" />-->
+    <!--    <result column="quick_search_code" property="quickSearchCode" jdbcType="VARCHAR" />-->
+    <!--    <result column="prove" property="prove" jdbcType="VARCHAR" />-->
+    <!--    <result column="name" property="name" jdbcType="VARCHAR" />-->
+    <!--    <result column="nickname" property="nickname" jdbcType="VARCHAR" />-->
+    <!--    <result column="eng_name" property="engName" jdbcType="VARCHAR" />-->
+    <!--    <result column="goods_source" property="goodsSource" jdbcType="INTEGER" />-->
+    <!--    <result column="brand_no" property="brandNo" jdbcType="INTEGER" />-->
+    <!--    <result column="category_dict_code" property="categoryDictCode" jdbcType="INTEGER" />-->
+    <!--    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />-->
+    <!--    <result column="gift_flag" property="giftFlag" jdbcType="INTEGER" />-->
+    <!--    <result column="jf_exchange_flag" property="jfExchangeFlag" jdbcType="INTEGER" />-->
+    <!--    <result column="jf_price" property="jfPrice" jdbcType="INTEGER" />-->
+    <!--    <result column="sale_price" property="salePrice" jdbcType="INTEGER" />-->
+    <!--    <result column="member_price" property="memberPrice" jdbcType="INTEGER" />-->
+    <!--    <result column="cost_price" property="costPrice" jdbcType="INTEGER" />-->
+    <!--    <result column="best_price" property="bestPrice" jdbcType="INTEGER" />-->
+    <!--    <result column="limit_down_price" property="limitDownPrice" jdbcType="INTEGER" />-->
+    <!--    <result column="yk_price" property="ykPrice" jdbcType="INTEGER" />-->
+    <!--    <result column="jk_price" property="jkPrice" jdbcType="INTEGER" />-->
+    <!--    <result column="zk_price" property="zkPrice" jdbcType="INTEGER" />-->
+    <!--    <result column="stock" property="stock" jdbcType="INTEGER" />-->
+    <!--    <result column="stock_threshold" property="stockThreshold" jdbcType="INTEGER" />-->
+    <!--    <result column="sale_pattern" property="salePattern" jdbcType="INTEGER" />-->
+    <!--    <result column="marketing_rule" property="marketingRule" jdbcType="VARCHAR" />-->
+    <!--    <result column="sale_start_time" property="saleStartTime" jdbcType="TIMESTAMP" />-->
+    <!--    <result column="sale_end_time" property="saleEndTime" jdbcType="TIMESTAMP" />-->
+    <!--    <result column="status" property="status" jdbcType="TINYINT" />-->
+    <!--    <result column="patent_code" property="patentCode" jdbcType="VARCHAR" />-->
+    <!--    <result column="approval_number" property="approvalNumber" jdbcType="VARCHAR" />-->
+    <!--    <result column="approval_type" property="approvalType" jdbcType="TINYINT" />-->
+    <!--    <result column="weight" property="weight" jdbcType="INTEGER" />-->
+    <!--    <result column="import_flag" property="importFlag" jdbcType="INTEGER" />-->
+    <!--    <result column="production_time" property="productionTime" jdbcType="TIMESTAMP" />-->
+    <!--    <result column="expiration_date" property="expirationDate" jdbcType="INTEGER" />-->
+    <!--    <result column="valid_date" property="validDate" jdbcType="TIMESTAMP" />-->
+    <!--    <result column="unit" property="unit" jdbcType="VARCHAR" />-->
+    <!--    <result column="total_use_num" property="totalUseNum" jdbcType="INTEGER" />-->
+    <!--    <result column="one_use_num" property="oneUseNum" jdbcType="INTEGER" />-->
+    <!--    <result column="one_to_times" property="oneToTimes" jdbcType="INTEGER" />-->
+    <!--    <result column="cj_name" property="cjName" jdbcType="VARCHAR" />-->
+    <!--    <result column="cj_country_no" property="cjCountryNo" jdbcType="INTEGER" />-->
+    <!--    <result column="cj_province_no" property="cjProvinceNo" jdbcType="INTEGER" />-->
+    <!--    <result column="cj_city_no" property="cjCityNo" jdbcType="INTEGER" />-->
+    <!--    <result column="cj_area_no" property="cjAreaNo" jdbcType="INTEGER" />-->
+    <!--    <result column="cj_addr" property="cjAddr" jdbcType="VARCHAR" />-->
+    <!--    <result column="update_no" property="updateNo" jdbcType="VARCHAR" />-->
+    <!--    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />-->
+    <!--    <result column="descri" property="descri" jdbcType="VARCHAR" />-->
+    <!--    <result column="applicable" property="applicable" jdbcType="VARCHAR" />-->
+    <!--    <result column="forbidden" property="forbidden" jdbcType="VARCHAR" />-->
+    <!--    <result column="raw_stock" property="rawStock" jdbcType="VARCHAR" />-->
+    <!--    <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />-->
+    <!--    <result column="finance_code" property="financeCode" jdbcType="VARCHAR" />-->
+    <!--    <result column="disease_id" property="diseaseId" jdbcType="VARCHAR" />-->
+    <!--    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />-->
+    <!--  </resultMap>-->
 
-  <!--查询商品列表-->
-  <select id="queryListProduct" resultType="cn.net.yzl.product.model.vo.product.dto.ProductListDTO"
-          parameterType="cn.net.yzl.product.model.vo.product.vo.ProductSelectVO">
-    select
-    product_code as productCode,
-    product_no as productNo,
-    `name` as name,
-    brand_no as brandNo,
-    category_dict_code as categoryDictCode,
-    sale_price as salePrice,
-    stock as stock,
-    `status` as status,
-    create_time as createTime,
-    image_url as imageUrl,
-    disease_id as diseaseId,
-    disease_pid as diseasePid
-    from
-    product
-    where 1=1
-    and del_flag=0
-    <if test="keyword != null and keyword != ''">
-      AND (`name` LIKE  CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%')
-      OR product_code LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%'))
-    </if>
-    <if test="categoryDictCode != null ">
-      AND category_dict_code = #{categoryDictCode}
-    </if>
+    <!--查询商品列表-->
+    <select id="queryListProduct" resultType="cn.net.yzl.product.model.vo.product.dto.ProductListDTO"
+            parameterType="cn.net.yzl.product.model.vo.product.vo.ProductSelectVO">
+        select
+        product_code as productCode,
+        product_no as productNo,
+        `name` as name,
+        brand_no as brandNo,
+        category_dict_code as categoryDictCode,
+        sale_price as salePrice,
+        stock as stock,
+        `status` as status,
+        create_time as createTime,
+        image_url as imageUrl,
+        disease_id as diseaseId,
+        disease_pid as diseasePid
+        from
+        product
+        where 1=1
+        and del_flag=0
+        <if test="keyword != null and keyword != ''">
+            AND (`name` LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%')
+            OR product_code LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%'))
+        </if>
+        <if test="categoryDictCode != null ">
+            AND category_dict_code = #{categoryDictCode}
+        </if>
 
-    <if test="categoryDictCode != null ">
-      AND category_dict_code = #{categoryDictCode}
-    </if>
-    <if test="diseaseId != null ">
-      AND disease_id = #{diseaseId}
-    </if>
-     <if test="brandNo != null ">
-      AND brand_no = #{brandNo}
-    </if>
-    <if test="status != null ">
-      AND status = #{status}
-    </if>
-    <if test="upPrice != null ">
-      <if test="downPrice != null ">
-        AND sale_price BETWEEN #{downPrice} AND #{upPrice}
-      </if>
-    </if>
-    order by create_time desc
+        <if test="categoryDictCode != null ">
+            AND category_dict_code = #{categoryDictCode}
+        </if>
+        <if test="diseaseId != null ">
+            AND disease_id = #{diseaseId}
+        </if>
+        <if test="brandNo != null ">
+            AND brand_no = #{brandNo}
+        </if>
+        <if test="status != null ">
+            AND status = #{status}
+        </if>
+        <if test="upPrice != null ">
+            <if test="downPrice != null ">
+                AND sale_price BETWEEN #{downPrice} AND #{upPrice}
+            </if>
+        </if>
+        order by create_time desc
 
-  </select>
-  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.pojo.product.Product" >
-    insert into product
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="productCode != null" >
-        product_code,
-      </if>
-      <if test="productNo != null" >
-        product_no,
-      </if>
-      <if test="businessCode != null" >
-        business_code,
-      </if>
-      <if test="quickSearchCode != null" >
-        quick_search_code,
-      </if>
-      <if test="prove != null" >
-        prove,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="nickname != null" >
-        nickname,
-      </if>
-      <if test="engName != null" >
-        eng_name,
-      </if>
-      <if test="goodsSource != null" >
-        goods_source,
-      </if>
-      <if test="brandNo != null" >
-        brand_no,
-      </if>
-      <if test="categoryDictCode != null" >
-        category_dict_code,
-      </if>
-      <if test="barCode != null" >
-        bar_code,
-      </if>
-      <if test="giftFlag != null" >
-        gift_flag,
-      </if>
-      <if test="jfExchangeFlag != null" >
-        jf_exchange_flag,
-      </if>
-      <if test="jfPrice != null" >
-        jf_price,
-      </if>
-      <if test="salePrice != null" >
-        sale_price,
-      </if>
-      <if test="memberPrice != null" >
-        member_price,
-      </if>
-      <if test="costPrice != null" >
-        cost_price,
-      </if>
-      <if test="bestPrice != null" >
-        best_price,
-      </if>
-      <if test="limitDownPrice != null" >
-        limit_down_price,
-      </if>
-      <if test="ykPrice != null" >
-        yk_price,
-      </if>
-      <if test="jkPrice != null" >
-        jk_price,
-      </if>
-      <if test="zkPrice != null" >
-        zk_price,
-      </if>
-      <if test="stock != null" >
-        stock,
-      </if>
-      <if test="stockThreshold != null" >
-        stock_threshold,
-      </if>
-      <if test="salePattern != null" >
-        sale_pattern,
-      </if>
-      <if test="marketingRule != null" >
-        marketing_rule,
-      </if>
-      <if test="saleStartTime != null" >
-        sale_start_time,
-      </if>
-      <if test="saleEndTime != null" >
-        sale_end_time,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="patentCode != null" >
-        patent_code,
-      </if>
-      <if test="approvalNumber != null" >
-        approval_number,
-      </if>
-      <if test="approvalType != null" >
-        approval_type,
-      </if>
-      <if test="weight != null" >
-        weight,
-      </if>
-      <if test="importFlag != null" >
-        import_flag,
-      </if>
-      <if test="productionTime != null" >
-        production_time,
-      </if>
-      <if test="expirationDate != null" >
-        expiration_date,
-      </if>
-      <if test="validDate != null" >
-        valid_date,
-      </if>
-      <if test="unit != null" >
-        unit,
-      </if>
-      <if test="totalUseNum != null" >
-        total_use_num,
-      </if>
-      <if test="oneUseNum != null" >
-        one_use_num,
-      </if>
-      <if test="oneToTimes != null" >
-        one_to_times,
-      </if>
-      <if test="cjName != null" >
-        cj_name,
-      </if>
-      <if test="cjCountryNo != null" >
-        cj_country_no,
-      </if>
-      <if test="cjProvinceNo != null" >
-        cj_province_no,
-      </if>
-      <if test="cjCityNo != null" >
-        cj_city_no,
-      </if>
-      <if test="cjAreaNo != null" >
-        cj_area_no,
-      </if>
-      <if test="cjAddr != null" >
-        cj_addr,
-      </if>
+    </select>
+    <insert id="insertSelective" parameterType="cn.net.yzl.product.model.pojo.product.Product">
+        insert into product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="productNo != null">
+                product_no,
+            </if>
+            <if test="businessCode != null">
+                business_code,
+            </if>
+            <if test="quickSearchCode != null">
+                quick_search_code,
+            </if>
+            <if test="prove != null">
+                prove,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="engName != null">
+                eng_name,
+            </if>
+            <if test="goodsSource != null">
+                goods_source,
+            </if>
+            <if test="brandNo != null">
+                brand_no,
+            </if>
+            <if test="categoryDictCode != null">
+                category_dict_code,
+            </if>
+            <if test="barCode != null">
+                bar_code,
+            </if>
+            <if test="giftFlag != null">
+                gift_flag,
+            </if>
+            <if test="jfExchangeFlag != null">
+                jf_exchange_flag,
+            </if>
+            <if test="jfPrice != null">
+                jf_price,
+            </if>
+            <if test="salePrice != null">
+                sale_price,
+            </if>
+            <if test="memberPrice != null">
+                member_price,
+            </if>
+            <if test="costPrice != null">
+                cost_price,
+            </if>
+            <if test="bestPrice != null">
+                best_price,
+            </if>
+            <if test="limitDownPrice != null">
+                limit_down_price,
+            </if>
+            <if test="ykPrice != null">
+                yk_price,
+            </if>
+            <if test="jkPrice != null">
+                jk_price,
+            </if>
+            <if test="zkPrice != null">
+                zk_price,
+            </if>
+            <if test="stock != null">
+                stock,
+            </if>
+            <if test="stockThreshold != null">
+                stock_threshold,
+            </if>
+            <if test="salePattern != null">
+                sale_pattern,
+            </if>
+            <if test="marketingRule != null">
+                marketing_rule,
+            </if>
+            <if test="saleStartTime != null">
+                sale_start_time,
+            </if>
+            <if test="saleEndTime != null">
+                sale_end_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="patentCode != null">
+                patent_code,
+            </if>
+            <if test="approvalNumber != null">
+                approval_number,
+            </if>
+            <if test="approvalType != null">
+                approval_type,
+            </if>
+            <if test="weight != null">
+                weight,
+            </if>
+            <if test="importFlag != null">
+                import_flag,
+            </if>
+            <if test="productionTime != null">
+                production_time,
+            </if>
+            <if test="expirationDate != null">
+                expiration_date,
+            </if>
+            <if test="validDate != null">
+                valid_date,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="totalUseNum != null">
+                total_use_num,
+            </if>
+            <if test="oneUseNum != null">
+                one_use_num,
+            </if>
+            <if test="oneToTimes != null">
+                one_to_times,
+            </if>
+            <if test="cjName != null">
+                cj_name,
+            </if>
+            <if test="cjCountryNo != null">
+                cj_country_no,
+            </if>
+            <if test="cjProvinceNo != null">
+                cj_province_no,
+            </if>
+            <if test="cjCityNo != null">
+                cj_city_no,
+            </if>
+            <if test="cjAreaNo != null">
+                cj_area_no,
+            </if>
 
-      <if test="updateNo != null" >
-        create_no,
-      </if>
-      <if test="updateNo != null" >
-        update_no,
-      </if>
-      <if test="descri != null" >
-        descri,
-      </if>
-      <if test="applicable != null" >
-        applicable,
-      </if>
-      <if test="forbidden != null" >
-        forbidden,
-      </if>
-      <if test="rawStock != null" >
-        raw_stock,
-      </if>
-      <if test="videoUrl != null" >
-        video_url,
-      </if>
-      <if test="diseaseId != null" >
-        disease_id,
-      </if>
-      <if test="diseasePid != null" >
-        disease_pid,
-      </if>
-      <if test="imageUrl != null" >
-        image_url,
-      </if>
-       <if test="financeCode != null" >
-         finance_code,
-      </if>
-    </trim>
-    <trim prefix="values(" suffix=")" suffixOverrides="," >
-      <if test="productCode != null" >
-        #{productCode,jdbcType=VARCHAR},
-      </if>
-      <if test="productNo != null" >
-        #{productNo,jdbcType=VARCHAR},
-      </if>
-      <if test="businessCode != null" >
-        #{businessCode,jdbcType=VARCHAR},
-      </if>
-      <if test="quickSearchCode != null" >
-        #{quickSearchCode,jdbcType=VARCHAR},
-      </if>
-      <if test="prove != null" >
-        #{prove,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null" >
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="engName != null" >
-        #{engName,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsSource != null" >
-        #{goodsSource,jdbcType=BIT},
-      </if>
-      <if test="brandNo != null" >
-        #{brandNo,jdbcType=INTEGER},
-      </if>
-      <if test="categoryDictCode != null" >
-        #{categoryDictCode,jdbcType=INTEGER},
-      </if>
-      <if test="barCode != null" >
-        #{barCode,jdbcType=VARCHAR},
-      </if>
-      <if test="giftFlag != null" >
-        #{giftFlag,jdbcType=BIT},
-      </if>
-      <if test="jfExchangeFlag != null" >
-        #{jfExchangeFlag,jdbcType=BIT},
-      </if>
-      <if test="jfPrice != null" >
-        #{jfPrice,jdbcType=INTEGER},
-      </if>
-      <if test="salePrice != null" >
-        #{salePrice,jdbcType=INTEGER},
-      </if>
-      <if test="memberPrice != null" >
-        #{memberPrice,jdbcType=INTEGER},
-      </if>
-      <if test="costPrice != null" >
-        #{costPrice,jdbcType=INTEGER},
-      </if>
-      <if test="bestPrice != null" >
-        #{bestPrice,jdbcType=INTEGER},
-      </if>
-      <if test="limitDownPrice != null" >
-        #{limitDownPrice,jdbcType=INTEGER},
-      </if>
-      <if test="ykPrice != null" >
-        #{ykPrice,jdbcType=INTEGER},
-      </if>
-      <if test="jkPrice != null" >
-        #{jkPrice,jdbcType=INTEGER},
-      </if>
-      <if test="zkPrice != null" >
-        #{zkPrice,jdbcType=INTEGER},
-      </if>
-      <if test="stock != null" >
-        #{stock,jdbcType=INTEGER},
-      </if>
-      <if test="stockThreshold != null" >
-        #{stockThreshold,jdbcType=INTEGER},
-      </if>
-      <if test="salePattern != null" >
-        #{salePattern,jdbcType=BIT},
-      </if>
-      <if test="marketingRule != null" >
-        #{marketingRule,jdbcType=VARCHAR},
-      </if>
-      <if test="saleStartTime != null" >
-        #{saleStartTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="saleEndTime != null" >
-        #{saleEndTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=TINYINT},
-      </if>
-      <if test="patentCode != null" >
-        #{patentCode,jdbcType=VARCHAR},
-      </if>
-      <if test="approvalNumber != null" >
-        #{approvalNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="approvalType != null" >
-        #{approvalType,jdbcType=TINYINT},
-      </if>
-      <if test="weight != null" >
-        #{weight,jdbcType=INTEGER},
-      </if>
-      <if test="importFlag != null" >
-        #{importFlag,jdbcType=BIT},
-      </if>
-      <if test="productionTime != null" >
-        #{productionTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="expirationDate != null" >
-        #{expirationDate,jdbcType=INTEGER},
-      </if>
-      <if test="validDate != null" >
-        #{validDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="unit != null" >
-        #{unit,jdbcType=VARCHAR},
-      </if>
-      <if test="totalUseNum != null" >
-        #{totalUseNum,jdbcType=INTEGER},
-      </if>
-      <if test="oneUseNum != null" >
-        #{oneUseNum,jdbcType=INTEGER},
-      </if>
-      <if test="oneToTimes != null" >
-        #{oneToTimes,jdbcType=INTEGER},
-      </if>
-      <if test="cjName != null" >
-        #{cjName,jdbcType=VARCHAR},
-      </if>
-      <if test="cjCountryNo != null" >
-        #{cjCountryNo,jdbcType=INTEGER},
-      </if>
-      <if test="cjProvinceNo != null" >
-        #{cjProvinceNo,jdbcType=INTEGER},
-      </if>
-      <if test="cjCityNo != null" >
-        #{cjCityNo,jdbcType=INTEGER},
-      </if>
-      <if test="cjAreaNo != null" >
-        #{cjAreaNo,jdbcType=INTEGER},
-      </if>
-      <if test="cjAddr != null" >
-        #{cjAddr,jdbcType=VARCHAR},
-      </if>
+            <if test="cjCountryName != null">
+                cj_country_name ,
+            </if>
+            <if test="cjProvinceName != null">
+                cj_province_name ,
+            </if>
+            <if test="cjCityName != null">
+                cj_city_name ,
+            </if>
+            <if test="cjAreaName != null">
+                cj_area_name ,
+            </if>
+            <if test="cjAddr != null">
+                cj_addr,
+            </if>
 
-      <if test="updateNo != null" >
-        #{updateNo,jdbcType=VARCHAR},
-      </if>
-      <if test="updateNo != null" >
-        #{updateNo,jdbcType=VARCHAR},
-      </if>
-      <if test="descri != null" >
-        #{descri,jdbcType=VARCHAR},
-      </if>
-      <if test="applicable != null" >
-        #{applicable,jdbcType=VARCHAR},
-      </if>
-      <if test="forbidden != null" >
-        #{forbidden,jdbcType=VARCHAR},
-      </if>
-      <if test="rawStock != null" >
-        #{rawStock,jdbcType=VARCHAR},
-      </if>
-      <if test="videoUrl != null" >
-        #{videoUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="diseaseId != null" >
-        #{diseaseId,jdbcType=INTEGER},
-      </if>
-      <if test="diseasePid != null" >
-        #{diseasePid,jdbcType=INTEGER},
-      </if>
-      <if test="imageUrl != null" >
-        #{imageUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="financeCode != null" >
-        #{financeCode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+            <if test="updateNo != null">
+                create_no,
+            </if>
+            <if test="updateNo != null">
+                update_no,
+            </if>
+            <if test="descri != null">
+                descri,
+            </if>
+            <if test="applicable != null">
+                applicable,
+            </if>
+            <if test="forbidden != null">
+                forbidden,
+            </if>
+            <if test="rawStock != null">
+                raw_stock,
+            </if>
+            <if test="videoUrl != null">
+                video_url,
+            </if>
+            <if test="diseaseId != null">
+                disease_id,
+            </if>
+            <if test="diseasePid != null">
+                disease_pid,
+            </if>
+            <if test="imageUrl != null">
+                image_url,
+            </if>
+            <if test="financeCode != null">
+                finance_code,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="productNo != null">
+                #{productNo,jdbcType=VARCHAR},
+            </if>
+            <if test="businessCode != null">
+                #{businessCode,jdbcType=VARCHAR},
+            </if>
+            <if test="quickSearchCode != null">
+                #{quickSearchCode,jdbcType=VARCHAR},
+            </if>
+            <if test="prove != null">
+                #{prove,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="engName != null">
+                #{engName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSource != null">
+                #{goodsSource,jdbcType=BIT},
+            </if>
+            <if test="brandNo != null">
+                #{brandNo,jdbcType=INTEGER},
+            </if>
+            <if test="categoryDictCode != null">
+                #{categoryDictCode,jdbcType=INTEGER},
+            </if>
+            <if test="barCode != null">
+                #{barCode,jdbcType=VARCHAR},
+            </if>
+            <if test="giftFlag != null">
+                #{giftFlag,jdbcType=BIT},
+            </if>
+            <if test="jfExchangeFlag != null">
+                #{jfExchangeFlag,jdbcType=BIT},
+            </if>
+            <if test="jfPrice != null">
+                #{jfPrice,jdbcType=INTEGER},
+            </if>
+            <if test="salePrice != null">
+                #{salePrice,jdbcType=INTEGER},
+            </if>
+            <if test="memberPrice != null">
+                #{memberPrice,jdbcType=INTEGER},
+            </if>
+            <if test="costPrice != null">
+                #{costPrice,jdbcType=INTEGER},
+            </if>
+            <if test="bestPrice != null">
+                #{bestPrice,jdbcType=INTEGER},
+            </if>
+            <if test="limitDownPrice != null">
+                #{limitDownPrice,jdbcType=INTEGER},
+            </if>
+            <if test="ykPrice != null">
+                #{ykPrice,jdbcType=INTEGER},
+            </if>
+            <if test="jkPrice != null">
+                #{jkPrice,jdbcType=INTEGER},
+            </if>
+            <if test="zkPrice != null">
+                #{zkPrice,jdbcType=INTEGER},
+            </if>
+            <if test="stock != null">
+                #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="stockThreshold != null">
+                #{stockThreshold,jdbcType=INTEGER},
+            </if>
+            <if test="salePattern != null">
+                #{salePattern,jdbcType=BIT},
+            </if>
+            <if test="marketingRule != null">
+                #{marketingRule,jdbcType=VARCHAR},
+            </if>
+            <if test="saleStartTime != null">
+                #{saleStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="saleEndTime != null">
+                #{saleEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="patentCode != null">
+                #{patentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalNumber != null">
+                #{approvalNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalType != null">
+                #{approvalType,jdbcType=TINYINT},
+            </if>
+            <if test="weight != null">
+                #{weight,jdbcType=INTEGER},
+            </if>
+            <if test="importFlag != null">
+                #{importFlag,jdbcType=BIT},
+            </if>
+            <if test="productionTime != null">
+                #{productionTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirationDate != null">
+                #{expirationDate,jdbcType=INTEGER},
+            </if>
+            <if test="validDate != null">
+                #{validDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="totalUseNum != null">
+                #{totalUseNum,jdbcType=INTEGER},
+            </if>
+            <if test="oneUseNum != null">
+                #{oneUseNum,jdbcType=INTEGER},
+            </if>
+            <if test="oneToTimes != null">
+                #{oneToTimes,jdbcType=INTEGER},
+            </if>
+            <if test="cjName != null">
+                #{cjName,jdbcType=VARCHAR},
+            </if>
+            <if test="cjCountryNo != null">
+                #{cjCountryNo,jdbcType=INTEGER},
+            </if>
+            <if test="cjProvinceNo != null">
+                #{cjProvinceNo,jdbcType=INTEGER},
+            </if>
+            <if test="cjCityNo != null">
+                #{cjCityNo,jdbcType=INTEGER},
+            </if>
+            <if test="cjAreaNo != null">
+                #{cjAreaNo,jdbcType=INTEGER},
+            </if>
+            <if test="cjCountryName != null">
+                #{cjCountryName,jdbcType=INTEGER},
+            </if>
+            <if test="cjProvinceName != null">
+                #{cjProvinceName,jdbcType=INTEGER},
+            </if>
+            <if test="cjCityName != null">
+                #{cjCityName,jdbcType=INTEGER},
+            </if>
+            <if test="cjAreaName != null">
+                #{cjAreaName,jdbcType=INTEGER},
+            </if>
+            <if test="cjAddr != null">
+                #{cjAddr,jdbcType=VARCHAR},
+            </if>
 
-  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.pojo.product.Product" >
-    update product
-    <set >
-      <if test="productNo != null" >
-        product_no = #{productNo,jdbcType=VARCHAR},
-      </if>
-      <if test="businessCode != null" >
-        business_code = #{businessCode,jdbcType=VARCHAR},
-      </if>
-      <if test="quickSearchCode != null" >
-        quick_search_code = #{quickSearchCode,jdbcType=VARCHAR},
-      </if>
-      <if test="prove != null" >
-        prove = #{prove,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null" >
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="engName != null" >
-        eng_name = #{engName,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsSource != null" >
-        goods_source = #{goodsSource,jdbcType=BIT},
-      </if>
-      <if test="brandNo != null" >
-        brand_no = #{brandNo,jdbcType=INTEGER},
-      </if>
-      <if test="categoryDictCode != null" >
-        category_dict_code = #{categoryDictCode,jdbcType=INTEGER},
-      </if>
-      <if test="barCode != null" >
-        bar_code = #{barCode,jdbcType=VARCHAR},
-      </if>
-      <if test="giftFlag != null" >
-        gift_flag = #{giftFlag,jdbcType=BIT},
-      </if>
-      <if test="jfExchangeFlag != null" >
-        jf_exchange_flag = #{jfExchangeFlag,jdbcType=BIT},
-      </if>
-      <if test="jfPrice != null" >
-        jf_price = #{jfPrice,jdbcType=INTEGER},
-      </if>
-      <if test="salePrice != null" >
-        sale_price = #{salePrice,jdbcType=INTEGER},
-      </if>
-      <if test="memberPrice != null" >
-        member_price = #{memberPrice,jdbcType=INTEGER},
-      </if>
-      <if test="costPrice != null" >
-        cost_price = #{costPrice,jdbcType=INTEGER},
-      </if>
-      <if test="bestPrice != null" >
-        best_price = #{bestPrice,jdbcType=INTEGER},
-      </if>
-      <if test="limitDownPrice != null" >
-        limit_down_price = #{limitDownPrice,jdbcType=INTEGER},
-      </if>
-      <if test="ykPrice != null" >
-        yk_price = #{ykPrice,jdbcType=INTEGER},
-      </if>
-      <if test="jkPrice != null" >
-        jk_price = #{jkPrice,jdbcType=INTEGER},
-      </if>
-      <if test="zkPrice != null" >
-        zk_price = #{zkPrice,jdbcType=INTEGER},
-      </if>
-      <if test="stock != null" >
-        stock = #{stock,jdbcType=INTEGER},
-      </if>
-      <if test="stockThreshold != null" >
-        stock_threshold = #{stockThreshold,jdbcType=INTEGER},
-      </if>
-      <if test="salePattern != null" >
-        sale_pattern = #{salePattern,jdbcType=BIT},
-      </if>
-      <if test="marketingRule != null" >
-        marketing_rule = #{marketingRule,jdbcType=VARCHAR},
-      </if>
-      <if test="saleStartTime != null" >
-        sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="saleEndTime != null" >
-        sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=TINYINT},
-      </if>
-      <if test="patentCode != null" >
-        patent_code = #{patentCode,jdbcType=VARCHAR},
-      </if>
-      <if test="approvalNumber != null" >
-        approval_number = #{approvalNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="approvalType != null" >
-        approval_type = #{approvalType,jdbcType=TINYINT},
-      </if>
-      <if test="weight != null" >
-        weight = #{weight,jdbcType=INTEGER},
-      </if>
-      <if test="importFlag != null" >
-        import_flag = #{importFlag,jdbcType=BIT},
-      </if>
-      <if test="productionTime != null" >
-        production_time = #{productionTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="expirationDate != null" >
-        expiration_date = #{expirationDate,jdbcType=INTEGER},
-      </if>
-      <if test="validDate != null" >
-        valid_date = #{validDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="unit != null" >
-        unit = #{unit,jdbcType=VARCHAR},
-      </if>
-      <if test="totalUseNum != null" >
-        total_use_num = #{totalUseNum,jdbcType=INTEGER},
-      </if>
-      <if test="oneUseNum != null" >
-        one_use_num = #{oneUseNum,jdbcType=INTEGER},
-      </if>
-      <if test="oneToTimes != null" >
-        one_to_times = #{oneToTimes,jdbcType=INTEGER},
-      </if>
-      <if test="cjName != null" >
-        cj_name = #{cjName,jdbcType=VARCHAR},
-      </if>
-      <if test="cjCountryNo != null" >
-        cj_country_no = #{cjCountryNo,jdbcType=INTEGER},
-      </if>
-      <if test="cjProvinceNo != null" >
-        cj_province_no = #{cjProvinceNo,jdbcType=INTEGER},
-      </if>
-      <if test="cjCityNo != null" >
-        cj_city_no = #{cjCityNo,jdbcType=INTEGER},
-      </if>
-      <if test="cjAreaNo != null" >
-        cj_area_no = #{cjAreaNo,jdbcType=INTEGER},
-      </if>
-      <if test="cjAddr != null" >
-        cj_addr = #{cjAddr,jdbcType=VARCHAR},
-      </if>
-      <if test="updateNo != null" >
-        update_no = #{updateNo,jdbcType=VARCHAR},
-      </if>
-      <if test="descri != null" >
-        descri = #{descri,jdbcType=VARCHAR},
-      </if>
-      <if test="applicable != null" >
-        applicable = #{applicable,jdbcType=VARCHAR},
-      </if>
-      <if test="forbidden != null" >
-        forbidden = #{forbidden,jdbcType=VARCHAR},
-      </if>
-      <if test="rawStock != null" >
-        raw_stock = #{rawStock,jdbcType=VARCHAR},
-      </if>
-      <if test="videoUrl != null" >
-        video_url = #{videoUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="videoUrl == null" >
-        video_url = null,
-      </if>
-      <if test="diseaseId != null" >
-        disease_id = #{diseaseId,jdbcType=INTEGER},
-      </if>
-      <if test="diseaseId == null" >
-        disease_id = null,
-      </if>
+            <if test="updateNo != null">
+                #{updateNo,jdbcType=VARCHAR},
+            </if>
+            <if test="updateNo != null">
+                #{updateNo,jdbcType=VARCHAR},
+            </if>
+            <if test="descri != null">
+                #{descri,jdbcType=VARCHAR},
+            </if>
+            <if test="applicable != null">
+                #{applicable,jdbcType=VARCHAR},
+            </if>
+            <if test="forbidden != null">
+                #{forbidden,jdbcType=VARCHAR},
+            </if>
+            <if test="rawStock != null">
+                #{rawStock,jdbcType=VARCHAR},
+            </if>
+            <if test="videoUrl != null">
+                #{videoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="diseaseId != null">
+                #{diseaseId,jdbcType=INTEGER},
+            </if>
+            <if test="diseasePid != null">
+                #{diseasePid,jdbcType=INTEGER},
+            </if>
+            <if test="imageUrl != null">
+                #{imageUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="financeCode != null">
+                #{financeCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
 
-      <if test="diseasePid != null" >
-        disease_pid = #{diseasePid,jdbcType=INTEGER},
-      </if>
-      <if test="diseasePid == null" >
-        disease_pid = null,
-      </if>
-      <if test="financeCode != null" >
-        finance_code = #{videoUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="financeCode == null" >
-        finance_code = null,
-      </if>
-      <if test="imageUrl != null" >
-        image_url = #{videoUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="imageUrl == null" >
-        image_url = null,
-      </if>
-    </set>
-    where product_code = #{productCode,jdbcType=VARCHAR}
-  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.pojo.product.Product">
+        update product
+        <set>
+            <if test="productNo != null">
+                product_no = #{productNo,jdbcType=VARCHAR},
+            </if>
+            <if test="businessCode != null">
+                business_code = #{businessCode,jdbcType=VARCHAR},
+            </if>
+            <if test="quickSearchCode != null">
+                quick_search_code = #{quickSearchCode,jdbcType=VARCHAR},
+            </if>
+            <if test="prove != null">
+                prove = #{prove,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="engName != null">
+                eng_name = #{engName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSource != null">
+                goods_source = #{goodsSource,jdbcType=BIT},
+            </if>
+            <if test="brandNo != null">
+                brand_no = #{brandNo,jdbcType=INTEGER},
+            </if>
+            <if test="categoryDictCode != null">
+                category_dict_code = #{categoryDictCode,jdbcType=INTEGER},
+            </if>
+            <if test="barCode != null">
+                bar_code = #{barCode,jdbcType=VARCHAR},
+            </if>
+            <if test="giftFlag != null">
+                gift_flag = #{giftFlag,jdbcType=BIT},
+            </if>
+            <if test="jfExchangeFlag != null">
+                jf_exchange_flag = #{jfExchangeFlag,jdbcType=BIT},
+            </if>
+            <if test="jfPrice != null">
+                jf_price = #{jfPrice,jdbcType=INTEGER},
+            </if>
+            <if test="salePrice != null">
+                sale_price = #{salePrice,jdbcType=INTEGER},
+            </if>
+            <if test="memberPrice != null">
+                member_price = #{memberPrice,jdbcType=INTEGER},
+            </if>
+            <if test="costPrice != null">
+                cost_price = #{costPrice,jdbcType=INTEGER},
+            </if>
+            <if test="bestPrice != null">
+                best_price = #{bestPrice,jdbcType=INTEGER},
+            </if>
+            <if test="limitDownPrice != null">
+                limit_down_price = #{limitDownPrice,jdbcType=INTEGER},
+            </if>
+            <if test="ykPrice != null">
+                yk_price = #{ykPrice,jdbcType=INTEGER},
+            </if>
+            <if test="jkPrice != null">
+                jk_price = #{jkPrice,jdbcType=INTEGER},
+            </if>
+            <if test="zkPrice != null">
+                zk_price = #{zkPrice,jdbcType=INTEGER},
+            </if>
+            <if test="stock != null">
+                stock = #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="stockThreshold != null">
+                stock_threshold = #{stockThreshold,jdbcType=INTEGER},
+            </if>
+            <if test="salePattern != null">
+                sale_pattern = #{salePattern,jdbcType=BIT},
+            </if>
+            <if test="marketingRule != null">
+                marketing_rule = #{marketingRule,jdbcType=VARCHAR},
+            </if>
+            <if test="saleStartTime != null">
+                sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="saleEndTime != null">
+                sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="patentCode != null">
+                patent_code = #{patentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalNumber != null">
+                approval_number = #{approvalNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalType != null">
+                approval_type = #{approvalType,jdbcType=TINYINT},
+            </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=INTEGER},
+            </if>
+            <if test="importFlag != null">
+                import_flag = #{importFlag,jdbcType=BIT},
+            </if>
+            <if test="productionTime != null">
+                production_time = #{productionTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expirationDate != null">
+                expiration_date = #{expirationDate,jdbcType=INTEGER},
+            </if>
+            <if test="validDate != null">
+                valid_date = #{validDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="totalUseNum != null">
+                total_use_num = #{totalUseNum,jdbcType=INTEGER},
+            </if>
+            <if test="oneUseNum != null">
+                one_use_num = #{oneUseNum,jdbcType=INTEGER},
+            </if>
+            <if test="oneToTimes != null">
+                one_to_times = #{oneToTimes,jdbcType=INTEGER},
+            </if>
+            <if test="cjName != null">
+                cj_name = #{cjName,jdbcType=VARCHAR},
+            </if>
+            <if test="cjCountryNo != null">
+                cj_country_no = #{cjCountryNo,jdbcType=INTEGER},
+            </if>
+            <if test="cjProvinceNo != null">
+                cj_province_no = #{cjProvinceNo,jdbcType=INTEGER},
+            </if>
+            <if test="cjCityNo != null">
+                cj_city_no = #{cjCityNo,jdbcType=INTEGER},
+            </if>
+            <if test="cjAreaNo != null">
+                cj_area_no = #{cjAreaNo,jdbcType=INTEGER},
+            </if>
+            <if test="cjCountryName != null">
+                cj_country_name = #{cjCountryName,jdbcType=INTEGER},
+            </if>
+            <if test="cjProvinceName != null">
+                cj_province_name = #{cjProvinceName,jdbcType=INTEGER},
+            </if>
+            <if test="cjCityName != null">
+                cj_city_name = #{cjCityName,jdbcType=INTEGER},
+            </if>
+            <if test="cjAreaName != null">
+                cj_area_name = #{cjAreaName,jdbcType=INTEGER},
+            </if>
+            <if test="cjCountryNo == null">
+                cj_country_no = null,
+            </if>
+            <if test="cjProvinceNo == null">
+                cj_province_no = null,
+            </if>
+            <if test="cjCityNo == null">
+                cj_city_no = null,
+            </if>
+            <if test="cjAreaNo == null">
+                cj_area_no = null,
+            </if>
+            <if test="cjCountryName == null">
+                cj_country_name = null,
+            </if>
+            <if test="cjProvinceName == null">
+                cj_province_name = null,
+            </if>
+            <if test="cjCityName == null">
+                cj_city_name = null,
+            </if>
+            <if test="cjAreaName == null">
+                cj_area_name = null,
+            </if>
+            <if test="cjAddr != null">
+                cj_addr = null,
+            </if>
+            <if test="updateNo != null">
+                update_no = #{updateNo,jdbcType=VARCHAR},
+            </if>
+            <if test="descri != null">
+                descri = #{descri,jdbcType=VARCHAR},
+            </if>
+            <if test="applicable != null">
+                applicable = #{applicable,jdbcType=VARCHAR},
+            </if>
+            <if test="forbidden != null">
+                forbidden = #{forbidden,jdbcType=VARCHAR},
+            </if>
+            <if test="rawStock != null">
+                raw_stock = #{rawStock,jdbcType=VARCHAR},
+            </if>
+            <if test="videoUrl != null">
+                video_url = #{videoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="videoUrl == null">
+                video_url = null,
+            </if>
+            <if test="diseaseId != null">
+                disease_id = #{diseaseId,jdbcType=INTEGER},
+            </if>
+            <if test="diseaseId == null">
+                disease_id = null,
+            </if>
 
-  <select id="queryMaxProductCode" resultType="string">
+            <if test="diseasePid != null">
+                disease_pid = #{diseasePid,jdbcType=INTEGER},
+            </if>
+            <if test="diseasePid == null">
+                disease_pid = null,
+            </if>
+            <if test="financeCode != null">
+                finance_code = #{videoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="financeCode == null">
+                finance_code = null,
+            </if>
+            <if test="imageUrl != null">
+                image_url = #{videoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="imageUrl == null">
+                image_url = null,
+            </if>
+        </set>
+        where product_code = #{productCode,jdbcType=VARCHAR}
+    </update>
+
+    <select id="queryMaxProductCode" resultType="string">
     SELECT max(product_code) as maxCode FROM product ;
   </select>
 
-  <!--按照上下架查询-->
-  <select id="queryCountByStatus" resultType="map">
+    <!--按照上下架查询-->
+    <select id="queryCountByStatus" resultType="map">
     SELECT count(`status`) AS cnt ,`status` AS status FROM product WHERE del_flag = 0 GROUP BY status;
   </select>
-  <!--根据商品编码查询商品上下架状态及最后修改时间-->
-  <select id="queryProductStatusByProductCode" parameterType="string" resultType="cn.net.yzl.product.model.pojo.product.ProductStatus">
+    <!--根据商品编码查询商品上下架状态及最后修改时间-->
+    <select id="queryProductStatusByProductCode" parameterType="string"
+            resultType="cn.net.yzl.product.model.pojo.product.ProductStatus">
     select product_code as productCode,
     status as status,
     update_time as updateTime
     from product where product_code = #{productCode,jdbcType=VARCHAR}
   </select>
-  <update id="updateStatusByProductCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO">
-    update product
-    set `status`= #{status,jdbcType=INTEGER},
+    <update id="updateStatusByProductCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO">
+        update product
+        set `status`= #{status,jdbcType=INTEGER},
         update_no = #{updateNo,jdbcType=VARCHAR}
-    where
+        where
         product_code in
-    <foreach item="item" index="index" collection="productCodeList" open="(" separator="," close=")">
-      #{item}
-    </foreach>
-  </update>
+        <foreach item="item" index="index" collection="productCodeList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 
 
-  <!--查询商品图谱-->
-  <select id="queryProductListAtlas" resultType="cn.net.yzl.product.model.db.ProductAtlasBean">
-    SELECT
-    p.product_code productCode,
-    p.`name`,
-    p.image_url imageUrl,
-    p.sale_price salePrice,
-    p.goods_source goodsSource,
-    p.unit,
-    b.id,
-    b.`name` brandName
-    FROM product p
-    LEFT JOIN brand b ON b.id = p.brand_no
-    WHERE p.status=1
-    <if test="diseaseId != null">
-      AND disease_id=#{diseaseId}
-    </if>
+    <!--查询商品图谱-->
+    <select id="queryProductListAtlas" resultType="cn.net.yzl.product.model.db.ProductAtlasBean">
+        SELECT
+        p.product_code productCode,
+        p.`name`,
+        p.image_url imageUrl,
+        p.sale_price salePrice,
+        p.goods_source goodsSource,
+        p.unit,
+        b.id,
+        b.`name` brandName
+        FROM product p
+        LEFT JOIN brand b ON b.id = p.brand_no
+        WHERE p.status=1
+        <if test="diseaseId != null">
+            AND disease_id=#{diseaseId}
+        </if>
 
-    <if test="productName != null">
-      AND p.`name` LIKE CONCAT('%',#{productName},'%')
-    </if>
-  </select>
+        <if test="productName != null">
+            AND p.`name` LIKE CONCAT('%',#{productName},'%')
+        </if>
+    </select>
 
-  <update id="updateTimeByProductCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO">
-    update product
-    set
-      sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
-      sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
-      update_no = #{updateNo,jdbcType=VARCHAR}
-    where
-    product_code in
-    <foreach item="item" index="index" collection="productCodeList" open="(" separator="," close=")">
-      #{item}
-    </foreach>
-  </update>
-  <select id="selectByProductCode" resultType="cn.net.yzl.product.model.vo.product.dto.ProductDetailVO">
+    <update id="updateTimeByProductCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO">
+        update product
+        set
+        sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
+        sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
+        update_no = #{updateNo,jdbcType=VARCHAR}
+        where
+        product_code in
+        <foreach item="item" index="index" collection="productCodeList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <select id="selectByProductCode" resultType="cn.net.yzl.product.model.vo.product.dto.ProductDetailVO">
     select
       p.product_code as productCode,
       p.product_no as productNo,
@@ -765,6 +827,10 @@
       p.cj_province_no as cjProvinceNo,
       p.cj_city_no as cjCityNo,
       p.cj_area_no as cjAreaNo,
+      p.cj_country_name as cjCountryName
+      p.cj_province_name as cjProvinceName
+      p.cj_city_name as cjCityName
+      p.cj_area_name as cjAreaName
       p.cj_addr as cjAddr,
       p.descri,
       p.applicable as applicable,

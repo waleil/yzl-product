@@ -2,37 +2,26 @@ package cn.net.yzl.product.model.vo.product.dto;
 
 import cn.net.yzl.product.model.BaseObject;
 import cn.net.yzl.product.model.vo.product.vo.ProductDiseaseVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductImageVO;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotEmpty;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
- * @author wanghuasheng
+ * @author lichanghong
  * @version 1.0
- * @title: ProductVO
- * @description 商品详情返回对象
- * @date: 2021/1/9 3:00 下午
+ * @title: ProductPortraitDTO
+ * @description 商品画像实体类
+ * @date: 2021/1/10 12:12 下午
  */
 @Data
-public class ProductDetailVO extends BaseObject {
+public class ProductPortraitDTO extends BaseObject {
     @ApiModelProperty(name = "productCode",value = "商品ID(product唯一标识)")
     private String productCode;
 
     @ApiModelProperty(name = "productNo",value = "商品编号")
     private String productNo;
 
-    @ApiModelProperty(name = "quickSearchCode", value = "快速检索码")
-    private String quickSearchCode;
-
     @ApiModelProperty(name = "name", required = true, value = "商品名称")
-    @NotEmpty(message = "商品名称不能为空")
     private String name;
 
     @ApiModelProperty(name = "nickname", value = "商品简称")
@@ -44,21 +33,11 @@ public class ProductDetailVO extends BaseObject {
     @ApiModelProperty(name = "goodsSource", required = true, value = "商品来源：1-自营 2-三方")
     private Integer goodsSource;
 
-    @ApiModelProperty(name = "brandNo", value = "品牌编号")
-    private Integer brandNo;
     @ApiModelProperty(name = "brandName", value = "品牌名称")
-    private Integer brandName;
-    @ApiModelProperty(name = "categoryDictCode", value = "商品分类")
-    private Integer categoryDictCode;
+    private String brandName;
 
-    @ApiModelProperty(name = "salePrice", required = true, value = "市场价(售卖价),以分为单位")
-    private Integer salePrice;
-
-    @ApiModelProperty(name = "costPrice", required = true, value = "成本价,以分为单位")
-    private Integer costPrice;
-
-    @ApiModelProperty(name = "limitDownPrice", required = true, value = "最低价格,所有的优惠扣减不能低于此价格,以分为单位")
-    private Integer limitDownPrice;
+    @ApiModelProperty(name = "categoryDictName", value = "商品分类名称")
+    private String categoryDictName;
 
     @ApiModelProperty(name = "salePriceD", required = true, value = "市场价(售卖价),以元为单位")
     private Double salePriceD;
@@ -71,9 +50,6 @@ public class ProductDetailVO extends BaseObject {
 
     @ApiModelProperty(name = "stock", required = true, value = "库存,-1代表不限制库存")
     private Integer stock;
-
-    @ApiModelProperty(name = "stockThreshold", value = "库存阈值")
-    private Integer stockThreshold;
 
     @ApiModelProperty(name = "marketingRule", value = "营销准则")
     private String marketingRule;
@@ -93,32 +69,31 @@ public class ProductDetailVO extends BaseObject {
     @ApiModelProperty(name = "approvalType", value = "批文类型，0代表国药准字，1代表国药健字")
     private int approvalType;
 
-
-    @ApiModelProperty(name = "importFlag", required = true, value = "是否进口商品，0代表非进口，1代表是进口")
+    @ApiModelProperty(name = "importFlag", value = "是否进口商品，0代表非进口，1代表是进口")
     private Integer importFlag;
 
-    @ApiModelProperty(name = "productionTime", required = true, value = "生产日期")
+    @ApiModelProperty(name = "productionTime",  value = "生产日期")
     private String productionTime;
 
-    @ApiModelProperty(name = "expirationDate", required = true, value = "保质期")
+    @ApiModelProperty(name = "expirationDate",  value = "保质期")
     private Integer expirationDate;
 
-    @ApiModelProperty(name = "validDate", required = true, value = "有效期至")
+    @ApiModelProperty(name = "validDate",  value = "有效期至")
     private String validDate;
 
     @ApiModelProperty(name = "unit", value = "计量单位")
     private String unit;
 
-    @ApiModelProperty(name = "totalUseNum", required = true, value = "规格")
+    @ApiModelProperty(name = "totalUseNum",  value = "规格")
     private Integer totalUseNum;
 
-    @ApiModelProperty(name = "oneUseNum", required = true, value = "每次数量")
+    @ApiModelProperty(name = "oneUseNum",  value = "每次数量")
     private Integer oneUseNum;
 
-    @ApiModelProperty(name = "oneToTimes", required = true, value = "每日几次")
+    @ApiModelProperty(name = "oneToTimes",  value = "每日几次")
     private Integer oneToTimes;
 
-    @ApiModelProperty(name = "cjName", required = true, value = "厂家名称")
+    @ApiModelProperty(name = "cjName",  value = "厂家名称")
     private String cjName;
 
     @ApiModelProperty(name = "cjCountryNo", value = "厂家国家")
@@ -132,6 +107,10 @@ public class ProductDetailVO extends BaseObject {
 
     @ApiModelProperty(name = "cjAreaNo", value = "厂家区/县")
     private Integer cjAreaNo;
+
+    @ApiModelProperty(name = "cjAddr", value = "厂家详细地址")
+    private String cjAddr;
+
     @ApiModelProperty(name = "cjCountryName", value = "厂家国家名称")
     private String cjCountryName;
 
@@ -144,23 +123,14 @@ public class ProductDetailVO extends BaseObject {
     @ApiModelProperty(name = "cjAreaName", value = "厂家区/县名称")
     private String cjAreaName;
 
-    @ApiModelProperty(name = "cjAddr", value = "厂家详细地址")
-    private String cjAddr;
-
-    @ApiModelProperty(name = "descri", value = "描述")
-    private String descri;
-
-    @ApiModelProperty(name = "applicable", required = true,value = "适用人群")
+    @ApiModelProperty(name = "applicable", value = "适用人群")
     private String applicable;
 
-    @ApiModelProperty(name = "forbidden", required = true, value = "禁用人群")
+    @ApiModelProperty(name = "forbidden", value = "禁用人群")
     private String forbidden;
 
-    @ApiModelProperty(name = "rawStock", required = true, value = "原材料")
+    @ApiModelProperty(name = "rawStock",  value = "原材料")
     private String rawStock;
-
-    @ApiModelProperty(name = "videoUrl", value = "视频地址")
-    private String videoUrl;
 
     @ApiModelProperty(name = "diseaseId", value = "商品主治病症")
     private Integer diseaseId;
@@ -171,14 +141,9 @@ public class ProductDetailVO extends BaseObject {
     @ApiModelProperty(name = "diseasePid", value = "主治病症上级主键")
     private Integer diseasePid;
 
-    @ApiModelProperty(name = "imageUrl", value = "商品主图")
-    private String imageUrl;
-    @ApiModelProperty(name = "images", value = "商品图片")
-    private List<ProductImageVO> images;
     @ApiModelProperty(name = "diseaseVOS", value = "商品关联病症")
     private List<ProductDiseaseVO> diseaseVOS;
 
-    @ApiModelProperty(name = "fastDFSUrl", value = "图片库地址,需要把imageUrl进行拼接")
-    private String fastDFSUrl;
+
 
 }

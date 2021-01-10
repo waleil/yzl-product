@@ -5,10 +5,7 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.DateFormatUtil;
-import cn.net.yzl.product.model.vo.product.dto.ProductAtlasDTO;
-import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
-import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
-import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
+import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO;
@@ -211,6 +208,11 @@ public class ProductController {
     @ApiOperation("查询商品详情")
     public ComResponse<ProductDetailVO> queryProductDetail(@RequestParam("productCode") String productCode) {
         return productService.queryProductDetail(productCode);
+    }
+    @GetMapping(value = "v1/queryProductPortrait")
+    @ApiOperation("查询商品画像")
+    public ComResponse<ProductPortraitDTO> queryProductPortrait(@RequestParam("productCode") String productCode ){
+        return null;
     }
 }
 

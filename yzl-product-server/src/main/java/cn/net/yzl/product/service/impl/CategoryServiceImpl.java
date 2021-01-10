@@ -121,9 +121,16 @@ public class CategoryServiceImpl implements CategoryService {
     public ComResponse<Page<CategoryTO>> queryPageByPid(Integer pid, Integer pageNo, Integer pageSize) {
         //开启分页
         PageHelper.startPage(pageNo,pageSize);
-        //分页查询
-        Page<CategoryTO> pageInfo = AssemblerResultUtil.resultAssembler(categoryBeanMapper.queryPageById(pid));
+        List<CategoryTO> list =categoryBeanMapper.queryPageById(pid);
         // TODO: 2021/1/5 缺少查询商品数量
+        // 说明查询是的是一级分类
+        if(pid==null && pid==0){
+
+        }else{
+
+        }
+        //分页查询
+        Page<CategoryTO> pageInfo = AssemblerResultUtil.resultAssembler(list);
         return ComResponse.success(pageInfo);
     }
 
