@@ -292,7 +292,7 @@
          finance_code,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    <trim prefix="values(" suffix=")" suffixOverrides="," >
       <if test="productCode != null" >
         #{productCode,jdbcType=VARCHAR},
       </if>

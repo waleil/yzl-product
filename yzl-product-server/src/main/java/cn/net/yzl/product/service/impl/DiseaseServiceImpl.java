@@ -4,6 +4,7 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.JsonUtil;
 import cn.net.yzl.product.dao.DiseaseBeanMapper;
+import cn.net.yzl.product.dao.ProductBeanMapper;
 import cn.net.yzl.product.model.db.DiseaseBean;
 import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
@@ -32,6 +33,9 @@ public class DiseaseServiceImpl implements DiseaseService {
     private DiseaseBeanMapper diseaseBeanMapper;
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private ProductBeanMapper productBeanMapper;
 
     /**
      * @param diseaseVo:
@@ -87,34 +91,34 @@ public class DiseaseServiceImpl implements DiseaseService {
      */
     @Override
     public ComResponse<List<DiseaseTreeNode>> queryTreeNode() {
-        List<DiseaseBean> diseaseBeans = diseaseBeanMapper.selectAll();
-        //判断是否为空
-        if (CollectionUtils.isEmpty(diseaseBeans)) {
-            return ComResponse.success(Collections.EMPTY_LIST);
-        }
-        //进行
-        Map<Integer, List<DiseaseBean>> map = diseaseBeans.stream().collect(Collectors.groupingBy(DiseaseBean::getPid));
-        List<DiseaseTreeNode> list = new ArrayList<>(map.size());
-        List<DiseaseBean> pList = map.get(0);
-        if (CollectionUtils.isEmpty(pList)) {
-            return ComResponse.success(Collections.EMPTY_LIST);
-        }
-        //循环
-        pList.stream().forEach(node -> {
-            DiseaseTreeNode treeNode = transform(node);
-            List<DiseaseBean> subList = map.get(node.getId());
-            if (!CollectionUtils.isEmpty(subList)) {
-                List<DiseaseTreeNode> treeNodes = new ArrayList<>(subList.size());
-                subList.forEach(suNode -> {
-                    DiseaseTreeNode subTreeNode = transform(suNode);
-                    //TODO 查询商品信息
-                    treeNodes.add(subTreeNode);
-                });
-                treeNode.setNodeList(treeNodes);
+            List<DiseaseBean> diseaseBeans = diseaseBeanMapper.selectAll();
+            //判断是否为空
+            if (CollectionUtils.isEmpty(diseaseBeans)) {
+                return ComResponse.success(Collections.EMPTY_LIST);
             }
-            list.add(treeNode);
-        });
-        return ComResponse.success(list);
+            //进行
+            Map<Integer, List<DiseaseBean>> map = diseaseBeans.stream().collect(Collectors.groupingBy(DiseaseBean::getPid));
+            List<DiseaseTreeNode> list = new ArrayList<>(map.size());
+            List<DiseaseBean> pList = map.get(0);
+            if (CollectionUtils.isEmpty(pList)) {
+                return ComResponse.success(Collections.EMPTY_LIST);
+            }
+            //循环
+            pList.stream().forEach(node -> {
+                DiseaseTreeNode treeNode = transform(node);
+                List<DiseaseBean> subList = map.get(node.getId());
+                if (!CollectionUtils.isEmpty(subList)) {
+                    List<DiseaseTreeNode> treeNodes = new ArrayList<>(subList.size());
+                    subList.forEach(suNode -> {
+                        DiseaseTreeNode subTreeNode = transform(suNode);
+                        //TODO 查询商品信息
+                        treeNodes.add(subTreeNode);
+                    });
+                    treeNode.setNodeList(treeNodes);
+                }
+                list.add(treeNode);
+            });
+            return ComResponse.success(list);
     }
 
     /**
