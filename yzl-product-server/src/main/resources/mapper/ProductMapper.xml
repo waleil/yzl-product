@@ -710,7 +710,7 @@
     LEFT JOIN brand b ON b.id = p.brand_no
     WHERE p.status=1
     <if test="diseaseId != null">
-      AND disease_id=#{diseaseId}
+      AND p.disease_id=#{diseaseId} and p.disease_pid=#{diseasePid}
     </if>
 
     <if test="productName != null">

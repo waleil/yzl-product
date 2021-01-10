@@ -45,7 +45,7 @@ public interface ProductMapper {
      */
     ProductStatus queryProductStatusByProductCode(String productCode);
 
-    List<ProductAtlasBean> queryProductListAtlas(@Param("productName") String productName, @Param("diseaseId") Integer diseaseId);
+    List<ProductAtlasBean> queryProductListAtlas(@Param("productName") String productName, @Param("diseaseId") Integer diseaseId, @Param("diseasePid") Integer  diseasePid);
 
     /**
      * @param vo
