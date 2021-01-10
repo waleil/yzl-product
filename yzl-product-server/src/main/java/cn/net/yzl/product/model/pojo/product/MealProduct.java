@@ -1,75 +1,35 @@
 package cn.net.yzl.product.model.pojo.product;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
+@ApiModel(value = "MealProduct",description = "套餐商品信息")
 public class MealProduct {
+
+    @ApiModelProperty(value = "主键",name = "id")
     private Integer id;
 
+    @ApiModelProperty(value = "套餐编码",name = "mealNo")
     private Integer mealNo;
 
+    @ApiModelProperty(value = "商品编码",name = "productCode")
     private String productCode;
 
+    @ApiModelProperty(value = "商品数量",name = "productNum")
     private Integer productNum;
 
+    @ApiModelProperty(value = "是否赠品(0代表否,1代表是)",name = "mealGiftFlag")
     private Boolean mealGiftFlag;
 
+    @ApiModelProperty(value = "创建时间",name = "createTime")
     private Date createTime;
 
+    @ApiModelProperty(value = "修改时间",name = "updateTime")
     private Date updateTime;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getMealNo() {
-        return mealNo;
-    }
-
-    public void setMealNo(Integer mealNo) {
-        this.mealNo = mealNo;
-    }
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode == null ? null : productCode.trim();
-    }
-
-    public Integer getProductNum() {
-        return productNum;
-    }
-
-    public void setProductNum(Integer productNum) {
-        this.productNum = productNum;
-    }
-
-    public Boolean getMealGiftFlag() {
-        return mealGiftFlag;
-    }
-
-    public void setMealGiftFlag(Boolean mealGiftFlag) {
-        this.mealGiftFlag = mealGiftFlag;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }
