@@ -220,5 +220,19 @@ public class ProductController {
     public ComResponse<ProductPortraitDTO> queryProductPortrait(@RequestParam("productCode") String productCode) {
         return ComResponse.success(productService.queryProductPortrait(productCode));
     }
+
+    /**
+     * @param productCode
+     * @Author: lichanghong
+     * @Description: 根据商品编号查询病症
+     * @Date: 2021/1/10 4:03 下午
+     * @Return: java.util.List<cn.net.yzl.product.model.vo.product.dto.ProductDiseaseDTO>
+     */
+    @GetMapping(value = "v1/queryDiseaseByProductCode")
+    @ApiOperation("根据商品编号查询病症")
+    public ComResponse<List<ProductDiseaseDTO>> queryDiseaseByProductCode(@RequestParam("productCode") String productCode) {
+        List<ProductDiseaseDTO> diseaseDTOS = productService.queryDiseaseByProductCode(productCode);
+        return ComResponse.success(diseaseDTOS);
+    }
 }
 

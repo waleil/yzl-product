@@ -2,6 +2,7 @@ package cn.net.yzl.product.service.product;
 
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
+import cn.net.yzl.product.model.pojo.product.ProductDisease;
 import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
@@ -89,5 +90,13 @@ public interface ProductService {
      */
     ProductPortraitDTO queryProductPortrait(String productCode);
 
+    /**
+     * @Author: lichanghong
+     * @Description: 根据商品编号查询病症
+     * @Date: 2021/1/10 4:03 下午
+     * @param productCode
+     * @Return: java.util.List<cn.net.yzl.product.model.vo.product.dto.ProductDiseaseDTO>
+     */
+    List<ProductDiseaseDTO> queryDiseaseByProductCode(String productCode);
 
 }

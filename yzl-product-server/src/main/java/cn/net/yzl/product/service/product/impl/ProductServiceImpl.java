@@ -16,6 +16,7 @@ import cn.net.yzl.product.model.db.ProductAtlasBean;
 import cn.net.yzl.product.model.pojo.category.Category;
 import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.pojo.product.Product;
+import cn.net.yzl.product.model.pojo.product.ProductDisease;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
 import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseTreeNode;
@@ -498,17 +499,17 @@ public class ProductServiceImpl implements ProductService {
             diseaseTreeNode.setNodeList(diseaseTreeNodes);
         }
         //处理关联病症
-        if(!CollectionUtils.isEmpty(diseaseVOS)){
-           Map<Integer, List<ProductDiseaseVO>> integerListMap =
-                   diseaseVOS.stream().collect(Collectors.groupingBy(ProductDiseaseVO::getDiseasePid));
-            integerListMap.keySet().stream().forEach(key->{
+        if (!CollectionUtils.isEmpty(diseaseVOS)) {
+            Map<Integer, List<ProductDiseaseVO>> integerListMap =
+                    diseaseVOS.stream().collect(Collectors.groupingBy(ProductDiseaseVO::getDiseasePid));
+            integerListMap.keySet().stream().forEach(key -> {
                 DiseaseTreeNode diseaseTreeNode = new DiseaseTreeNode();
                 DiseaseDTO dto1 = root.get(key);
                 diseaseTreeNode.setId(key);
                 diseaseTreeNode.setName(dto1.getName());
                 diseaseTreeNode.setPid(0);
                 List<DiseaseTreeNode> list1 = new ArrayList<>();
-                integerListMap.get(key).forEach(v->{
+                integerListMap.get(key).forEach(v -> {
                     DiseaseTreeNode node = new DiseaseTreeNode();
                     node.setName(v.getDiseaseName());
                     node.setPid(key);
@@ -520,6 +521,56 @@ public class ProductServiceImpl implements ProductService {
         }
         dto.setDiseaseTreeNodes(list);
         return dto;
+    }
+
+    /**
+     * @param productCode
+     * @Author: lichanghong
+     * @Description: 根据商品编号查询病症
+     * @Date: 2021/1/10 4:03 下午
+     * @Return: java.util.List<cn.net.yzl.product.model.vo.product.dto.ProductDiseaseDTO>
+     */
+    @Override
+    public List<ProductDiseaseDTO> queryDiseaseByProductCode(String productCode) {
+        //查询主治病症
+        List<ProductDiseaseDTO> list = new ArrayList<>(32);
+        ProductDisease disease = productMapper.queryDiseaseByProductCode(productCode);
+        if (disease != null && disease.getDiseaseId() != null && disease.getDiseaseId() > 0) {
+            Disease d = diseaseService.queryById(disease.getDiseaseId(), disease.getDiseasePid());
+            if (d != null) {
+                ProductDiseaseDTO diseaseDTO = new ProductDiseaseDTO();
+                Disease pd = diseaseService.queryById(d.getPid(), 0);
+                if (pd != null) {
+                    diseaseDTO.setDiseaseId(d.getId());
+                    diseaseDTO.setDiseaseName(d.getName());
+                    diseaseDTO.setDiseasePid(pd.getId());
+                    diseaseDTO.setDiseasePName(pd.getName());
+                    diseaseDTO.setProductCode(productCode);
+                    list.add(diseaseDTO);
+                }
+            }
+        }
+        List<ProductDiseaseVO> diseaseVOS = productDiseaseMapper.queryByProductCode(productCode);
+        if(!CollectionUtils.isEmpty(diseaseVOS)){
+            diseaseVOS.stream().forEach(v->{
+                if (v != null && v.getDiseaseId() != null && v.getDiseaseId() > 0) {
+                    Disease d = diseaseService.queryById(v.getDiseaseId(), v.getDiseasePid());
+                    if (d != null) {
+                        ProductDiseaseDTO diseaseDTO = new ProductDiseaseDTO();
+                        Disease pd = diseaseService.queryById(d.getPid(), 0);
+                        if (pd != null) {
+                            diseaseDTO.setDiseaseId(d.getId());
+                            diseaseDTO.setDiseaseName(d.getName());
+                            diseaseDTO.setDiseasePid(pd.getId());
+                            diseaseDTO.setDiseasePName(pd.getName());
+                            diseaseDTO.setProductCode(productCode);
+                            list.add(diseaseDTO);
+                        }
+                    }
+                }
+            });
+        }
+        return list;
     }
 
     /**

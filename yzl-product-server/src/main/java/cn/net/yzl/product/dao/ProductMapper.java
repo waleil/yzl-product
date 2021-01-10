@@ -2,6 +2,7 @@ package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.ProductAtlasBean;
 import cn.net.yzl.product.model.pojo.product.Product;
+import cn.net.yzl.product.model.pojo.product.ProductDisease;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
 import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
@@ -63,4 +64,12 @@ public interface ProductMapper {
      * @Return:
      */
     void updateTimeByProductCode(ProductUpdateTimeVO vo);
+    /**
+     * @Author: lichanghong
+     * @Description:  根据商品编号查询主治病症
+     * @Date: 2021/1/10 4:00 下午
+     * @param productCode
+     * @Return:
+     */
+    ProductDisease queryDiseaseByProductCode(String productCode);
 }
