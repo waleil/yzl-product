@@ -35,5 +35,5 @@ public interface MealMapper {
 
     List<ProductMealDTO> queryListProductMeal(ProductMealVO vo);
 
-    ProductMealDTO queryProductMealPortray(Integer mealNo);
+    cn.net.yzl.product.model.db.Meal queryProductMealPortray(Integer mealNo);
 }

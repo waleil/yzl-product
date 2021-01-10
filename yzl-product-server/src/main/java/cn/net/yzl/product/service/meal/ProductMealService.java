@@ -2,6 +2,7 @@ package cn.net.yzl.product.service.meal;
 
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.product.model.pojo.product.Meal;
+import cn.net.yzl.product.model.vo.product.dto.MealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
@@ -31,7 +32,7 @@ public interface ProductMealService {
 
     ComResponse<Page<ProductMealDTO>> queryListProductMeal(ProductMealVO vo);
 
-    ComResponse<ProductMealDTO> queryProductMealPortray(Integer mealNo);
+    ComResponse<MealDTO> queryProductMealPortray(Integer mealNo);
 
     /**
      * @Description: 修改套餐上下架状态

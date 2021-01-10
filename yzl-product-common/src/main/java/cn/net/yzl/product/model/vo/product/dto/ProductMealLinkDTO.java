@@ -33,6 +33,21 @@ public class ProductMealLinkDTO extends BaseObject {
     @ApiModelProperty(name = "mealGiftFlag", value = "是否套餐赠品(0代表否,1代表是)")
     private Integer mealGiftFlag;
 
+    @ApiModelProperty(name = "productName", value = "商品名称")
+    private Integer productName;
+
+    @ApiModelProperty(name = "salePrice", required = true, value = "市场价(售卖价),以分为单位")
+    private Integer salePrice;
+
+    @ApiModelProperty(name = "salePriceD", value = "市场价(售卖价)单位为元")
+    private Double salePriceD;
+
+    @ApiModelProperty(name = "brandName", value = "品牌名称")
+    private Integer brandName;
+
+    @ApiModelProperty(name = "brandNo", value = "品牌编号")
+    private Integer brandNo;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty(name = "createTime", value = "创建时间")
     private Date createTime;

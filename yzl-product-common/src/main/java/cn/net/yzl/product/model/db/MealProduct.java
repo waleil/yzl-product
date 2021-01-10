@@ -1,4 +1,4 @@
-package cn.net.yzl.product.model.pojo.product;
+package cn.net.yzl.product.model.db;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

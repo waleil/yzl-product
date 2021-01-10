@@ -772,6 +772,7 @@
       p.raw_stock as rawStock,
       p.video_url as videoUrl,
       p.disease_id as diseaseId,
+      p.disease_pid as diseasePid,
       p.image_url as imageUrl
     from product p
     where product_code = #{productCode,jdbcType=VARCHAR}

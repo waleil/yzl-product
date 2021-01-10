@@ -4,6 +4,7 @@ package cn.net.yzl.product.controller;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
+import cn.net.yzl.product.model.vo.product.dto.MealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.product.model.pojo.product.Meal;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
@@ -175,7 +176,7 @@ public class ProductMealController {
 
     @GetMapping(value = "v1/queryProductMealPortray")
     @ApiOperation("查询商品套餐画像")
-    public ComResponse<ProductMealDTO> queryProductMealPortray(Integer mealNo) {
+    public ComResponse<MealDTO> queryProductMealPortray(Integer mealNo) {
         return productMealService.queryProductMealPortray(mealNo);
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.net.yzl.product.dao.MealMapper">
-    <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.pojo.product.Meal">
+    <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.db.Meal">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="meal_no" property="mealNo" jdbcType="BIGINT"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
@@ -17,6 +17,11 @@
         <result column="sale_end_time" property="saleEndTime" jdbcType="TIMESTAMP"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <collection property="mealProductList" ofType="cn.net.yzl.product.model.db.MealProduct">
+            <result column="product_num" property="productNum" jdbcType="INTEGER"/>
+            <result column="meal_gift_flag" property="mealGiftFlag" jdbcType="INTEGER"/>
+            <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        </collection>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -208,11 +213,26 @@
     </select>
 
     <select id="queryProductMealPortray" parameterType="Integer"
-            resultType="cn.net.yzl.product.model.vo.product.dto.ProductMealDTO">
+            resultMap="BaseResultMap">
       select
-      id, meal_no mealNo, `name`, price, discount_price discountPrice, integral, descri, status,
-      del_flag delFlag, old_id oldId, create_time createTime, update_time updateTime
-      from meal where 1=1 and del_flag=0 and meal_no = #{mealNo,jdbcType=INTEGER}
+        m.id,
+        m.meal_no,
+        m.`name`,
+        m.price,
+        m.discount_price,
+        m.integral,
+        m.descri,
+        m.status,
+        m.old_id,
+        m.image_url,
+        m.sale_start_time,
+        m.sale_end_time,
+        mp.product_num,
+        mp.meal_gift_flag,
+        mp.product_code
+        from meal m
+        LEFT JOIN meal_product mp ON mp.meal_no=m.meal_no
+        where m.meal_no = #{mealNo,jdbcType=INTEGER} and m.del_flag=0
     </select>
 
 
