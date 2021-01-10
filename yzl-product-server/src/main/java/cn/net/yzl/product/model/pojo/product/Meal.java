@@ -25,6 +25,12 @@ public class Meal extends BaseObject {
 
     private Integer oldId;
 
+    private Date saleStartTime;
+
+    private Date saleEndTime;
+
+    private String imageUrl;
+
     private Date createTime;
 
     private Date updateTime;
@@ -123,5 +129,29 @@ public class Meal extends BaseObject {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Date getSaleStartTime() {
+        return saleStartTime;
+    }
+
+    public void setSaleStartTime(Date saleStartTime) {
+        this.saleStartTime = saleStartTime;
+    }
+
+    public Date getSaleEndTime() {
+        return saleEndTime;
+    }
+
+    public void setSaleEndTime(Date saleEndTime) {
+        this.saleEndTime = saleEndTime;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
