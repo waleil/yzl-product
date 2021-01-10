@@ -4,12 +4,10 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.product.model.pojo.product.Meal;
 import cn.net.yzl.product.model.vo.product.dto.MealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
-import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
-import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
+import cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.*;
-import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,6 +28,7 @@ public interface ProductMealService {
      */
     List<ProductStatusCountDTO> queryCountByStatus();
 
+    ComResponse<ProductMealDTO> queryProductMealPortray(Integer mealNo);
     ComResponse<Page<ProductMealDTO>> queryListProductMeal(ProductMealVO vo);
 
     ComResponse<MealDTO> queryProductMealPortray(Integer mealNo);
@@ -61,7 +60,7 @@ public interface ProductMealService {
      * @param vo:
      * @return: cn.net.yzl.common.entity.ComResponse<java.lang.Void>
      **/
-    ComResponse editProductMeal(ProductMealVO vo);
+    ComResponse editProductMeal(MealVO vo);
 
 
     /**
@@ -72,4 +71,12 @@ public interface ProductMealService {
      * @return: cn.net.yzl.common.entity.ComResponse
      **/
     ComResponse<ProductMealDetailVO> queryMealDetail(Meal meal);
+
+    /**
+     * @Author: wanghuasheng
+     * @Description: 查询商品套餐列表
+     * @Date: 2021/1/10 12:07 上午
+     * @Return:
+     */
+    ComResponse<Page<ProductMealListDTO>> queryProductMealList(ProductMealSelectVO vo);
 }

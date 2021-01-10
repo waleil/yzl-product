@@ -167,7 +167,7 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where meal_no = #{mealNo,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.pojo.product.Meal">
     update meal
@@ -191,14 +191,17 @@
   </select>
 
     <!--查询商品列表-->
-    <select id="queryListProductMeal" resultType="cn.net.yzl.product.model.vo.product.dto.ProductMealDTO"
-            parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealVO">
+    <select id="queryListProductMeal" resultType="cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO"
+            parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealSelectVO">
         select
-        id, meal_no mealNo, name, price, discount_price discountPrice, integral, descri, status,
-        del_flag delFlag, old_id oldId, create_time createTime, update_time updateTime
-        from meal where 1=1 and del_flag=0
+        meal_no, `name`, price, discount_price,
+        create_time, image_url, sale_start_time, sale_end_time
+        from
+        meal
+        where 1=1
+        and del_flag=0
         <if test="keyword != null and keyword != ''">
-            AND (`name` LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%')
+            AND (`name` LIKE  CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%')
             OR meal_no LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%'))
         </if>
         <if test="status != null ">
@@ -239,7 +242,8 @@
   <!-- 修改上下架的状态 -->
   <update id="updateStatusByMealCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealUpdateStatusVO">
     update meal
-    set `status`= #{status,jdbcType=INTEGER}
+    set `status`= #{status,jdbcType=INTEGER},
+      update_no = #{updateNo,jdbcType=VARCHAR}
     where
     meal_no in
     <foreach item="item" index="index" collection="mealNoList" open="(" separator="," close=")">
@@ -251,8 +255,10 @@
   <update id="updateTimeByMealCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealUpdateTimeVO">
     update meal
     set
-    create_time = #{saleStartTime,jdbcType=TIMESTAMP},
-    update_time = #{saleEndTime,jdbcType=TIMESTAMP}
+    sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
+    sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    update_no = #{updateNo,jdbcType=VARCHAR}
     where
     meal_no in
     <foreach item="item" index="index" collection="mealNoList" open="(" separator="," close=")">
@@ -278,5 +284,14 @@
          from meal p
     where meal_no = #{mealNo,jdbcType=VARCHAR}
   </select>
-
+    <!--查询最大主键编号-->
+    <select id="queryMaxId" resultType="int">
+        select max(old_id) as maxId from  meal;
+    </select>
+    <!--根据商品套餐编码查询上下架状态及最后修改时间-->
+    <select id="queryMealStatusByMaelNo" parameterType="java.lang.Long" resultType="cn.net.yzl.product.model.pojo.product.MealStatus">
+    select meal_no as mealNo,
+    update_time as updateTime
+    from meal where meal_no = #{mealNo,jdbcType=BIGINT}
+  </select>
 </mapper>

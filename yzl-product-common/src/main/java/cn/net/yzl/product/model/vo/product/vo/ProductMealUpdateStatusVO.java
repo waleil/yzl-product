@@ -25,4 +25,8 @@ public class ProductMealUpdateStatusVO extends BaseObject {
     @DecimalMin(value = "0",message = "下架")
     @DecimalMax(value = "1",message = "上架")
     private Integer status;
+
+    @ApiModelProperty(name = "updateNo", required = true,value = "编辑人编号")
+    @NotEmpty(message = "编辑员工编号不能为空")
+    private String updateNo;
 }

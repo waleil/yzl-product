@@ -1,8 +1,8 @@
 package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.pojo.product.MealProduct;
-import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
-import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
+import cn.net.yzl.product.model.vo.product.dto.MealListProductDTO;
+import io.lettuce.core.dynamic.annotation.Param;
 
 import java.util.List;
 
@@ -18,4 +18,15 @@ public interface MealProductMapper {
     int updateByPrimaryKeySelective(MealProduct record);
 
     int updateByPrimaryKey(MealProduct record);
+
+    /**
+     * 根据套餐号查询关联产品
+     * @param mealNoList
+     * @return
+     */
+    List<MealListProductDTO> queryMealProductByMealNos(@Param("mealNoList") List<Integer> mealNoList);
+
+    void deleteByMealNo(Long mealNo);
+
+    void insertSelectiveList(List<MealProduct> mealProductList);
 }
