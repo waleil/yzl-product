@@ -70,5 +70,5 @@ public interface ProductService {
      * @param productCode
      * @Return:
      */
-    ComResponse<ProductDetailVO> queryProducDetail(String productCode);
+    ComResponse<ProductDetailVO> queryProductDetail(String productCode);
 }

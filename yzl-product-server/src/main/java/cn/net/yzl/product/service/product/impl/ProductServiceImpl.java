@@ -427,9 +427,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ComResponse<ProductDetailVO> queryProducDetail(String productCode) {
+    public ComResponse<ProductDetailVO> queryProductDetail(String productCode) {
         try {
             ProductDetailVO productVO = productMapper.selectByProductCode(productCode);
+            productVO.setSalePriceD(new BigDecimal(String.valueOf(productVO.getSalePrice() / 100d))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            productVO.setCostPriceD(new BigDecimal(String.valueOf(productVO.getCostPrice() / 100d))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            productVO.setLimitDownPriceD(new BigDecimal(String.valueOf(productVO.getLimitDownPrice() / 100d))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
             return ComResponse.success(productVO);
         } catch (Exception ex) {
             log.error("查询商品详情信息失败,", ex);

@@ -53,14 +53,23 @@ public class ProductDetailVO extends BaseObject {
     @ApiModelProperty(name = "categoryDictCode", value = "商品分类名称")
     private Integer categoryDictName;
 
-    @ApiModelProperty(name = "salePrice", required = true, value = "市场价(售卖价),以元为单位")
+    @ApiModelProperty(name = "salePrice", required = true, value = "市场价(售卖价),以分为单位")
     private Integer salePrice;
 
-    @ApiModelProperty(name = "costPrice", required = true, value = "成本价,以元为单位")
+    @ApiModelProperty(name = "costPrice", required = true, value = "成本价,以分为单位")
     private Integer costPrice;
 
-    @ApiModelProperty(name = "limitDownPrice", required = true, value = "最低价格,所有的优惠扣减不能低于此价格,以元为单位")
+    @ApiModelProperty(name = "limitDownPrice", required = true, value = "最低价格,所有的优惠扣减不能低于此价格,以分为单位")
     private Integer limitDownPrice;
+
+    @ApiModelProperty(name = "salePriceD", required = true, value = "市场价(售卖价),以元为单位")
+    private Double salePriceD;
+
+    @ApiModelProperty(name = "costPrice", required = true, value = "成本价,以元为单位")
+    private Double costPriceD;
+
+    @ApiModelProperty(name = "limitDownPrice", required = true, value = "最低价格,所有的优惠扣减不能低于此价格,以元为单位")
+    private Double limitDownPriceD;
 
     @ApiModelProperty(name = "stock", required = true, value = "库存,-1代表不限制库存")
     private Integer stock;

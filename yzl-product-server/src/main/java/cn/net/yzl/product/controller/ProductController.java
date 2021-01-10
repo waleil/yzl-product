@@ -180,7 +180,7 @@ public class ProductController {
     @GetMapping(value = "v1/queryProductDetail")
     @ApiOperation("查询商品详情")
     public ComResponse<ProductDetailVO> queryProductDetail(@RequestParam("productCode") String productCode) {
-        return productService.queryProducDetail(productCode);
+        return productService.queryProductDetail(productCode);
     }
 }
 
