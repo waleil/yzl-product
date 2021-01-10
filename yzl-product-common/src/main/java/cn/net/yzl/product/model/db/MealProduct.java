@@ -36,7 +36,7 @@ public class MealProduct {
     private Integer productNum;
 
     @ApiModelProperty(value = "是否赠品(0代表否,1代表是)",name = "mealGiftFlag")
-    private Boolean mealGiftFlag;
+    private Integer mealGiftFlag;
 
     @ApiModelProperty(name = "imageUrl", value = "商品主图")
     private String imageUrl;
