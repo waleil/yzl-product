@@ -208,4 +208,11 @@
   <select id="queryMaxId" resultType="int">
         select max(old_id) as maxId from  category_dict;
     </select>
+  <!--根据主键查询-->
+  <select id="queryById" resultType="cn.net.yzl.product.model.pojo.category.Category" parameterType="int">
+     select
+    old_id as id ,name,pid
+    from category_dict
+    where del_flag=0 and old_id = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

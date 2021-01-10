@@ -119,4 +119,9 @@
     <select id="queryMaxId" resultType="int">
         select max(old_id) as maxId  from disease;
     </select>
+    <!--根据主键查询病症信息-->
+    <select id="queryById"  resultType="cn.net.yzl.product.model.pojo.disease.Disease">
+         select old_id as id, name,pid
+        from disease where del_flag=0 and pid = #{pid,jdbcType=INTEGER} and old_id = #{id,jdbcType=INTEGER}
+    </select>
 </mapper>

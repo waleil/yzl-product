@@ -76,7 +76,8 @@
     `status` as status,
     create_time as createTime,
     image_url as imageUrl,
-    disease_id as diseaseId
+    disease_id as diseaseId,
+    disease_pid as diseasePid
     from
     product
     where 1=1
@@ -281,6 +282,9 @@
       <if test="diseaseId != null" >
         disease_id,
       </if>
+      <if test="diseasePid != null" >
+        disease_pid,
+      </if>
       <if test="imageUrl != null" >
         image_url,
       </if>
@@ -457,6 +461,9 @@
       </if>
       <if test="diseaseId != null" >
         #{diseaseId,jdbcType=INTEGER},
+      </if>
+      <if test="diseasePid != null" >
+        #{diseasePid,jdbcType=INTEGER},
       </if>
       <if test="imageUrl != null" >
         #{imageUrl,jdbcType=VARCHAR},
@@ -637,6 +644,13 @@
       </if>
       <if test="diseaseId == null" >
         disease_id = null,
+      </if>
+
+      <if test="diseasePid != null" >
+        disease_pid = #{diseasePid,jdbcType=INTEGER},
+      </if>
+      <if test="diseasePid == null" >
+        disease_pid = null,
       </if>
       <if test="financeCode != null" >
         finance_code = #{videoUrl,jdbcType=VARCHAR},
