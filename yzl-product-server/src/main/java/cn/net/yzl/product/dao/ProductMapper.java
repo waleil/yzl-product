@@ -4,6 +4,7 @@ import cn.net.yzl.product.model.db.ProductAtlasBean;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductDisease;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
+import cn.net.yzl.product.model.vo.product.dto.ProductDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
@@ -74,4 +75,12 @@ public interface ProductMapper {
     ProductDisease queryDiseaseByProductCode(String productCode);
 
     Integer queryCountByDiseaseIdAndPID(@Param("diseasePid") Integer diseasePid, @Param("diseaseId") Integer diseaseId);
+    /**
+     * @Author: lichanghong
+     * @Description: 根据病症一级主键查询商品信息
+     * @Date: 2021/1/10 6:28 下午
+     * @param list
+     * @Return:
+     */
+    List<ProductDTO> queryByDiseasePid(@Param("list") List<Integer> list);
 }

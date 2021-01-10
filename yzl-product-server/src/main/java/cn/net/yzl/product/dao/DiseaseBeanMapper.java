@@ -5,6 +5,7 @@ import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
 import cn.net.yzl.product.model.vo.disease.DiseaseVo;
+import cn.net.yzl.product.model.vo.disease.dto.DiseaseTreePageDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -59,4 +60,12 @@ public interface DiseaseBeanMapper {
      * @Return:
      */
    Disease queryById(@Param("id") Integer id ,@Param("pid") Integer pid);
+    /**
+     * @Author: lichanghong
+     * @Description: 根据主键ID查询
+     * @Date: 2021/1/9 9:28 下午
+     * @param list
+     * @Return:
+     */
+   List<DiseaseTreePageDTO> queryByPIds(@Param("list") List<Integer> list);
 }

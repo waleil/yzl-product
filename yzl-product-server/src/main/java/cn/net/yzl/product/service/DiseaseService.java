@@ -1,6 +1,7 @@
 package cn.net.yzl.product.service;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.db.DiseaseBean;
 import cn.net.yzl.product.model.db.ProductDiseaseBean;
 import cn.net.yzl.product.model.pojo.disease.Disease;
@@ -8,6 +9,7 @@ import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
 import cn.net.yzl.product.model.vo.disease.DiseaseTreeNode;
 import cn.net.yzl.product.model.vo.disease.DiseaseVo;
+import cn.net.yzl.product.model.vo.disease.dto.DiseaseTreePageDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -55,5 +57,7 @@ public interface DiseaseService {
      * @return: List<DiseaseDTO>
      */
     Disease queryById( Integer id,Integer pid);
+
+    Page<DiseaseTreePageDTO> queryDiseaseTreePage(int pageNo,int pageSize);
 
 }

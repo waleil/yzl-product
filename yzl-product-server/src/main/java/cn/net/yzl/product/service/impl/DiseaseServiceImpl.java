@@ -1,8 +1,11 @@
 package cn.net.yzl.product.service.impl;
 
 import cn.net.yzl.common.entity.ComResponse;
+import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
+import cn.net.yzl.common.util.AssemblerResultUtil;
 import cn.net.yzl.common.util.JsonUtil;
+import cn.net.yzl.product.config.FastDFSConfig;
 import cn.net.yzl.product.dao.DiseaseBeanMapper;
 import cn.net.yzl.product.dao.ProductBeanMapper;
 import cn.net.yzl.product.dao.ProductDiseaseMapper;
@@ -13,16 +16,19 @@ import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
 import cn.net.yzl.product.model.vo.disease.DiseaseTreeNode;
 import cn.net.yzl.product.model.vo.disease.DiseaseVo;
+import cn.net.yzl.product.model.vo.disease.dto.DiseaseTreePageDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductDTO;
 import cn.net.yzl.product.service.DiseaseService;
 import cn.net.yzl.product.utils.CacheKeyUtil;
 import cn.net.yzl.product.utils.RedisUtil;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,6 +46,9 @@ public class DiseaseServiceImpl implements DiseaseService {
     private ProductMapper productMapper;
     @Autowired
     private ProductDiseaseMapper productDiseaseMapper;
+    @Autowired
+    private FastDFSConfig dfsConfig;
+
     /**
      * @param diseaseVo:
      * @author lichanghong
@@ -147,18 +156,18 @@ public class DiseaseServiceImpl implements DiseaseService {
         if (treeNode.getPid() == 0) {
             treeNode.setNodeList(new ArrayList<>());
         }
-        if (node.getPid() != 0) {
-            List<ProductDTO> list = new ArrayList<>();
-            ProductDTO dto = new ProductDTO();
-            dto.setName("商品名称");
-            dto.setCode("1000001");
-            dto.setImageUrl("http://fast.staff.yuzhilin.net.cn/group1/M00/00/01/wKggg1_4IDGAU5tUAAAWIYXlGys238.png");
-            dto.setSource(1);
-            for (int i = 0; i < 2; i++) {
-                list.add(dto);
-            }
-            treeNode.setProductDTOList(list);
-        }
+//        if (node.getPid() != 0) {
+//            List<ProductDTO> list = new ArrayList<>();
+//            ProductDTO dto = new ProductDTO();
+//            dto.setName("商品名称");
+//            dto.setCode("1000001");
+//            dto.setImageUrl("http://fast.staff.yuzhilin.net.cn/group1/M00/00/01/wKggg1_4IDGAU5tUAAAWIYXlGys238.png");
+//            dto.setSource(1);
+//            for (int i = 0; i < 2; i++) {
+//                list.add(dto);
+//            }
+//            treeNode.setProductDTOList(list);
+//        }
         return treeNode;
     }
 
@@ -210,6 +219,61 @@ public class DiseaseServiceImpl implements DiseaseService {
             }
             return disease;
         }
+    }
+    /**
+     * @Author: lichanghong
+     * @Description:    分页查询病症关联的商品信息
+     * @Date: 2021/1/10 6:36 下午
+     * @param pageNo   分页数
+     * @param pageSize  每页显示大小
+     * @Return: cn.net.yzl.common.entity.Page<cn.net.yzl.product.model.vo.disease.dto.DiseaseTreePageDTO>
+     */
+    @Override
+    public Page<DiseaseTreePageDTO> queryDiseaseTreePage(int pageNo, int pageSize) {
+        List<Integer> pIds = new ArrayList<>();
+        pIds.add(0);
+        PageHelper.startPage(pageNo, pageSize);
+        List<DiseaseTreePageDTO> list = diseaseBeanMapper.queryByPIds(pIds);
+        //判断是否有数据
+        if(!CollectionUtils.isEmpty(list)){
+            List<Integer> subList = list.stream().map(DiseaseTreePageDTO::getId).collect(Collectors.toList());
+            List<DiseaseTreePageDTO> list1 = diseaseBeanMapper.queryByPIds(subList);
+            //判断是否有关联的二级病症
+            if(!CollectionUtils.isEmpty(list1)){
+                //查询二级病症关联的商品信息
+                List<ProductDTO> productDTOS = productMapper.queryByDiseasePid(subList);
+                Map<Integer, List<ProductDTO>> map = new HashMap<>();
+                if(!CollectionUtils.isEmpty(productDTOS)){
+                    map = productDTOS.stream().collect(Collectors.groupingBy(ProductDTO::getDiseaseId));
+                }
+                Map<Integer, List<DiseaseTreePageDTO>> diseaseMap =list1.stream().collect(Collectors.groupingBy(DiseaseTreePageDTO::getPid));
+                Map<Integer, List<ProductDTO>> finalMap = map;
+
+                for(DiseaseTreePageDTO p:list){
+                    List<DiseaseTreePageDTO> subt = new ArrayList<>();
+                    //获取二级病症
+                    List<DiseaseTreePageDTO> dtos = diseaseMap.get(p.getId());
+                    if(!CollectionUtils.isEmpty(dtos)){
+                        for(DiseaseTreePageDTO s:dtos){
+                            List<ProductDTO> dtos1 = map.get(s.getId());
+                            if(!CollectionUtils.isEmpty(dtos1)){
+                                //处理价格及图片地址
+                                for(ProductDTO d:dtos1){
+                                    d.setFastDFSUrl(dfsConfig.getUrl());
+                                    d.setSalePriceD(new BigDecimal(String.valueOf(d.getSalePrice() / 100d))
+                                            .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                                }
+                                s.setProductDTOS(dtos1);
+                            }
+                            subt.add(s);
+                        }
+                        p.setDiseaseTreePageDTOS(subt);
+                    }
+                }
+            }
+
+        }
+        return AssemblerResultUtil.resultAssembler(list);
     }
 
 

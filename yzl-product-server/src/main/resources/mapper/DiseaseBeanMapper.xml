@@ -124,4 +124,14 @@
          select old_id as id, name,pid
         from disease where del_flag=0 and pid = #{pid,jdbcType=INTEGER} and old_id = #{id,jdbcType=INTEGER}
     </select>
+
+    <select id="queryByPIds"  resultType="cn.net.yzl.product.model.vo.disease.dto.DiseaseTreePageDTO" parameterType="list">
+         select old_id as id, name,pid
+        from disease where del_flag=0 and pid in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by create_time desc
+    </select>
+
 </mapper>
