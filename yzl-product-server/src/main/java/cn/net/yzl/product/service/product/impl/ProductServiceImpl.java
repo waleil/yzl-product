@@ -468,7 +468,15 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
             //查询关联病症
-            productVO.setDiseaseVOS(productDiseaseMapper.queryByProductCode(productCode));
+            List<ProductDiseaseVO> productDiseaseVOList = productDiseaseMapper.queryByProductCode(productCode);
+            if(!CollectionUtils.isEmpty(productDiseaseVOList)){
+                for(ProductDiseaseVO v:productDiseaseVOList){
+                    Disease d = diseaseService.queryById(v.getDiseaseId(), v.getDiseasePid());
+                    v.setDiseaseName(d.getName());
+                }
+                productVO.setDiseaseVOS(productDiseaseVOList);
+            }
+
             return ComResponse.success(productVO);
         } catch (Exception ex) {
             log.error("查询商品详情信息失败,", ex);
