@@ -68,4 +68,6 @@ public interface CategoryService {
      * @return: null
      */
     ComResponse<List<CategorySelectTO>> query4SelectOption(@Param("pid") Integer pid);
+
+    cn.net.yzl.product.model.pojo.category.Category queryById(@Param("id") Integer id);
 }

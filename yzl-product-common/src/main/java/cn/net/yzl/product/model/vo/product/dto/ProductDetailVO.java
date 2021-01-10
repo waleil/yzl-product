@@ -9,6 +9,7 @@ import lombok.Data;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -52,14 +53,23 @@ public class ProductDetailVO extends BaseObject {
     @ApiModelProperty(name = "categoryDictCode", value = "商品分类名称")
     private Integer categoryDictName;
 
-    @ApiModelProperty(name = "salePrice", required = true, value = "市场价(售卖价),以元为单位")
+    @ApiModelProperty(name = "salePrice", required = true, value = "市场价(售卖价),以分为单位")
     private Integer salePrice;
 
-    @ApiModelProperty(name = "costPrice", required = true, value = "成本价,以元为单位")
+    @ApiModelProperty(name = "costPrice", required = true, value = "成本价,以分为单位")
     private Integer costPrice;
 
-    @ApiModelProperty(name = "limitDownPrice", required = true, value = "最低价格,所有的优惠扣减不能低于此价格,以元为单位")
+    @ApiModelProperty(name = "limitDownPrice", required = true, value = "最低价格,所有的优惠扣减不能低于此价格,以分为单位")
     private Integer limitDownPrice;
+
+    @ApiModelProperty(name = "salePriceD", required = true, value = "市场价(售卖价),以元为单位")
+    private Double salePriceD;
+
+    @ApiModelProperty(name = "costPriceD", required = true, value = "成本价,以元为单位")
+    private Double costPriceD;
+
+    @ApiModelProperty(name = "limitDownPriceD", required = true, value = "最低价格,所有的优惠扣减不能低于此价格,以元为单位")
+    private Double limitDownPriceD;
 
     @ApiModelProperty(name = "stock", required = true, value = "库存,-1代表不限制库存")
     private Integer stock;
@@ -71,12 +81,10 @@ public class ProductDetailVO extends BaseObject {
     private String marketingRule;
 
     @ApiModelProperty(name = "saleStartTime", value = "销售开始日期")
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date saleStartTime;
+    private String saleStartTime;
 
     @ApiModelProperty(name = "saleEndTime", value = "销售结束日期")
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date saleEndTime;
+    private String saleEndTime;
 
     @ApiModelProperty(name = "patentCode", value = "发明专利号")
     private String patentCode;
@@ -92,14 +100,13 @@ public class ProductDetailVO extends BaseObject {
     private Integer importFlag;
 
     @ApiModelProperty(name = "productionTime", required = true, value = "生产日期")
-    private Date productionTime;
+    private String productionTime;
 
     @ApiModelProperty(name = "expirationDate", required = true, value = "保质期")
-    @DecimalMin(value = "1",message = "保质期为空")
     private Integer expirationDate;
 
     @ApiModelProperty(name = "validDate", required = true, value = "有效期至")
-    private Date validDate;
+    private String validDate;
 
     @ApiModelProperty(name = "unit", value = "计量单位")
     private String unit;
@@ -157,4 +164,9 @@ public class ProductDetailVO extends BaseObject {
     private List<ProductImageVO> images;
     @ApiModelProperty(name = "diseaseVOS", value = "商品关联病症")
     private List<ProductDiseaseVO> diseaseVOS;
+
+    public String getProductCode() {
+        return productCode;
+    }
+
 }

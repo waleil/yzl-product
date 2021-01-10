@@ -71,11 +71,11 @@ public class ProductVO extends BaseObject {
     private String marketingRule;
 
     @ApiModelProperty(name = "saleStartTime", value = "销售开始日期")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date saleStartTime;
 
     @ApiModelProperty(name = "saleEndTime", value = "销售结束日期")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date saleEndTime;
 
     @ApiModelProperty(name = "patentCode", value = "发明专利号")
@@ -92,7 +92,7 @@ public class ProductVO extends BaseObject {
     private Integer importFlag;
 
     @ApiModelProperty(name = "productionTime", required = true, value = "生产日期")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date productionTime;
 
     @ApiModelProperty(name = "expirationDate", required = true, value = "保质期")
@@ -100,7 +100,7 @@ public class ProductVO extends BaseObject {
     private Integer expirationDate;
 
     @ApiModelProperty(name = "validDate", required = true, value = "有效期至")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date validDate;
 
     @ApiModelProperty(name = "unit", value = "计量单位")
@@ -160,6 +160,9 @@ public class ProductVO extends BaseObject {
 
     @ApiModelProperty(name = "diseaseId", value = "商品主治病症")
     private Integer diseaseId;
+
+    @ApiModelProperty(name = "diseasePid", value = "主治病症上级主键")
+    private Integer diseasePid;
 
     @ApiModelProperty(name = "imageUrl", value = "商品主图")
     private String imageUrl;

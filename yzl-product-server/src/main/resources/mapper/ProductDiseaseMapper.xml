@@ -46,6 +46,9 @@
       <if test="diseaseId != null" >
         disease_id,
       </if>
+      <if test="diseasePid != null" >
+        disease_pid,
+      </if>
       <if test="dtype != null" >
         dtype,
       </if>
@@ -68,6 +71,9 @@
       </if>
       <if test="diseaseId != null" >
         #{diseaseId,jdbcType=INTEGER},
+      </if>
+      <if test="diseasePid != null" >
+        #{diseasePid,jdbcType=INTEGER},
       </if>
       <if test="dtype != null" >
         #{dtype,jdbcType=INTEGER},
@@ -92,6 +98,9 @@
       <if test="diseaseId != null" >
         disease_id = #{diseaseId,jdbcType=INTEGER},
       </if>
+      <if test="diseasePid != null" >
+        disease_pid = #{diseasePid,jdbcType=INTEGER},
+      </if>
       <if test="dtype != null" >
         dtype = #{dtype,jdbcType=INTEGER},
       </if>
@@ -107,14 +116,15 @@
   <!--批量查询病症-->
   <insert id="insertArray" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductDiseaseVO">
      insert into product_disease (
-     product_code, disease_id,disease_name
+     product_code, disease_id,disease_name,disease_pid
       )
     values
     <foreach item="item" collection="list" separator=",">
     (
     #{item.productCode,jdbcType=VARCHAR},
     #{item.diseaseName,jdbcType=VARCHAR},
-        #{item.diseaseId,jdbcType=INTEGER}
+        #{item.diseaseId,jdbcType=INTEGER},
+        #{item.diseasePid,jdbcType=INTEGER}
       )
     </foreach>
   </insert>

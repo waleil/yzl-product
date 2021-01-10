@@ -1,6 +1,7 @@
 package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.db.DiseaseBean;
+import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
 import cn.net.yzl.product.model.vo.disease.DiseaseVo;
@@ -50,4 +51,12 @@ public interface DiseaseBeanMapper {
      * @Return: Integer
      */
     int queryMaxId();
+    /**
+     * @Author: lichanghong
+     * @Description: 根据主键查询
+     * @Date: 2021/1/9 9:28 下午
+     * @param id
+     * @Return:
+     */
+   Disease queryById(@Param("id") Integer id ,@Param("pid") Integer pid);
 }

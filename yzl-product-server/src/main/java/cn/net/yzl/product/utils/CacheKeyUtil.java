@@ -40,5 +40,26 @@ public class CacheKeyUtil {
     public static String maxDiseaseCacheKey(){
         return new StringBuilder(serverName).append("-").append("maxDiseaseId").toString();
     }
-
+    /**
+     * @Author: lichanghong
+     * @Description:
+     * @Date: 2021/1/9 9:30 下午
+     * @param id 病症主键
+     * @Return: java.lang.String
+     */
+    public static String diseaseCacheKey(Integer id,Integer pid){
+        return new StringBuilder(serverName).append("-")
+                .append("disease:").append(id).append("-").append(pid).toString();
+    }
+    /**
+     * @Author: lichanghong
+     * @Description:
+     * @Date: 2021/1/9 9:30 下午
+     * @param id 病症主键
+     * @Return: java.lang.String
+     */
+    public static String categoryCacheKey(Integer id){
+        return new StringBuilder(serverName).append("-")
+                .append("category:").append(id).toString();
+    }
 }

@@ -4,8 +4,10 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.AssemblerResultUtil;
+import cn.net.yzl.common.util.JsonUtil;
 import cn.net.yzl.product.dao.CategoryBeanMapper;
 import cn.net.yzl.product.model.db.Category;
+import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.vo.category.*;
 import cn.net.yzl.product.service.CategoryService;
 import cn.net.yzl.product.utils.CacheKeyUtil;
@@ -14,6 +16,7 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -21,6 +24,10 @@ import java.util.List;
 @Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
+    //缓存时间，12个小时
+    private static long CACHE_TIME = 60 * 60 * 12;
+    //空字符串，表示数据库中不存在
+    private static String NULL_STR = "null";
     @Autowired
     private CategoryBeanMapper categoryBeanMapper;
 
@@ -53,7 +60,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ComResponse<Void> saveOrUpdateCategory(CategoryVO categoryVO) {
         if(categoryVO.getId()!=null&&categoryVO.getId()>0){
-
             categoryBeanMapper.updateByPrimaryKeySelective(categoryVO);
         }else{
             String cacheKey = CacheKeyUtil.maxCategoryCacheKey();
@@ -68,6 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ComResponse<Void> deleteCategory(CategoryDelVO vo) {
             try {
+                deleteCache(vo.getId());
                 categoryBeanMapper.deleteByPrimaryKey(vo);
                 return ComResponse.success();
             } catch (Exception e) {
@@ -123,5 +130,40 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ComResponse<List<CategorySelectTO>> query4SelectOption(Integer pid) {
         return ComResponse.success(categoryBeanMapper.query4SelectOption(pid));
+    }
+
+    @Override
+    public cn.net.yzl.product.model.pojo.category.Category queryById(Integer id) {
+
+        //先从缓存中查询
+        String cacheKey = CacheKeyUtil.categoryCacheKey(id);
+        String result = redisUtil.getStr(cacheKey);
+        if (StringUtils.hasText(result)) {
+            if (!NULL_STR.equals(result)) {
+                return JsonUtil.getObjectFromJSONString(result, cn.net.yzl.product.model.pojo.category.Category.class);
+            } else {
+                return null;
+            }
+        } else {
+            cn.net.yzl.product.model.pojo.category.Category category = categoryBeanMapper.queryById(id);
+            if (category != null) {
+                redisUtil.set(cacheKey,JsonUtil.toJsonStr(category), CACHE_TIME);
+            } else {
+                //缓存5分钟
+                redisUtil.set(cacheKey, NULL_STR, 300);
+            }
+            return category;
+        }
+    }
+    /**
+     * @Author: lichanghong
+     * @Description: 删除缓存数据
+     * @Date: 2021/1/9 10:20 下午
+     * @param id    主键
+     * @Return: void
+     */
+    private void deleteCache(Integer id){
+        String cacheKey = CacheKeyUtil.categoryCacheKey(id);
+        redisUtil.del(cacheKey);
     }
 }

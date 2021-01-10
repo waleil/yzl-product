@@ -6,10 +6,13 @@ import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.AssemblerResultUtil;
 import cn.net.yzl.product.config.FastDFSConfig;
+import cn.net.yzl.product.dao.DiseaseBeanMapper;
 import cn.net.yzl.product.dao.ProductDiseaseMapper;
 import cn.net.yzl.product.dao.ProductImageMapper;
 import cn.net.yzl.product.dao.ProductMapper;
 import cn.net.yzl.product.model.db.ProductAtlasBean;
+import cn.net.yzl.product.model.pojo.category.Category;
+import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
 import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
@@ -18,6 +21,8 @@ import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.*;
+import cn.net.yzl.product.service.CategoryService;
+import cn.net.yzl.product.service.DiseaseService;
 import cn.net.yzl.product.service.product.ProductService;
 import cn.net.yzl.product.utils.CacheKeyUtil;
 import cn.net.yzl.product.utils.RedisUtil;
@@ -53,6 +58,10 @@ public class ProductServiceImpl implements ProductService {
     private ProductImageMapper productImageMapper;
     @Autowired
     private FastDFSConfig dfsConfig;
+    @Autowired
+    private DiseaseService diseaseService;
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      * @Author: lichanghong
@@ -75,6 +84,35 @@ public class ProductServiceImpl implements ProductService {
                 dto.setSalePriceD(new BigDecimal(String.valueOf(dto.getSalePrice() / 100d))
                         .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
                 dto.setFastDFSUrl(dfsConfig.getUrl());
+                //判断是否关联类目
+                if (dto.getCategoryDictCode() != null && dto.getCategoryDictCode() > 0) {
+                    //查询关联的二级类目
+                    Category category = categoryService.queryById(dto.getCategoryDictCode());
+                    StringBuilder sb = new StringBuilder();
+                    if (category != null) {
+                        Category pCategory = categoryService.queryById(category.getPid());
+                        if (pCategory != null) {
+                            sb.append(pCategory.getName()).append(">");
+                        }
+                        sb.append(category.getName());
+                        dto.setCategoryStr(sb.toString());
+                    }
+                }
+                //判断是否关联病症
+                if (dto.getDiseaseId() != null && dto.getDiseaseId() > 0) {
+                    //查询主治病症
+                    Disease disease= diseaseService.queryById(dto.getDiseaseId(),dto.getDiseasePid());
+                    if(disease!=null&& disease.getPid()>0){
+                        StringBuilder sb = new StringBuilder();
+                        //查询病症的一级分类
+                        Disease p= diseaseService.queryById(disease.getPid(),0);
+                        if(p!=null){
+                            sb.append(p.getName()).append(">");
+                        }
+                        sb.append(disease.getName());
+                        dto.setDiseaseStr(sb.toString());
+                    }
+                }
             }
         }
         //分页查询
@@ -182,7 +220,9 @@ public class ProductServiceImpl implements ProductService {
     private void handleDisease(List<ProductDiseaseVO> list, String productCode) {
         //新增关联病症
         if (!CollectionUtils.isEmpty(list)) {
-            List<ProductDiseaseVO> tempVOS = list.stream().filter(d -> d.getDiseaseId() != null).collect(Collectors.toList());
+            List<ProductDiseaseVO> tempVOS = list.stream().filter(d -> d.getDiseaseId() != null
+                    && d.getDiseasePid()!=null)
+                    .collect(Collectors.toList());
             for (ProductDiseaseVO diseaseVO : tempVOS) {
                 diseaseVO.setProductCode(productCode);
             }
@@ -268,8 +308,8 @@ public class ProductServiceImpl implements ProductService {
 
 
         /*假如只传商品名称，有可能出现不同病症    病症分组*/
-        Map<Integer,List<ProductAtlasBean>> mapResult = new HashMap<>();
-        if (id == null){
+        Map<Integer, List<ProductAtlasBean>> mapResult = new HashMap<>();
+        if (id == null) {
             for (ProductAtlasBean productAtlasBean : productAtlasBeanList) {
                 //病症id
                 Integer disId = productAtlasBean.getId();
@@ -279,8 +319,8 @@ public class ProductServiceImpl implements ProductService {
                 }
                 mapResult.get(disId).add(productAtlasBean);
             }
-        }else {
-            mapResult.put(id,productAtlasBeanList);
+        } else {
+            mapResult.put(id, productAtlasBeanList);
         }
 
 
@@ -291,7 +331,6 @@ public class ProductServiceImpl implements ProductService {
          *                排序： 自营：由下至上 价格由小到大
          *                       第三方：由上至下 价格由小到大
          */
-
 
 
         //最终封装后的结果
@@ -388,9 +427,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ComResponse<ProductDetailVO> queryProducDetail(String productCode) {
+    public ComResponse<ProductDetailVO> queryProductDetail(String productCode) {
         try {
             ProductDetailVO productVO = productMapper.selectByProductCode(productCode);
+            productVO.setSalePriceD(new BigDecimal(String.valueOf(productVO.getSalePrice() / 100d))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            productVO.setCostPriceD(new BigDecimal(String.valueOf(productVO.getCostPrice() / 100d))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            productVO.setLimitDownPriceD(new BigDecimal(String.valueOf(productVO.getLimitDownPrice() / 100d))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
             return ComResponse.success(productVO);
         } catch (Exception ex) {
             log.error("查询商品详情信息失败,", ex);

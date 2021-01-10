@@ -33,7 +33,7 @@ public class DiseaseController {
     @ApiOperation("查询所有病症")
     @GetMapping("v1/selectAll")
     public ComResponse selectAllDiseases(){
-        return diseaseService.selectAllDiseases();
+        return ComResponse.success(diseaseService.selectAllDiseases());
     }
 
     @ApiOperation("查询树形结构，包含商品信息")

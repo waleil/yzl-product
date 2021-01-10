@@ -18,11 +18,11 @@ import java.util.List;
  */
 @Data
 public class ProductUpdateStatusVO extends BaseObject {
-    @ApiModelProperty(name = "productCode", value = "商品唯一编码")
+    @ApiModelProperty(name = "productCode",required = true, value = "商品唯一编码")
     @NotEmpty(message = "商品ID不能为空")
     private List<String> productCodeList;
 
-    @ApiModelProperty(name = "updateNo", value = "编辑人编号")
+    @ApiModelProperty(name = "updateNo", required = true,value = "编辑人编号")
     @NotEmpty(message = "编辑员工编号不能为空")
     private String updateNo;
 

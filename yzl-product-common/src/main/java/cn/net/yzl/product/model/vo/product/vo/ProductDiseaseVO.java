@@ -12,10 +12,16 @@ import lombok.Data;
  */
 @Data
 public class ProductDiseaseVO {
+
     @ApiModelProperty(name = "productCode", value = "商品ID")
     private String productCode;
+
     @ApiModelProperty(name = "diseaseId", value = "病症主键")
     private Integer diseaseId;
+
     @ApiModelProperty(name = "diseaseName", value = "病症名称")
     private String diseaseName;
+
+    @ApiModelProperty(name = "diseasePid", value = "病症上级主键")
+    private Integer diseasePid;
 }

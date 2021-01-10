@@ -124,8 +124,12 @@
         and status = #{status}
       </if>
     </select>
+  <select id="selectByDid" resultMap="BaseResultMap" parameterType="int">
+    select `name`,product_code,unit,sale_price,image_url,id
+    from   product where disease_id = #{id} and del_flag = 0
+  </select>
 
-    <delete id="deleteRelationOfProductAndImgId">
+  <delete id="deleteRelationOfProductAndImgId">
     delete from product_image
     where itype = #{type}
     and

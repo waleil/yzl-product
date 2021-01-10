@@ -3,6 +3,7 @@ package cn.net.yzl.product.service;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.product.model.db.DiseaseBean;
 import cn.net.yzl.product.model.db.ProductDiseaseBean;
+import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDelVo;
 import cn.net.yzl.product.model.vo.disease.DiseaseTreeNode;
@@ -25,7 +26,7 @@ public interface DiseaseService {
     ComResponse<Void> deleteByPrimaryKey(DiseaseDelVo delVo);
 
 
-    ComResponse<List<DiseaseBean>> selectAllDiseases();
+    List<DiseaseBean> selectAllDiseases();
     /**
      * @Author: lichanghong
      * @Description:
@@ -34,6 +35,7 @@ public interface DiseaseService {
      * @Return:
      */
     ComResponse<List<DiseaseTreeNode>> queryTreeNode();
+
 
     /**
      * @author lichanghong
@@ -45,4 +47,12 @@ public interface DiseaseService {
     List<DiseaseDTO> queryByPID(@Param("pid") Integer pid);
 
     ComResponse changeDiseaseName(Integer id, String name, String userId);
+    /**
+     * @author lichanghong
+     * @description 根据病症主键查询
+     * @date: 2021/1/6 2:00 下午
+     * @param id:  病症编号
+     * @return: List<DiseaseDTO>
+     */
+    Disease queryById( Integer id,Integer pid);
 }

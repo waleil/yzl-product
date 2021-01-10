@@ -19,12 +19,12 @@ public class ProductUpdateTimeRequestVO {
     private String updateNo;
 
     @ApiModelProperty(name = "saleStartTime", value = "销售开始日期")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "销售开始日期不能为空")
     private Date saleStartTime;
 
     @ApiModelProperty(name = "saleEndTime", value = "销售结束日期")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "销售结束日期不能为空")
     private Date saleEndTime;
 
