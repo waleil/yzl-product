@@ -6,6 +6,7 @@ import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
+import cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
@@ -28,8 +29,6 @@ public interface ProductMealService {
      * @Return:
      */
     List<ProductStatusCountDTO> queryCountByStatus();
-
-    ComResponse<Page<ProductMealDTO>> queryListProductMeal(ProductMealVO vo);
 
     ComResponse<ProductMealDTO> queryProductMealPortray(Integer mealNo);
 
@@ -71,4 +70,12 @@ public interface ProductMealService {
      * @return: cn.net.yzl.common.entity.ComResponse
      **/
     ComResponse<ProductMealDetailVO> queryMealDetail(Meal meal);
+
+    /**
+     * @Author: wanghuasheng
+     * @Description: 查询商品套餐列表
+     * @Date: 2021/1/10 12:07 上午
+     * @Return:
+     */
+    ComResponse<Page<ProductMealListDTO>> queryProductMealList(ProductMealSelectVO vo);
 }

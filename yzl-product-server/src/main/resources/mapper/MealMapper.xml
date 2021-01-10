@@ -186,14 +186,17 @@
   </select>
 
     <!--查询商品列表-->
-    <select id="queryListProductMeal" resultType="cn.net.yzl.product.model.vo.product.dto.ProductMealDTO"
-            parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealVO">
+    <select id="queryListProductMeal" resultType="cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO"
+            parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealSelectVO">
         select
-        id, meal_no mealNo, name, price, discount_price discountPrice, integral, descri, status,
-        del_flag delFlag, old_id oldId, create_time createTime, update_time updateTime
-        from meal where 1=1 and del_flag=0
+        meal_no, `name`, price, discount_price,
+        create_time, image_url, sale_start_time, sale_end_time
+        from
+        meal
+        where 1=1
+        and del_flag=0
         <if test="keyword != null and keyword != ''">
-            AND (`name` LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%')
+            AND (`name` LIKE  CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%')
             OR meal_no LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%'))
         </if>
         <if test="status != null ">

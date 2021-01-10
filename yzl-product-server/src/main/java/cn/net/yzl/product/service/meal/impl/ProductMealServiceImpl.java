@@ -4,25 +4,27 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.AssemblerResultUtil;
-import cn.net.yzl.common.entity.ComResponse;
-import cn.net.yzl.common.enums.ResponseCodeEnums;
+import cn.net.yzl.product.config.FastDFSConfig;
 import cn.net.yzl.product.dao.MealMapper;
 import cn.net.yzl.product.dao.MealProductMapper;
-import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
+import cn.net.yzl.product.model.pojo.category.Category;
+import cn.net.yzl.product.model.pojo.disease.Disease;
+import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.pojo.product.Meal;
-import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.service.meal.ProductMealService;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import cn.net.yzl.product.utils.RedisUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wanghuahseng
@@ -36,9 +38,12 @@ import java.util.*;
 public class ProductMealServiceImpl implements ProductMealService {
     @Autowired
     private MealMapper mealMapper;
-
+    @Autowired
+    private MealProductMapper mealProductMapper;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private FastDFSConfig dfsConfig;
 
     /**
      * @Author: wanghuasheng
@@ -49,19 +54,6 @@ public class ProductMealServiceImpl implements ProductMealService {
     @Override
     public List<ProductStatusCountDTO> queryCountByStatus() {
         return mealMapper.queryCountByStatus();
-    }
-
-    @Override
-    public ComResponse<Page<ProductMealDTO>> queryListProductMeal(ProductMealVO vo) {
-        //开启分页
-        PageHelper.startPage(vo.getPageNo(), vo.getPageSize());
-        List<ProductMealDTO> list = mealMapper.queryListProductMeal(vo);
-        for (ProductMealDTO p : list) {
-            //List<ProductMealLinkDTO> pList =  productMealLinkMapper.queryProductMealLink(p.getMealNo());
-        }
-        //分页查询
-        Page<ProductMealDTO> pageInfo = AssemblerResultUtil.resultAssembler(list);
-        return ComResponse.success(pageInfo);
     }
 
     /**
@@ -82,7 +74,6 @@ public class ProductMealServiceImpl implements ProductMealService {
         return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(), "修改失败");
     }
 
-
     /**
      * @Description: 修改套餐售卖时间
      * @Author: dongjunmei
@@ -100,7 +91,6 @@ public class ProductMealServiceImpl implements ProductMealService {
         }
         return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(), "修改套餐售卖时间失败");
     }
-
 
     /**
      * @param vo:
@@ -134,7 +124,6 @@ public class ProductMealServiceImpl implements ProductMealService {
         return null;
     }
 
-
     private Meal translateProductMeal(ProductMealVO vo) {
         return null;
     }
@@ -156,6 +145,39 @@ public class ProductMealServiceImpl implements ProductMealService {
             log.error("查询套餐详情信息失败,", ex);
         }
         return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(), "查询套餐详情信息失败");
+    }
+
+    //查询商品套餐列表
+    @Override
+    public ComResponse<Page<ProductMealListDTO>> queryProductMealList(ProductMealSelectVO vo) {
+        //开启分页
+        PageHelper.startPage(vo.getPageNo(), vo.getPageSize());
+        //查询套餐列表
+        List<ProductMealListDTO> ProductMealList = mealMapper.queryListProductMeal(vo);
+        if (!CollectionUtils.isEmpty(ProductMealList)) {
+            List<Integer> mealNoList = new ArrayList<Integer>();
+            for (ProductMealListDTO dto : ProductMealList) {
+                dto.setPriceD(new BigDecimal(String.valueOf(dto.getPrice() / 100d))
+                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                dto.setFastDFSUrl(dfsConfig.getUrl());
+                mealNoList.add(dto.getMealNo());
+            }
+            //查询套餐关联产品
+            if (!CollectionUtils.isEmpty(mealNoList)) {
+                List<MealListProductDTO> mealProducts = mealProductMapper.queryMealProductByMealNos(mealNoList);
+                if (!CollectionUtils.isEmpty(mealProducts)) {
+                    //根据套餐no转换为map
+                    Map<Integer, List<MealListProductDTO>> MealListProductMap = mealProducts.stream().collect(Collectors.groupingBy(MealListProductDTO::getMealNO, LinkedHashMap::new, Collectors.toList()));
+                    //设置套餐关联商品
+                    ProductMealList.stream().forEach(productMealListDTO -> {
+                        productMealListDTO.setMealProductList(MealListProductMap.get(productMealListDTO.getMealNo()));
+                    });
+                }
+            }
+        }
+        //分页查询
+        Page<ProductMealListDTO> pageInfo = AssemblerResultUtil.resultAssembler(ProductMealList);
+        return ComResponse.success(pageInfo);
     }
 
     @Override

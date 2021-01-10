@@ -2,6 +2,7 @@ package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.pojo.product.Meal;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
+import cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 import cn.net.yzl.product.model.vo.product.vo.*;
@@ -33,7 +34,8 @@ public interface MealMapper {
     //修改套餐的上下架状态
     void updateStatusByMealCode(ProductMealUpdateStatusVO vo);
 
-    List<ProductMealDTO> queryListProductMeal(ProductMealVO vo);
+    //查询商品套餐列表
+    List<ProductMealListDTO> queryListProductMeal(ProductMealSelectVO vo);
 
     ProductMealDTO queryProductMealPortray(Integer mealNo);
 }
