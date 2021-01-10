@@ -3,14 +3,9 @@ package cn.net.yzl.product.model.vo.product.dto;
 import cn.net.yzl.product.model.BaseObject;
 import cn.net.yzl.product.model.vo.product.vo.ProductDiseaseVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductImageVO;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,8 +41,7 @@ public class ProductDetailVO extends BaseObject {
 
     @ApiModelProperty(name = "brandNo", value = "品牌编号")
     private Integer brandNo;
-    @ApiModelProperty(name = "brandName", value = "品牌名称")
-    private Integer brandName;
+
     @ApiModelProperty(name = "categoryDictCode", value = "商品分类")
     private Integer categoryDictCode;
 

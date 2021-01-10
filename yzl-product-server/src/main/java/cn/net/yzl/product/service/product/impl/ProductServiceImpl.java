@@ -1,21 +1,22 @@
 package cn.net.yzl.product.service.product.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.AssemblerResultUtil;
 import cn.net.yzl.product.config.FastDFSConfig;
-import cn.net.yzl.product.dao.DiseaseBeanMapper;
+import cn.net.yzl.product.dao.BrandBeanMapper;
 import cn.net.yzl.product.dao.ProductDiseaseMapper;
 import cn.net.yzl.product.dao.ProductImageMapper;
 import cn.net.yzl.product.dao.ProductMapper;
+import cn.net.yzl.product.model.db.BrandBean;
 import cn.net.yzl.product.model.db.ProductAtlasBean;
 import cn.net.yzl.product.model.pojo.category.Category;
 import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
-import cn.net.yzl.product.model.vo.brand.BrandBeanTO;
 import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.service.CategoryService;
@@ -59,6 +60,8 @@ public class ProductServiceImpl implements ProductService {
     private DiseaseService diseaseService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private BrandBeanMapper brandBeanMapper;
 
     /**
      * @Author: lichanghong
@@ -98,12 +101,12 @@ public class ProductServiceImpl implements ProductService {
                 //判断是否关联病症
                 if (dto.getDiseaseId() != null && dto.getDiseaseId() > 0) {
                     //查询主治病症
-                    Disease disease= diseaseService.queryById(dto.getDiseaseId(),dto.getDiseasePid());
-                    if(disease!=null&& disease.getPid()>0){
+                    Disease disease = diseaseService.queryById(dto.getDiseaseId(), dto.getDiseasePid());
+                    if (disease != null && disease.getPid() > 0) {
                         StringBuilder sb = new StringBuilder();
                         //查询病症的一级分类
-                        Disease p= diseaseService.queryById(disease.getPid(),0);
-                        if(p!=null){
+                        Disease p = diseaseService.queryById(disease.getPid(), 0);
+                        if (p != null) {
                             sb.append(p.getName()).append(">");
                         }
                         sb.append(disease.getName());
@@ -235,7 +238,7 @@ public class ProductServiceImpl implements ProductService {
         //新增关联病症
         if (!CollectionUtils.isEmpty(list)) {
             List<ProductDiseaseVO> tempVOS = list.stream().filter(d -> d.getDiseaseId() != null
-                    && d.getDiseasePid()!=null)
+                    && d.getDiseasePid() != null)
                     .collect(Collectors.toList());
             for (ProductDiseaseVO diseaseVO : tempVOS) {
                 diseaseVO.setProductCode(productCode);
@@ -466,13 +469,38 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductPortraitDTO queryProductPortrait(String productCode) {
         ProductDetailVO productVO = productMapper.selectByProductCode(productCode);
+        ProductPortraitDTO dto = transformProductPortraitDTO(productVO);
+        //品牌
+        if (checkInteger(productVO.getBrandNo())) {
+            BrandBean brandBean = brandBeanMapper.selectByPrimaryKey(productVO.getBrandNo());
+            if (brandBean != null) {
+                dto.setBrandName(brandBean.getName());
+            }
+        }
 
         return null;
     }
 
-    private ProductPortraitDTO transformProductPortraitDTO(ProductDetailVO productVO){
+    /**
+     * @param integer
+     * @Author: lichanghong
+     * @Description: 判断是否为正整数
+     * @Date: 2021/1/10 2:08 下午
+     * @Return: boolean
+     */
+    private boolean checkInteger(Integer integer) {
+        if (integer == null) {
+            return false;
+        }
+        if (integer <= 0) {
+            return false;
+        }
+        return true;
+    }
+
+    private ProductPortraitDTO transformProductPortraitDTO(ProductDetailVO productVO) {
         ProductPortraitDTO dto = BeanUtil.copyProperties(productVO, ProductPortraitDTO.class);
-            //处理价格
+        //处理价格
         dto.setSalePriceD(new BigDecimal(String.valueOf(productVO.getSalePrice() / 100d))
                 .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         dto.setCostPriceD(new BigDecimal(String.valueOf(productVO.getCostPrice() / 100d))
