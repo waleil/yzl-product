@@ -704,7 +704,8 @@
     p.sale_price salePrice,
     p.goods_source goodsSource,
     p.unit,
-    b.id,
+    p.disease_id id,
+    p.disease_pid pid,
     b.`name` brandName
     FROM product p
     LEFT JOIN brand b ON b.id = p.brand_no
