@@ -5,6 +5,8 @@ import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.JsonUtil;
 import cn.net.yzl.product.dao.DiseaseBeanMapper;
 import cn.net.yzl.product.dao.ProductBeanMapper;
+import cn.net.yzl.product.dao.ProductDiseaseMapper;
+import cn.net.yzl.product.dao.ProductMapper;
 import cn.net.yzl.product.model.db.DiseaseBean;
 import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
@@ -17,6 +19,7 @@ import cn.net.yzl.product.utils.CacheKeyUtil;
 import cn.net.yzl.product.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -33,10 +36,10 @@ public class DiseaseServiceImpl implements DiseaseService {
     private DiseaseBeanMapper diseaseBeanMapper;
     @Autowired
     private RedisUtil redisUtil;
-
     @Autowired
-    private ProductBeanMapper productBeanMapper;
-
+    private ProductMapper productMapper;
+    @Autowired
+    private ProductDiseaseMapper productDiseaseMapper;
     /**
      * @param diseaseVo:
      * @author lichanghong
@@ -62,6 +65,7 @@ public class DiseaseServiceImpl implements DiseaseService {
      * @Return: cn.net.yzl.common.entity.ComResponse<java.lang.Void>
      */
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public ComResponse<Void> deleteByPrimaryKey(DiseaseDelVo delVo) {
 
         //首先判断是否有子集
@@ -71,7 +75,14 @@ public class DiseaseServiceImpl implements DiseaseService {
         }
         //判断是否有商品
         // TODO: 2021/1/5  查询商品信息
+        if(delVo.getPId()!=null&&delVo.getPId()>0){
+            Integer cnt = productMapper.queryCountByDiseaseIdAndPID(delVo.getPId(),delVo.getId());
+            if(cnt!=null && cnt>0){
+                return ComResponse.fail(ResponseCodeEnums.BIZ_ERROR_CODE.getCode(), "存在关联商品，无法删除!");
+            }
+        }
         diseaseBeanMapper.deleteByPrimaryKey(delVo);
+        productDiseaseMapper.deleteByDiseaseIdAndPid(delVo.getPId(),delVo.getId());
         //删除缓存
         deleteCache(delVo.getId(),delVo.getPId());
         return ComResponse.success();

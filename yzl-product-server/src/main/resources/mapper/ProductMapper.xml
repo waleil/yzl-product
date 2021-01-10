@@ -827,10 +827,10 @@
       p.cj_province_no as cjProvinceNo,
       p.cj_city_no as cjCityNo,
       p.cj_area_no as cjAreaNo,
-      p.cj_country_name as cjCountryName
-      p.cj_province_name as cjProvinceName
-      p.cj_city_name as cjCityName
-      p.cj_area_name as cjAreaName
+      p.cj_country_name as cjCountryName,
+      p.cj_province_name as cjProvinceName,
+      p.cj_city_name as cjCityName,
+      p.cj_area_name as cjAreaName,
       p.cj_addr as cjAddr,
       p.descri,
       p.applicable as applicable,
@@ -848,6 +848,11 @@
             resultType="cn.net.yzl.product.model.pojo.product.ProductDisease">
         select  p.disease_id as diseaseId,
       p.disease_pid as diseasePid from product p where product_code = #{productCode,jdbcType=VARCHAR}
+    </select>
+    <!--查询病症关联的商品数量-->
+    <select id="queryCountByDiseaseIdAndPID" resultType="int">
+        select count(1) from product p where p.disease_id = #{diseaseId,jdbcType=INTEGER}
+        AND p.disease_pid = #{diseasePid,jdbcType=INTEGER} and p.del_flag = 0
     </select>
 </mapper>
 

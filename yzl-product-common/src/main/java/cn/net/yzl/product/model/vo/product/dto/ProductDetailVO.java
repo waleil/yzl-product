@@ -45,6 +45,9 @@ public class ProductDetailVO extends BaseObject {
     @ApiModelProperty(name = "categoryDictCode", value = "商品分类")
     private Integer categoryDictCode;
 
+    @ApiModelProperty(name = "categoryPDictCode", value = "商品一级分类")
+    private Integer categoryPDictCode;
+
     @ApiModelProperty(name = "salePrice", required = true, value = "市场价(售卖价),以分为单位")
     private Integer salePrice;
 

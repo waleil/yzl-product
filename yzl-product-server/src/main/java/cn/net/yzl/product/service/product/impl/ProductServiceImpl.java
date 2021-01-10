@@ -460,6 +460,13 @@ public class ProductServiceImpl implements ProductService {
             //处理图片
             productVO.setImages(productImageMapper.queryByProductCode(productCode));
             productVO.setFastDFSUrl(dfsConfig.getUrl());
+            //查询上一级分类
+            if (productVO.getCategoryDictCode() != null) {
+                Category category = categoryService.queryById(productVO.getCategoryDictCode());
+                if (category != null) {
+                    productVO.setCategoryPDictCode(category.getPid());
+                }
+            }
             //查询关联病症
             productVO.setDiseaseVOS(productDiseaseMapper.queryByProductCode(productCode));
             return ComResponse.success(productVO);
@@ -482,6 +489,12 @@ public class ProductServiceImpl implements ProductService {
         }
         //查询关联病症
         List<ProductDiseaseVO> diseaseVOS = productDiseaseMapper.queryByProductCode(productCode);
+        if (!CollectionUtils.isEmpty(diseaseVOS)){
+            for (ProductDiseaseVO v:diseaseVOS){
+                Disease d = diseaseService.queryById(v.getDiseaseId(), v.getDiseasePid());
+                v.setDiseaseName(d.getName());
+            }
+        }
         dto.setDiseaseVOS(diseaseVOS);
         Map<Integer, DiseaseDTO> root = queryRootDisease();
         List<DiseaseTreeNode> list = new ArrayList<>();
@@ -491,34 +504,42 @@ public class ProductServiceImpl implements ProductService {
             DiseaseDTO dto1 = root.get(dto.getDiseasePid());
             diseaseTreeNode.setName(dto1.getName());
             diseaseTreeNode.setPid(0);
+            diseaseTreeNode.setId(dto1.getId());
             List<DiseaseTreeNode> diseaseTreeNodes = new ArrayList<>();
+            Disease d = diseaseService.queryById(dto.getDiseaseId(), dto.getDiseasePid());
             DiseaseTreeNode node = new DiseaseTreeNode();
-            node.setPid(dto.getDiseasePid());
-            node.setName(dto.getDiseaseName());
+            node.setPid(d.getPid());
+            node.setId(d.getId());
+            dto.setDiseaseName(d.getName());
+            node.setName(d.getName());
             diseaseTreeNodes.add(node);
             diseaseTreeNode.setNodeList(diseaseTreeNodes);
+            list.add(diseaseTreeNode);
         }
-        //处理关联病症
-        if (!CollectionUtils.isEmpty(diseaseVOS)) {
-            Map<Integer, List<ProductDiseaseVO>> integerListMap =
-                    diseaseVOS.stream().collect(Collectors.groupingBy(ProductDiseaseVO::getDiseasePid));
-            integerListMap.keySet().stream().forEach(key -> {
-                DiseaseTreeNode diseaseTreeNode = new DiseaseTreeNode();
-                DiseaseDTO dto1 = root.get(key);
-                diseaseTreeNode.setId(key);
-                diseaseTreeNode.setName(dto1.getName());
-                diseaseTreeNode.setPid(0);
-                List<DiseaseTreeNode> list1 = new ArrayList<>();
-                integerListMap.get(key).forEach(v -> {
-                    DiseaseTreeNode node = new DiseaseTreeNode();
-                    node.setName(v.getDiseaseName());
-                    node.setPid(key);
-                    node.setId(v.getDiseaseId());
-                    list1.add(node);
-                });
-                list.add(diseaseTreeNode);
-            });
-        }
+        //TODO 关联病症先不做
+//        //处理关联病症
+//        if (!CollectionUtils.isEmpty(diseaseVOS)) {
+//            Map<Integer, List<ProductDiseaseVO>> integerListMap =
+//                    diseaseVOS.stream().collect(Collectors.groupingBy(ProductDiseaseVO::getDiseasePid));
+//            integerListMap.keySet().stream().forEach(key -> {
+//                DiseaseTreeNode diseaseTreeNode = new DiseaseTreeNode();
+//                DiseaseDTO dto1 = root.get(key);
+//                diseaseTreeNode.setId(key);
+//                diseaseTreeNode.setName(dto1.getName());
+//                diseaseTreeNode.setPid(0);
+//                List<DiseaseTreeNode> list1 = new ArrayList<>();
+//                integerListMap.get(key).forEach(v -> {
+//                    DiseaseTreeNode node = new DiseaseTreeNode();
+//                    Disease d = diseaseService.queryById(v.getDiseaseId(), v.getDiseasePid());
+//                    node.setName(d.getName());
+//                    node.setPid(key);
+//                    node.setId(v.getDiseaseId());
+//                    list1.add(node);
+//                });
+//                diseaseTreeNode.setNodeList(list1);
+//                list.add(diseaseTreeNode);
+//            });
+//        }
         dto.setDiseaseTreeNodes(list);
         return dto;
     }
@@ -550,26 +571,27 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
-        List<ProductDiseaseVO> diseaseVOS = productDiseaseMapper.queryByProductCode(productCode);
-        if(!CollectionUtils.isEmpty(diseaseVOS)){
-            diseaseVOS.stream().forEach(v->{
-                if (v != null && v.getDiseaseId() != null && v.getDiseaseId() > 0) {
-                    Disease d = diseaseService.queryById(v.getDiseaseId(), v.getDiseasePid());
-                    if (d != null) {
-                        ProductDiseaseDTO diseaseDTO = new ProductDiseaseDTO();
-                        Disease pd = diseaseService.queryById(d.getPid(), 0);
-                        if (pd != null) {
-                            diseaseDTO.setDiseaseId(d.getId());
-                            diseaseDTO.setDiseaseName(d.getName());
-                            diseaseDTO.setDiseasePid(pd.getId());
-                            diseaseDTO.setDiseasePName(pd.getName());
-                            diseaseDTO.setProductCode(productCode);
-                            list.add(diseaseDTO);
-                        }
-                    }
-                }
-            });
-        }
+        //TODO 关联病症先不做
+//        List<ProductDiseaseVO> diseaseVOS = productDiseaseMapper.queryByProductCode(productCode);
+//        if (!CollectionUtils.isEmpty(diseaseVOS)) {
+//            diseaseVOS.stream().forEach(v -> {
+//                if (v != null && v.getDiseaseId() != null && v.getDiseaseId() > 0) {
+//                    Disease d = diseaseService.queryById(v.getDiseaseId(), v.getDiseasePid());
+//                    if (d != null) {
+//                        ProductDiseaseDTO diseaseDTO = new ProductDiseaseDTO();
+//                        Disease pd = diseaseService.queryById(d.getPid(), 0);
+//                        if (pd != null) {
+//                            diseaseDTO.setDiseaseId(d.getId());
+//                            diseaseDTO.setDiseaseName(d.getName());
+//                            diseaseDTO.setDiseasePid(pd.getId());
+//                            diseaseDTO.setDiseasePName(pd.getName());
+//                            diseaseDTO.setProductCode(productCode);
+//                            list.add(diseaseDTO);
+//                        }
+//                    }
+//                }
+//            });
+//        }
         return list;
     }
 

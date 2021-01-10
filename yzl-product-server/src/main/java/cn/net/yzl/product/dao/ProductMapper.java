@@ -72,4 +72,6 @@ public interface ProductMapper {
      * @Return:
      */
     ProductDisease queryDiseaseByProductCode(String productCode);
+
+    Integer queryCountByDiseaseIdAndPID(@Param("diseasePid") Integer diseasePid, @Param("diseaseId") Integer diseaseId);
 }

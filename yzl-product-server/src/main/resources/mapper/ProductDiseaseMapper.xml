@@ -139,4 +139,10 @@
     disease_name as diseaseName,disease_pid as diseasePid
     from product_disease where product_code = #{productCode,jdbcType=VARCHAR}
   </select>
+
+  <!--根据商品删除关联关系-->
+  <delete id="deleteByDiseaseIdAndPid">
+    delete from product_disease
+    where disease_id = #{diseaseId,jdbcType=INTEGER} and disease_pid = #{diseasePid,jdbcType=INTEGER}
+  </delete>
 </mapper>

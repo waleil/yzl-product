@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -16,9 +17,11 @@ import java.util.Date;
  */
 @Data
 public class DiseaseDelVo extends BaseObject {
-    @ApiModelProperty(name = "id", value = "主键")
+    @ApiModelProperty(name = "id", required = true,value = "主键")
+    @NotNull(message = "病症主键不能为空")
     private Integer id;
-    @ApiModelProperty(name = "pId", value = "上级主键")
+    @ApiModelProperty(name = "pId",required = true, value = "上级主键")
+    @NotNull(message = "病症上级主键不能为空")
     private Integer pId;
     @ApiModelProperty(name = "updateNo", value = "员工编号")
     private String updateNo;
