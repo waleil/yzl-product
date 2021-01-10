@@ -5,6 +5,7 @@ import cn.net.yzl.product.model.pojo.product.ProductImage;
 import java.util.List;
 
 import cn.net.yzl.product.model.vo.product.vo.ProductImageVO;
+import org.springframework.data.repository.query.Param;
 
 public interface ProductImageMapper {
 
@@ -15,4 +16,6 @@ public interface ProductImageMapper {
     int insertArray(List<ProductImageVO> list);
 
     int deleteByProductCode(String productCode);
+
+    List<ProductImageVO> queryByProductCode(@Param(value = "productCode") String productCode);
 }

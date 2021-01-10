@@ -20,4 +20,5 @@ public interface ProductDiseaseMapper {
 
     int deleteByProductCode(String productCode);
 
+    List<ProductDiseaseVO> queryByProductCode(String productCode);
 }

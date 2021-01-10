@@ -155,8 +155,12 @@ public class ProductDetailVO extends BaseObject {
 
     @ApiModelProperty(name = "diseaseId", value = "商品主治病症")
     private Integer diseaseId;
-    @ApiModelProperty(name = "diseaseId", value = "商品主治病症名称")
+
+    @ApiModelProperty(name = "diseaseName", value = "商品主治病症名称")
     private String diseaseName;
+
+    @ApiModelProperty(name = "diseasePid", value = "主治病症上级主键")
+    private Integer diseasePid;
 
     @ApiModelProperty(name = "imageUrl", value = "商品主图")
     private String imageUrl;
@@ -165,8 +169,7 @@ public class ProductDetailVO extends BaseObject {
     @ApiModelProperty(name = "diseaseVOS", value = "商品关联病症")
     private List<ProductDiseaseVO> diseaseVOS;
 
-    public String getProductCode() {
-        return productCode;
-    }
+    @ApiModelProperty(name = "fastDFSUrl", value = "图片库地址,需要把imageUrl进行拼接")
+    private String fastDFSUrl;
 
 }

@@ -15,6 +15,16 @@ public class ProductDisease {
 
     private Date updateTime;
 
+    private Integer diseasePid;
+
+    public Integer getDiseasePid() {
+        return diseasePid;
+    }
+
+    public void setDiseasePid(Integer diseasePid) {
+        this.diseasePid = diseasePid;
+    }
+
     public String getDiseaseName() {
         return diseaseName;
     }

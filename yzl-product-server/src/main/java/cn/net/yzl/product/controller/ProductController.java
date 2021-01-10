@@ -84,6 +84,36 @@ public class ProductController {
         return productService.queryListProduct(vo);
     }
 
+    @GetMapping(value = "v1/queryProducts")
+    @ApiOperation("提供给其他服务查询商品列表")
+    public ComResponse<Page<ProductListDTO>> queryProducts(ProductSelectVO vo) {
+        //价格必须成对出现
+        if ((vo.getPriceUp() != null && vo.getPriceDown() == null)
+                || (vo.getPriceUp() == null && vo.getPriceDown() != null)) {
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
+        }
+        if (vo.getPriceUp() != null) {
+            vo.setUpPrice((int) (vo.getPriceUp() * 100));
+        }
+        if (vo.getPriceDown() != null) {
+            vo.setDownPrice((int) (vo.getPriceDown() * 100));
+        }
+        if (vo.getPageNo() == null) {
+            vo.setPageNo(1);
+        }
+        if (vo.getPageSize() == null) {
+            vo.setPageSize(15);
+        }
+        if (vo.getPageSize() > 50) {
+            vo.setPageSize(50);
+        }
+        if (StringUtils.isNotBlank(vo.getKeyword())) {
+            String str = vo.getKeyword();
+            vo.setKeyword(str.replace("%", "\\%"));
+        }
+        return productService.queryProducts(vo);
+    }
+
     /**
      * @param vo
      * @Author: lichanghong

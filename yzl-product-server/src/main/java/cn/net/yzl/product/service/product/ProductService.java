@@ -27,8 +27,20 @@ public interface ProductService {
      * @Return:
      */
     List<ProductStatusCountDTO> queryCountByStatus();
-
+    /**
+     * @Author: lichanghong
+     * @Description: CRM查询商品列表
+     * @Date: 2021/1/10 11:33 上午
+     * @Return:
+     */
     ComResponse<Page<ProductListDTO>> queryListProduct(ProductSelectVO vo);
+    /**
+     * @Author: lichanghong
+     * @Description: 提供给其他服务查询商品列表
+     * @Date: 2021/1/7 9:59 下午
+     * @Return:
+     */
+    ComResponse<Page<ProductListDTO>> queryProducts(ProductSelectVO vo);
     /**
      * @Author: lichanghong
      * @Description: 编辑商品

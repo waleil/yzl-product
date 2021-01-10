@@ -65,6 +65,10 @@
     </trim>
   </insert>
 
+  <select id="queryByProductCode" resultType="cn.net.yzl.product.model.vo.product.vo.ProductImageVO">
+    select product_code as productCode, image_url as imageUrl,main_flag as mainFlag
+    from product_image where product_code=#{productCode,jdbcType=VARCHAR}
+  </select>
   <insert id="insertArray" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductImageVO" >
     insert into product_image (product_code, image_url,main_flag) values
     <foreach item="item" collection="list" separator=",">

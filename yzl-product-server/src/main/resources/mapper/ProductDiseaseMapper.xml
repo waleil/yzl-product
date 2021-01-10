@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="product_code" property="productCode" jdbcType="VARCHAR" />
     <result column="disease_id" property="diseaseId" jdbcType="INTEGER" />
+    <result column="disease_pid" property="diseasePid" jdbcType="INTEGER" />
     <result column="disease_name" property="diseaseName" jdbcType="INTEGER" />
     <result column="dtype" property="dtype" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -12,7 +13,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, product_code, disease_id, disease_name,dtype, create_time, update_time
+    id, product_code, disease_id, disease_name,dtype, create_time, update_time,disease_pid
   </sql>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -133,4 +134,9 @@
     delete from product_disease
     where product_code = #{productCode,jdbcType=VARCHAR}
   </delete>
+  <select id="queryByProductCode" resultType="cn.net.yzl.product.model.vo.product.vo.ProductDiseaseVO">
+    select product_code as productCode, disease_id as diseaseId,
+    disease_name as diseaseName,disease_pid as diseasePid
+    from product_disease where product_code = #{productCode,jdbcType=VARCHAR}
+  </select>
 </mapper>

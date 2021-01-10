@@ -120,6 +120,23 @@ public class ProductServiceImpl implements ProductService {
         return ComResponse.success(pageInfo);
     }
 
+    @Override
+    public ComResponse<Page<ProductListDTO>> queryProducts(ProductSelectVO vo) {
+        //开启分页
+        PageHelper.startPage(vo.getPageNo(), vo.getPageSize());
+        List<ProductListDTO> list = productMapper.queryListProduct(vo);
+        if (!CollectionUtils.isEmpty(list)) {
+            for (ProductListDTO dto : list) {
+                dto.setSalePriceD(new BigDecimal(String.valueOf(dto.getSalePrice() / 100d))
+                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                dto.setFastDFSUrl(dfsConfig.getUrl());
+            }
+        }
+        //分页查询
+        Page<ProductListDTO> pageInfo = AssemblerResultUtil.resultAssembler(list);
+        return ComResponse.success(pageInfo);
+    }
+
     /**
      * @param vo
      * @param vo
@@ -430,12 +447,18 @@ public class ProductServiceImpl implements ProductService {
     public ComResponse<ProductDetailVO> queryProductDetail(String productCode) {
         try {
             ProductDetailVO productVO = productMapper.selectByProductCode(productCode);
+            //处理价格
             productVO.setSalePriceD(new BigDecimal(String.valueOf(productVO.getSalePrice() / 100d))
                     .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
             productVO.setCostPriceD(new BigDecimal(String.valueOf(productVO.getCostPrice() / 100d))
                     .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
             productVO.setLimitDownPriceD(new BigDecimal(String.valueOf(productVO.getLimitDownPrice() / 100d))
                     .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            //处理图片
+            productVO.setImages(productImageMapper.queryByProductCode(productCode));
+            productVO.setFastDFSUrl(dfsConfig.getUrl());
+            //查询关联病症
+            productVO.setDiseaseVOS(productDiseaseMapper.queryByProductCode(productCode));
             return ComResponse.success(productVO);
         } catch (Exception ex) {
             log.error("查询商品详情信息失败,", ex);
