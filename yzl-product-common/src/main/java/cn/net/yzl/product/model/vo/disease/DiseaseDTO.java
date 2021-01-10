@@ -18,4 +18,6 @@ public class DiseaseDTO extends BaseObject {
     private Integer id;
     @ApiModelProperty(name = "name", value = "病症名称")
     private String name;
+    @ApiModelProperty(name = "pid", value = "父级主键")
+    private Integer pid;
 }

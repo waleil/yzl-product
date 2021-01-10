@@ -55,4 +55,5 @@ public interface DiseaseService {
      * @return: List<DiseaseDTO>
      */
     Disease queryById( Integer id,Integer pid);
+
 }

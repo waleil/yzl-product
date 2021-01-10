@@ -164,6 +164,11 @@ public class ProductController {
         if (vo.getUpdateNo() == null) {
             return "编辑员工编码不能为空!";
         }
+        if (vo.getDiseaseId() != null) {
+            if (vo.getDiseasePid() == null) {
+                return "主治病症上级编号不能为空!";
+            }
+        }
         return null;
     }
 
@@ -174,7 +179,7 @@ public class ProductController {
             @ApiImplicitParam(name = "id", value = "病症id", dataType = "Int", paramType = "query")
     })
     @GetMapping("v1/queryProductListAtlas")
-    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(@RequestParam(value = "productName",required = false) String productName, @RequestParam(value = "id",required = false) Integer id) {
+    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(@RequestParam(value = "productName", required = false) String productName, @RequestParam(value = "id", required = false) Integer id) {
         return productService.queryProductListAtlas(productName, id);
     }
 
@@ -209,10 +214,11 @@ public class ProductController {
     public ComResponse<ProductDetailVO> queryProductDetail(@RequestParam("productCode") String productCode) {
         return productService.queryProductDetail(productCode);
     }
+
     @GetMapping(value = "v1/queryProductPortrait")
     @ApiOperation("查询商品画像")
-    public ComResponse<ProductPortraitDTO> queryProductPortrait(@RequestParam("productCode") String productCode ){
-        return null;
+    public ComResponse<ProductPortraitDTO> queryProductPortrait(@RequestParam("productCode") String productCode) {
+        return ComResponse.success(productService.queryProductPortrait(productCode));
     }
 }
 

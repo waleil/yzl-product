@@ -1,6 +1,7 @@
 package cn.net.yzl.product.model.vo.product.dto;
 
 import cn.net.yzl.product.model.BaseObject;
+import cn.net.yzl.product.model.vo.disease.DiseaseTreeNode;
 import cn.net.yzl.product.model.vo.product.vo.ProductDiseaseVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -143,7 +144,8 @@ public class ProductPortraitDTO extends BaseObject {
 
     @ApiModelProperty(name = "diseaseVOS", value = "商品关联病症")
     private List<ProductDiseaseVO> diseaseVOS;
-
+    @ApiModelProperty(name = "diseaseTreeNodes", value = "病症树")
+    private List<DiseaseTreeNode> diseaseTreeNodes;
 
 
 }

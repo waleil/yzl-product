@@ -153,7 +153,11 @@ public class DiseaseServiceImpl implements DiseaseService {
 
     @Override
     public List<DiseaseDTO> queryByPID(Integer pid) {
-        return diseaseBeanMapper.queryByPID(pid);
+        List<DiseaseDTO> list = diseaseBeanMapper.queryByPID(pid);
+        if(CollectionUtils.isEmpty(list)){
+            return Collections.EMPTY_LIST;
+        }
+        return list;
     }
 
     @Override
@@ -196,6 +200,7 @@ public class DiseaseServiceImpl implements DiseaseService {
             return disease;
         }
     }
+
 
     /**
      * @param id

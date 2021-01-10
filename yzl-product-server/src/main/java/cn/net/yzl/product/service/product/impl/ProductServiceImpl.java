@@ -17,6 +17,8 @@ import cn.net.yzl.product.model.pojo.category.Category;
 import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
+import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
+import cn.net.yzl.product.model.vo.disease.DiseaseTreeNode;
 import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.service.CategoryService;
@@ -477,8 +479,67 @@ public class ProductServiceImpl implements ProductService {
                 dto.setBrandName(brandBean.getName());
             }
         }
+        //查询关联病症
+        List<ProductDiseaseVO> diseaseVOS = productDiseaseMapper.queryByProductCode(productCode);
+        dto.setDiseaseVOS(diseaseVOS);
+        Map<Integer, DiseaseDTO> root = queryRootDisease();
+        List<DiseaseTreeNode> list = new ArrayList<>();
+        //先处理主治病症
+        if (dto.getDiseaseId() != null && dto.getDiseasePid() != null) {
+            DiseaseTreeNode diseaseTreeNode = new DiseaseTreeNode();
+            DiseaseDTO dto1 = root.get(dto.getDiseasePid());
+            diseaseTreeNode.setName(dto1.getName());
+            diseaseTreeNode.setPid(0);
+            List<DiseaseTreeNode> diseaseTreeNodes = new ArrayList<>();
+            DiseaseTreeNode node = new DiseaseTreeNode();
+            node.setPid(dto.getDiseasePid());
+            node.setName(dto.getDiseaseName());
+            diseaseTreeNodes.add(node);
+            diseaseTreeNode.setNodeList(diseaseTreeNodes);
+        }
+        //处理关联病症
+        if(!CollectionUtils.isEmpty(diseaseVOS)){
+           Map<Integer, List<ProductDiseaseVO>> integerListMap =
+                   diseaseVOS.stream().collect(Collectors.groupingBy(ProductDiseaseVO::getDiseasePid));
+            integerListMap.keySet().stream().forEach(key->{
+                DiseaseTreeNode diseaseTreeNode = new DiseaseTreeNode();
+                DiseaseDTO dto1 = root.get(key);
+                diseaseTreeNode.setId(key);
+                diseaseTreeNode.setName(dto1.getName());
+                diseaseTreeNode.setPid(0);
+                List<DiseaseTreeNode> list1 = new ArrayList<>();
+                integerListMap.get(key).forEach(v->{
+                    DiseaseTreeNode node = new DiseaseTreeNode();
+                    node.setName(v.getDiseaseName());
+                    node.setPid(key);
+                    node.setId(v.getDiseaseId());
+                    list1.add(node);
+                });
+                list.add(diseaseTreeNode);
+            });
+        }
+        dto.setDiseaseTreeNodes(list);
+        return dto;
+    }
 
-        return null;
+    /**
+     * @param
+     * @Author: lichanghong
+     * @Description: 查询根节点
+     * @Date: 2021/1/10 3:07 下午
+     * @Return: java.util.Map<java.lang.Integer, cn.net.yzl.product.model.vo.disease.DiseaseDTO>
+     */
+    private Map<Integer, DiseaseDTO> queryRootDisease() {
+
+        //查询所有一级病症
+        List<DiseaseDTO> list = diseaseService.queryByPID(0);
+        Map<Integer, DiseaseDTO> map = new HashMap<>(list.size() * 2);
+        if (!CollectionUtils.isEmpty(list)) {
+            list.stream().forEach(diseaseDTO -> {
+                map.put(diseaseDTO.getId(), diseaseDTO);
+            });
+        }
+        return map;
     }
 
     /**
