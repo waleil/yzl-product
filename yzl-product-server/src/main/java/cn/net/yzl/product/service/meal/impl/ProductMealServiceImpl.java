@@ -20,7 +20,7 @@ import cn.net.yzl.product.model.vo.product.dto.MealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
-import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
+//import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 import cn.net.yzl.product.model.pojo.product.*;
 import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.vo.product.vo.*;
@@ -138,7 +138,7 @@ public class ProductMealServiceImpl implements ProductMealService {
             mealMapper.insertSelective(meal);
             //套餐商品新增
             List<MealProductVO> mealProducts = vo.getMealProducts();
-            List<MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, MealProduct::new);
+            List<cn.net.yzl.product.model.pojo.product.MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, cn.net.yzl.product.model.pojo.product.MealProduct::new);
             mealProductList.stream().forEach(n -> n.setMealNo(maxProductCode));
             mealProductMapper.insertSelectiveList(mealProductList);
         } else {
@@ -153,7 +153,7 @@ public class ProductMealServiceImpl implements ProductMealService {
             mealMapper.updateByPrimaryKeySelective(meal);
             mealProductMapper.deleteByMealNo(mealNo);
             List<MealProductVO> mealProducts = vo.getMealProducts();
-            List<MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, MealProduct::new);
+            List<cn.net.yzl.product.model.pojo.product.MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, cn.net.yzl.product.model.pojo.product.MealProduct::new);
             mealProductList.stream().forEach(n -> {
                         n.setMealNo(mealStatus.getMealNo());
                         n.setUpdateTime(mealStatus.getUpdateTime());

@@ -28,5 +28,5 @@ public interface MealProductMapper {
 
     void deleteByMealNo(Long mealNo);
 
-    void insertSelectiveList(List<MealProduct> mealProductList);
+    void insertSelectiveList(List<cn.net.yzl.product.model.pojo.product.MealProduct> mealProductList);
 }

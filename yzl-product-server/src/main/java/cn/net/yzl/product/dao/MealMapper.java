@@ -38,7 +38,6 @@ public interface MealMapper {
     List<ProductMealListDTO> queryListProductMeal(ProductMealSelectVO vo);
 
     cn.net.yzl.product.model.db.Meal queryProductMealPortray(Integer mealNo);
-    ProductMealDTO queryProductMealPortray(Integer mealNo);
 
     //查询最大套餐编号
     int queryMaxId();

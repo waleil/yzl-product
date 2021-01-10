@@ -28,8 +28,7 @@ public interface ProductMealService {
      */
     List<ProductStatusCountDTO> queryCountByStatus();
 
-    ComResponse<ProductMealDTO> queryProductMealPortray(Integer mealNo);
-    ComResponse<Page<ProductMealDTO>> queryListProductMeal(ProductMealVO vo);
+//    ComResponse<Page<ProductMealDTO>> queryListProductMeal(ProductMealVO vo);
 
     ComResponse<MealDTO> queryProductMealPortray(Integer mealNo);
 
