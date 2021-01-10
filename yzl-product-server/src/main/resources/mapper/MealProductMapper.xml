@@ -130,4 +130,25 @@
       #{item}
     </foreach>
   </select>
+
+  <delete id="deleteByMealNo">
+    delete from meal_product
+    where meal_no = #{mealNo,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelectiveList" parameterType="cn.net.yzl.product.model.pojo.product.MealProduct">
+    insert into meal_product (
+    meal_no, product_code,product_num,meal_gift_flag,update_time
+    )
+    values
+    <foreach item="item" collection="list" separator=",">
+      (
+      #{item.mealNo,jdbcType=INTEGER},
+      #{item.productCode,jdbcType=VARCHAR},
+      #{item.productNum,jdbcType=INTEGER},
+      #{item.mealGiftFlag,jdbcType=BIT},
+      #{item.updateTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
 </mapper>

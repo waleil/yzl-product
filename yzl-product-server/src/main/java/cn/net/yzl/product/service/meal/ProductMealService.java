@@ -3,13 +3,10 @@ package cn.net.yzl.product.service.meal;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.product.model.pojo.product.Meal;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
-import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
-import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.*;
-import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -59,7 +56,7 @@ public interface ProductMealService {
      * @param vo:
      * @return: cn.net.yzl.common.entity.ComResponse<java.lang.Void>
      **/
-    ComResponse editProductMeal(ProductMealVO vo);
+    ComResponse editProductMeal(MealVO vo);
 
 
     /**

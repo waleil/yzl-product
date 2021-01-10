@@ -1,5 +1,6 @@
 package cn.net.yzl.product.service.meal.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
@@ -7,13 +8,12 @@ import cn.net.yzl.common.util.AssemblerResultUtil;
 import cn.net.yzl.product.config.FastDFSConfig;
 import cn.net.yzl.product.dao.MealMapper;
 import cn.net.yzl.product.dao.MealProductMapper;
-import cn.net.yzl.product.model.pojo.category.Category;
-import cn.net.yzl.product.model.pojo.disease.Disease;
+import cn.net.yzl.product.model.pojo.product.*;
 import cn.net.yzl.product.model.vo.product.dto.*;
-import cn.net.yzl.product.model.pojo.product.Meal;
-import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.service.meal.ProductMealService;
+import cn.net.yzl.product.utils.BeanCopyUtil;
+import cn.net.yzl.product.utils.CacheKeyUtil;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import cn.net.yzl.product.utils.RedisUtil;
@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -101,31 +102,56 @@ public class ProductMealServiceImpl implements ProductMealService {
      **/
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public ComResponse editProductMeal(ProductMealVO vo) {
-
-//        Meal meal = translateProductMeal(vo);
-//        Long mealNo = vo.getMealNo();
-//
-//        if (StringUtils.isEmpty("mealNo")) {
-//            //获取商品ID
-//            String cacheKey = CacheKeyUtil.maxProductCacheKey();
-//            long mealno = redisUtil.incr(cacheKey, 1);
-//            mealNo = String.valueOf(mealno);
-//            meal.setMealNo(mealNo);
-//            mealMapper.insertSelective(meal);
-//        } else {
-//            MealStatus MealStatus = mealMapper.queryProductStatusByProductCode(mealNo);
-//            if (MealStatus == null) {
-//                return ComResponse.fail(ResponseCodeEnums.NO_MATCHING_RESULT_CODE.getCode(), ResponseCodeEnums.NO_MATCHING_RESULT_CODE.getMessage());
-//            }
-//            if (MealStatus.getUpdateTime().getTime() > vo.getUpdateTime().getTime()) {
-//                return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
-//            }
-        return null;
+    public ComResponse editProductMeal(MealVO vo) {
+        //处理金额
+        Meal meal = translateMeal(vo);
+        Long mealNo = vo.getMealNo();
+        //代表新增
+        if (null == mealNo) {
+            //获取套餐ID
+            String cacheKey = CacheKeyUtil.maxProductCacheKey();
+            long maxProductCode = redisUtil.incr(cacheKey, 1);
+            meal.setMealNo(maxProductCode);
+            mealMapper.insertSelective(meal);
+            //套餐商品新增
+            List<MealProductVO> mealProducts = vo.getMealProducts();
+            List<MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, MealProduct::new);
+            mealProductList.stream().forEach(n -> n.setMealNo(maxProductCode));
+            mealProductMapper.insertSelectiveList(mealProductList);
+        } else {
+            MealStatus mealStatus = mealMapper.queryMealStatusByMaelNo(mealNo);
+            if (mealStatus == null) {
+                return ComResponse.fail(ResponseCodeEnums.NO_MATCHING_RESULT_CODE.getCode(), ResponseCodeEnums.NO_MATCHING_RESULT_CODE.getMessage());
+            }
+            if (mealStatus.getUpdateTime().getTime() > vo.getUpdateTime().getTime()) {
+                return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
+            }
+            //修改
+            mealMapper.updateByPrimaryKeySelective(meal);
+            mealProductMapper.deleteByMealNo(mealNo);
+            List<MealProductVO> mealProducts = vo.getMealProducts();
+            List<MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, MealProduct::new);
+            mealProductList.stream().forEach(n -> {
+                        n.setMealNo(mealStatus.getMealNo());
+                        n.setUpdateTime(mealStatus.getUpdateTime());
+                    }
+            );
+            mealProductMapper.insertSelectiveList(mealProductList);
+        }
+        return ComResponse.success();
     }
 
-    private Meal translateProductMeal(ProductMealVO vo) {
-        return null;
+    private Meal translateMeal(MealVO vo) {
+        Meal meal = BeanUtil.copyProperties(vo, Meal.class);
+        //售卖价
+        if (vo.getPriceD() != null) {
+            meal.setPrice((int) (vo.getPriceD() * 100));
+        }
+        //成本价
+        if (vo.getDiscountPriceD() != null) {
+            meal.setDiscountPrice((int) (vo.getDiscountPriceD() * 100));
+        }
+        return meal;
     }
 
 

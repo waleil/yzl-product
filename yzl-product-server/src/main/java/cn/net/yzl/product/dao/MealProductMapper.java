@@ -2,8 +2,6 @@ package cn.net.yzl.product.dao;
 
 import cn.net.yzl.product.model.pojo.product.MealProduct;
 import cn.net.yzl.product.model.vo.product.dto.MealListProductDTO;
-import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
-import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 import io.lettuce.core.dynamic.annotation.Param;
 
 import java.util.List;
@@ -27,4 +25,8 @@ public interface MealProductMapper {
      * @return
      */
     List<MealListProductDTO> queryMealProductByMealNos(@Param("mealNoList") List<Integer> mealNoList);
+
+    void deleteByMealNo(Long mealNo);
+
+    void insertSelectiveList(List<MealProduct> mealProductList);
 }

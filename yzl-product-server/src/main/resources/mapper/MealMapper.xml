@@ -162,7 +162,7 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where meal_no = #{mealNo,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.pojo.product.Meal">
     update meal
@@ -261,5 +261,14 @@
          from meal p
     where meal_no = #{mealNo,jdbcType=VARCHAR}
   </select>
-
+    <!--查询最大主键编号-->
+    <select id="queryMaxId" resultType="int">
+        select max(old_id) as maxId from  meal;
+    </select>
+    <!--根据商品套餐编码查询上下架状态及最后修改时间-->
+    <select id="queryMealStatusByMaelNo" parameterType="java.lang.Long" resultType="cn.net.yzl.product.model.pojo.product.MealStatus">
+    select meal_no as mealNo,
+    update_time as updateTime
+    from meal where meal_no = #{mealNo,jdbcType=BIGINT}
+  </select>
 </mapper>

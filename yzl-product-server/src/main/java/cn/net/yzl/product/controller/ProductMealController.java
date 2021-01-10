@@ -8,7 +8,6 @@ import cn.net.yzl.product.model.vo.product.dto.ProductMealDTO;
 import cn.net.yzl.product.model.pojo.product.Meal;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
-import cn.net.yzl.product.model.vo.product.vo.ProductMealVO;
 import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.service.meal.ProductMealService;
 import com.alibaba.nacos.common.utils.CollectionUtils;
@@ -103,7 +102,7 @@ public class ProductMealController {
      **/
     @PostMapping(value = "v1/edit")
     @ApiOperation("编辑套餐")
-    public ComResponse<Void> editProductMeal(@RequestBody @Valid ProductMealVO vo) {
+    public ComResponse<Void> editProductMeal(@RequestBody @Valid MealVO vo) {
         String str = checkParams(vo);
         if (StringUtils.isNotBlank(str)) {
             return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), str);
@@ -118,15 +117,21 @@ public class ProductMealController {
      * @param vo:
      * @return: java.lang.String
      **/
-    public String checkParams(ProductMealVO vo) {
-        if (vo.getName()==null){
+    public String checkParams(MealVO vo) {
+        if (StringUtils.isEmpty(vo.getName())){
             return "套餐名称不能为空";
         }
-        if (vo.getPrice()==null){
+        if (vo.getPriceD()==null){
             return "套餐价格不能为空";
         }
-        if (vo.getDiscountPrice()==null){
+        if (vo.getDiscountPriceD()==null){
             return "套餐优惠折扣价不能为空";
+        }
+        if (vo.getUpdateTime() == null) {
+            return "最后修改时间不能为空!";
+        }
+        if (vo.getUpdateNo() == null) {
+            return "编辑员工编码不能为空!";
         }
         return null;
     }
