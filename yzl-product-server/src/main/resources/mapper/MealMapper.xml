@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.net.yzl.product.dao.MealMapper" >
-  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.pojo.product.Meal" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="meal_no" property="mealNo" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="INTEGER" />
-    <result column="discount_price" property="discountPrice" jdbcType="INTEGER" />
-    <result column="integral" property="integral" jdbcType="INTEGER" />
-    <result column="descri" property="descri" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
-    <result column="old_id" property="oldId" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
+<mapper namespace="cn.net.yzl.product.dao.MealMapper">
+    <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.db.Meal">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="meal_no" property="mealNo" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="discount_price" property="discountPrice" jdbcType="INTEGER"/>
+        <result column="integral" property="integral" jdbcType="INTEGER"/>
+        <result column="descri" property="descri" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="old_id" property="oldId" jdbcType="VARCHAR"/>
+        <result column="image_url" property="imageUrl" jdbcType="INTEGER"/>
+        <result column="sale_start_time" property="saleStartTime" jdbcType="TIMESTAMP"/>
+        <result column="sale_end_time" property="saleEndTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <collection property="mealProductList" ofType="cn.net.yzl.product.model.db.MealProduct">
+            <result column="product_num" property="productNum" jdbcType="INTEGER"/>
+            <result column="meal_gift_flag" property="mealGiftFlag" jdbcType="INTEGER"/>
+            <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
 
-  <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
     id, meal_no, name, price, discount_price, integral, descri, status, del_flag, old_id, 
-    create_time, update_time
+    create_time, update_time, image_url, sale_start_time, sale_end_time
   </sql>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from meal
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from meal
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from meal
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="cn.net.yzl.product.model.pojo.product.Meal" >
+    <insert id="insert" parameterType="cn.net.yzl.product.model.db.Meal">
     insert into meal (id, meal_no, name, 
       price, discount_price, integral, 
       descri, status, del_flag, old_id, 
@@ -42,126 +50,126 @@
       #{descri,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{delFlag,jdbcType=INTEGER}, #{oldId,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.pojo.product.Meal" >
-    insert into meal
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="mealNo != null" >
-        meal_no,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="discountPrice != null" >
-        discount_price,
-      </if>
-      <if test="integral != null" >
-        integral,
-      </if>
-      <if test="descri != null" >
-        descri,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="delFlag != null" >
-        del_flag,
-      </if>
-      <if test="oldId != null" >
-        old_id,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="mealNo != null" >
-        #{mealNo,jdbcType=BIGINT},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=INTEGER},
-      </if>
-      <if test="discountPrice != null" >
-        #{discountPrice,jdbcType=INTEGER},
-      </if>
-      <if test="integral != null" >
-        #{integral,jdbcType=INTEGER},
-      </if>
-      <if test="descri != null" >
-        #{descri,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=INTEGER},
-      </if>
-      <if test="oldId != null" >
-        #{oldId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
+    <insert id="insertSelective" parameterType="cn.net.yzl.product.model.db.Meal">
+        insert into meal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="mealNo != null">
+                meal_no,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="discountPrice != null">
+                discount_price,
+            </if>
+            <if test="integral != null">
+                integral,
+            </if>
+            <if test="descri != null">
+                descri,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="oldId != null">
+                old_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="mealNo != null">
+                #{mealNo,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=INTEGER},
+            </if>
+            <if test="discountPrice != null">
+                #{discountPrice,jdbcType=INTEGER},
+            </if>
+            <if test="integral != null">
+                #{integral,jdbcType=INTEGER},
+            </if>
+            <if test="descri != null">
+                #{descri,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="oldId != null">
+                #{oldId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.pojo.product.Meal" >
-    update meal
-    <set >
-      <if test="mealNo != null" >
-        meal_no = #{mealNo,jdbcType=BIGINT},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=INTEGER},
-      </if>
-      <if test="discountPrice != null" >
-        discount_price = #{discountPrice,jdbcType=INTEGER},
-      </if>
-      <if test="integral != null" >
-        integral = #{integral,jdbcType=INTEGER},
-      </if>
-      <if test="descri != null" >
-        descri = #{descri,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=INTEGER},
-      </if>
-      <if test="oldId != null" >
-        old_id = #{oldId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.pojo.product.Meal" >
+    <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.db.Meal">
+        update meal
+        <set>
+            <if test="mealNo != null">
+                meal_no = #{mealNo,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=INTEGER},
+            </if>
+            <if test="discountPrice != null">
+                discount_price = #{discountPrice,jdbcType=INTEGER},
+            </if>
+            <if test="integral != null">
+                integral = #{integral,jdbcType=INTEGER},
+            </if>
+            <if test="descri != null">
+                descri = #{descri,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="oldId != null">
+                old_id = #{oldId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where meal_no = #{mealNo,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.db.Meal">
     update meal
     set meal_no = #{mealNo,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},
@@ -177,8 +185,113 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <!--按照上下架查询-->
-  <select id="queryCountByStatus" resultType="map">
+    <!--按照上下架查询-->
+    <select id="queryCountByStatus" resultType="map">
     SELECT count(`status`) AS cnt ,`status` AS status FROM meal WHERE del_flag = 0 GROUP BY status;
+  </select>
+
+    <!--查询商品列表-->
+    <select id="queryListProductMeal" resultType="cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO"
+            parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealSelectVO">
+        select
+        meal_no, `name`, price, discount_price,
+        create_time, image_url, sale_start_time, sale_end_time
+        from
+        meal
+        where 1=1
+        and del_flag=0
+        <if test="keyword != null and keyword != ''">
+            AND (`name` LIKE  CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%')
+            OR meal_no LIKE CONCAT(CONCAT('%',#{keyword,jdbcType=VARCHAR}),'%'))
+        </if>
+        <if test="status != null ">
+            AND status = #{status}
+        </if>
+        <if test="upPrice != null ">
+            <if test="downPrice != null ">
+                AND sale_price BETWEEN #{downPrice} AND #{upPrice}
+            </if>
+        </if>
+        order by create_time desc
+    </select>
+
+    <select id="queryProductMealPortray" parameterType="Integer"
+            resultMap="BaseResultMap">
+      select
+        m.id,
+        m.meal_no,
+        m.`name`,
+        m.price,
+        m.discount_price,
+        m.integral,
+        m.descri,
+        m.status,
+        m.old_id,
+        m.image_url,
+        m.sale_start_time,
+        m.sale_end_time,
+        mp.product_num,
+        mp.meal_gift_flag,
+        mp.product_code
+        from meal m
+        LEFT JOIN meal_product mp ON mp.meal_no=m.meal_no
+        where m.meal_no = #{mealNo,jdbcType=INTEGER} and m.del_flag=0
+    </select>
+
+
+  <!-- 修改上下架的状态 -->
+  <update id="updateStatusByMealCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealUpdateStatusVO">
+    update meal
+    set `status`= #{status,jdbcType=INTEGER},
+      update_no = #{updateNo,jdbcType=VARCHAR}
+    where
+    meal_no in
+    <foreach item="item" index="index" collection="mealNoList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
+
+  <!-- 修改套餐售卖时间 -->
+  <update id="updateTimeByMealCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealUpdateTimeVO">
+    update meal
+    set
+    sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
+    sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    update_no = #{updateNo,jdbcType=VARCHAR}
+    where
+    meal_no in
+    <foreach item="item" index="index" collection="mealNoList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
+
+<!--套餐查看-->
+  <select id="selectBymealNo" resultType="cn.net.yzl.product.model.vo.product.vo.ProductMealDetailVO">
+    select
+      p.meal_no,
+      p.name,
+      p.price,
+      p.integral,
+      p.discount_price,
+      p.integral,
+      p.descri,
+      p.status,
+      p.del_flag,
+      p.old_id,
+      p.create_time,
+      p.update_time
+         from meal p
+    where meal_no = #{mealNo,jdbcType=VARCHAR}
+  </select>
+    <!--查询最大主键编号-->
+    <select id="queryMaxId" resultType="int">
+        select max(old_id) as maxId from  meal;
+    </select>
+    <!--根据商品套餐编码查询上下架状态及最后修改时间-->
+    <select id="queryMealStatusByMaelNo" parameterType="java.lang.Long" resultType="cn.net.yzl.product.model.pojo.product.MealStatus">
+    select meal_no as mealNo,
+    update_time as updateTime
+    from meal where meal_no = #{mealNo,jdbcType=BIGINT}
   </select>
 </mapper>

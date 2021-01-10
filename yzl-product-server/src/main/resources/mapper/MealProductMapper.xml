@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.net.yzl.product.dao.MealProductMapper" >
-  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.pojo.product.MealProduct" >
+  <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.db.MealProduct" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="meal_no" property="mealNo" jdbcType="INTEGER" />
     <result column="product_code" property="productCode" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from meal_product
     where id = #{id,jdbcType=INTEGER}
@@ -26,15 +26,15 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="cn.net.yzl.product.model.pojo.product.MealProduct" >
-    insert into meal_product (id, meal_no, product_code, 
-      product_num, meal_gift_flag, create_time, 
+  <insert id="insert" parameterType="cn.net.yzl.product.model.db.MealProduct" >
+    insert into meal_product (id, meal_no, product_code,
+      product_num, meal_gift_flag, create_time,
       update_time)
-    values (#{id,jdbcType=INTEGER}, #{mealNo,jdbcType=INTEGER}, #{productCode,jdbcType=VARCHAR}, 
-      #{productNum,jdbcType=INTEGER}, #{mealGiftFlag,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{mealNo,jdbcType=INTEGER}, #{productCode,jdbcType=VARCHAR},
+      #{productNum,jdbcType=INTEGER}, #{mealGiftFlag,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.pojo.product.MealProduct" >
+  <insert id="insertSelective" parameterType="cn.net.yzl.product.model.db.MealProduct" >
     insert into meal_product
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -84,7 +84,7 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.pojo.product.MealProduct" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.net.yzl.product.model.db.MealProduct" >
     update meal_product
     <set >
       <if test="mealNo != null" >
@@ -109,7 +109,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.pojo.product.MealProduct" >
+  <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.db.MealProduct" >
     update meal_product
     set meal_no = #{mealNo,jdbcType=INTEGER},
       product_code = #{productCode,jdbcType=VARCHAR},
@@ -119,4 +119,36 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryMealProductByMealNos" parameterType="java.util.List" resultType="cn.net.yzl.product.model.vo.product.dto.MealListProductDTO">
+    select
+    meal_no, product_code, product_num, meal_gift_flag
+    from meal_product
+    where
+    meal_no in
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <delete id="deleteByMealNo">
+    delete from meal_product
+    where meal_no = #{mealNo,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelectiveList" parameterType="cn.net.yzl.product.model.db.MealProduct">
+    insert into meal_product (
+    meal_no, product_code,product_num,meal_gift_flag,update_time
+    )
+    values
+    <foreach item="item" collection="list" separator=",">
+      (
+      #{item.mealNo,jdbcType=INTEGER},
+      #{item.productCode,jdbcType=VARCHAR},
+      #{item.productNum,jdbcType=INTEGER},
+      #{item.mealGiftFlag,jdbcType=BIT},
+      #{item.updateTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
 </mapper>

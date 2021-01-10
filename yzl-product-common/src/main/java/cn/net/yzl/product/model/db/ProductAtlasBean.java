@@ -32,6 +32,12 @@ public class ProductAtlasBean {
     @ApiModelProperty(name = "id",value ="病症id" )
     private Integer id;
 
+    @ApiModelProperty(name = "id",value ="病症pid" )
+    private Integer pid;
+
+    @ApiModelProperty(name = "disName",value ="病症名称" )
+    private String disName;
+
     @ApiModelProperty(name = "brandName",value ="品牌名称" )
     private String brandName;
 

@@ -314,12 +314,12 @@ public class ProductServiceImpl implements ProductService {
      * @return
      */
     @Override
-    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(String productName, Integer id) {
+    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(String productName, Integer id,Integer pid) {
         if (productName == null && id == null)
             return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
 
         //查询商品数据(商品图谱)
-        List<ProductAtlasBean> productAtlasBeanList = productMapper.queryProductListAtlas(productName, id);
+        List<ProductAtlasBean> productAtlasBeanList = productMapper.queryProductListAtlas(productName, id,pid);
 
         //判断是否有数据
         if (productAtlasBeanList == null || productAtlasBeanList.size() == 0)

@@ -3,6 +3,7 @@ package cn.net.yzl.product.init;
 import cn.net.yzl.product.context.BeanUtils;
 import cn.net.yzl.product.dao.CategoryBeanMapper;
 import cn.net.yzl.product.dao.DiseaseBeanMapper;
+import cn.net.yzl.product.dao.MealMapper;
 import cn.net.yzl.product.dao.ProductMapper;
 import cn.net.yzl.product.utils.CacheKeyUtil;
 import cn.net.yzl.product.utils.RedisUtil;
@@ -27,6 +28,7 @@ public class InitEnv implements CommandLineRunner {
         initProductCode();
         initDiseaseMax();
         initCategoryMax();
+        initMealCode();
     }
 
     /**
@@ -91,6 +93,28 @@ public class InitEnv implements CommandLineRunner {
         int maxId = categoryBeanMapper.queryMaxId();
         RedisUtil redisUtil = BeanUtils.getBean(RedisUtil.class);
         String cacheKey = CacheKeyUtil.maxCategoryCacheKey();
+        String maxCode = redisUtil.getStr(cacheKey);
+        if (maxId > 0 && StringUtils.isNotBlank(maxCode)) {
+            if (maxId > Integer.parseInt(maxCode)) {
+                redisUtil.set(cacheKey, maxId);
+            }
+        } else {
+            redisUtil.set(cacheKey, maxId);
+        }
+
+    }
+
+    /**
+     * @Author: wanghuasheng
+     * @Description: 初始化套餐编号
+     * @Date: 2021/1/7 6:52 下午
+     * @Return:
+     */
+    private void initMealCode() {
+        MealMapper mealMapper = BeanUtils.getBean(MealMapper.class);
+        int maxId = mealMapper.queryMaxId();
+        RedisUtil redisUtil = BeanUtils.getBean(RedisUtil.class);
+        String cacheKey = CacheKeyUtil.maxMealCacheKey();
         String maxCode = redisUtil.getStr(cacheKey);
         if (maxId > 0 && StringUtils.isNotBlank(maxCode)) {
             if (maxId > Integer.parseInt(maxCode)) {

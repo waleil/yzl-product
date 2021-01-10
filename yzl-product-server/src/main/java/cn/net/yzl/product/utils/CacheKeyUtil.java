@@ -62,4 +62,15 @@ public class CacheKeyUtil {
         return new StringBuilder(serverName).append("-")
                 .append("category:").append(id).toString();
     }
+
+    /**
+     * @Author: wanghuasheng
+     * @Description: 生成商品套餐自增主键
+     * @Date: 2021/1/10 3:10 下午
+     * @param
+     * @Return: java.lang.String
+     */
+    public static String maxMealCacheKey(){
+        return new StringBuilder(serverName).append("-").append("maxMealId").toString();
+    }
 }

@@ -5,17 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
- * @author wujianing
+ * @author wanghuasheng
  * @version 1.0
- * @title: ProductMealVO
+ * @title: ProductMealSelectVO
  * @description 商品套餐列表查询条件
- * @date: 2021/1/9 11:39 上午
+ * @date: 2021/1/10 12:04 上午
  */
 @Data
-public class ProductMealVO extends BaseObject {
+public class ProductMealSelectVO extends BaseObject {
 
-    @ApiModelProperty(name = "keyword", value = "关键词搜索/针对商品套餐名称和编码")
+    @ApiModelProperty(name = "keyword", value = "关键词搜索/针对商品名称和编码")
     private String keyword;
 
     @ApiModelProperty(name = "pageNo", value = "分页页码")
@@ -33,9 +35,6 @@ public class ProductMealVO extends BaseObject {
 
     @JsonIgnore
     private Integer upPrice;
-
-    @ApiModelProperty(name = "diseaseId", value = "商品主治病症")
-    private Integer diseaseId;
 
     @ApiModelProperty(name = "status", value = "上下架状态：0代表下架，1代表上架，null代表全部")
     private Integer status;

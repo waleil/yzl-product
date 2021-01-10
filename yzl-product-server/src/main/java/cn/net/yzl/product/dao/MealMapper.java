@@ -1,11 +1,18 @@
 package cn.net.yzl.product.dao;
 
-import cn.net.yzl.product.model.pojo.product.Meal;
+import cn.net.yzl.product.model.db.Meal;
+import cn.net.yzl.product.model.pojo.product.MealStatus;
+import cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
+import cn.net.yzl.product.model.vo.product.vo.*;
 
 import java.util.List;
 
 public interface MealMapper {
+
+    ProductMealDetailVO selectBymealNo(Meal meal);
+
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Meal record);
@@ -19,4 +26,20 @@ public interface MealMapper {
     int updateByPrimaryKey(Meal record);
 
     List<ProductStatusCountDTO> queryCountByStatus();
+
+    //修改套餐的售卖时间
+    void updateTimeByMealCode(ProductMealUpdateTimeVO vo);
+
+    //修改套餐的上下架状态
+    void updateStatusByMealCode(ProductMealUpdateStatusVO vo);
+
+    //查询商品套餐列表
+    List<ProductMealListDTO> queryListProductMeal(ProductMealSelectVO vo);
+
+    cn.net.yzl.product.model.db.Meal queryProductMealPortray(Integer mealNo);
+
+    //查询最大套餐编号
+    int queryMaxId();
+
+    MealStatus queryMealStatusByMaelNo(Long mealNo);
 }

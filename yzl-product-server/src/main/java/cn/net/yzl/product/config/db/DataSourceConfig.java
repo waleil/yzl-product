@@ -61,8 +61,9 @@ public class DataSourceConfig {
         return dynamicDataSource;
     }
     @Bean
-    public SqlSessionFactory sessionFactory(@Qualifier("dynamicDb") DataSource dynamicDataSource) throws Exception {
+    public SqlSessionFactory sessionFactory(@Qualifier("dynamicDb") DataSource dynamicDataSource,org.apache.ibatis.session.Configuration configuration) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setConfiguration(configuration);
         bean.setMapperLocations(
                 new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml"));
                 //new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*Mapper.xml"));
@@ -80,4 +81,9 @@ public class DataSourceConfig {
         return dataSourceTransactionManager;
     }
 
+    @Bean
+    @ConfigurationProperties(prefix = "mybatis.configuration")
+    public org.apache.ibatis.session.Configuration globalConfiguration(@Qualifier("dynamicDb") DataSource dynamicDataSource) {
+        return new org.apache.ibatis.session.Configuration();
+    }
 }
