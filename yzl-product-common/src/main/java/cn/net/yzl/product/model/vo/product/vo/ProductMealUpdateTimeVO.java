@@ -31,4 +31,13 @@ public class ProductMealUpdateTimeVO extends BaseObject {
     @JsonFormat(pattern="yyyy-MM-dd")
     @NotNull(message = "销售结束日期不能为空")
     private Date saleEndTime;
+
+    @ApiModelProperty(name = "updateNo", required = true, value = "编辑人编号")
+    @NotEmpty(message = "编辑员工编号不能为空")
+    private String updateNo;
+
+    @ApiModelProperty(name = "updateTime", value = "更新时间")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    @NotNull(message = "更新时间不能为空")
+    private Date updateTime;
 }

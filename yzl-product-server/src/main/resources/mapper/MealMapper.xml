@@ -234,8 +234,10 @@
   <update id="updateTimeByMealCode" parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealUpdateTimeVO">
     update meal
     set
-    create_time = #{saleStartTime,jdbcType=TIMESTAMP},
-    update_time = #{saleEndTime,jdbcType=TIMESTAMP}
+    sale_start_time = #{saleStartTime,jdbcType=TIMESTAMP},
+    sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    update_no = #{updateNo,jdbcType=VARCHAR}
     where
     meal_no in
     <foreach item="item" index="index" collection="mealNoList" open="(" separator="," close=")">
