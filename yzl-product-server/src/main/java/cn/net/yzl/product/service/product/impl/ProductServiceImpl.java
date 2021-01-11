@@ -180,6 +180,10 @@ public class ProductServiceImpl implements ProductService {
             if (productStatus.getUpdateTime().getTime() > vo.getUpdateTime().getTime()) {
                 return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
             }
+            //上架状态的商品不允许修改
+            if(productStatus.getStatus()==1){
+                return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), "商品正在上架，无法修改");
+            }
             //修改
             productMapper.updateByPrimaryKeySelective(product);
             productDiseaseMapper.deleteByProductCode(productCode);

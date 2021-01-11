@@ -1,6 +1,7 @@
 package cn.net.yzl.product.model.vo.product.dto;
 
 import cn.net.yzl.product.model.BaseObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -29,6 +30,7 @@ public class ProductDTO extends BaseObject {
     private Double salePriceD;
 
     @ApiModelProperty(name = "salePrice",  value = "市场价(售卖价),以分为单位")
+    @JsonIgnore
     private Integer salePrice;
 
     @ApiModelProperty(name = "fastDFSUrl", value = "图片库地址,需要把imageUrl进行拼接")
