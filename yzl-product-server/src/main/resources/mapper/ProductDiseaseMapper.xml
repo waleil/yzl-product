@@ -123,8 +123,8 @@
     <foreach item="item" collection="list" separator=",">
     (
     #{item.productCode,jdbcType=VARCHAR},
-    #{item.diseaseName,jdbcType=VARCHAR},
-        #{item.diseaseId,jdbcType=INTEGER},
+    #{item.diseaseId,jdbcType=VARCHAR},
+        #{item.diseaseName,jdbcType=INTEGER},
         #{item.diseasePid,jdbcType=INTEGER}
       )
     </foreach>
