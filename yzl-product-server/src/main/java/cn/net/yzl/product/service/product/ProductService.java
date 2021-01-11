@@ -8,6 +8,7 @@ import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -98,5 +99,12 @@ public interface ProductService {
      * @Return: java.util.List<cn.net.yzl.product.model.vo.product.dto.ProductDiseaseDTO>
      */
     List<ProductDiseaseDTO> queryDiseaseByProductCode(String productCode);
-
+    /**
+     * @Author: lichanghong
+     * @Description: 根据病症一级主键查询商品信息
+     * @Date: 2021/1/10 6:28 下午
+     * @param list 主键编号
+     * @Return:
+     */
+    List<ProductDTO> queryByProductCodes(List<String> list);
 }
