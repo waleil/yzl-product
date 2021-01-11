@@ -603,6 +603,21 @@ public class ProductServiceImpl implements ProductService {
         return list;
     }
 
+    @Override
+    public List<ProductDTO> queryByProductCodes(List<String> codes) {
+        List<ProductDTO> list = productMapper.queryByProductCodes(codes);
+        if(CollectionUtils.isEmpty(list)){
+            return Collections.emptyList();
+        }
+        for(ProductDTO dto:list){
+            //处理价格
+            dto.setSalePriceD(new BigDecimal(String.valueOf(dto.getSalePrice() / 100d))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            dto.setFastDFSUrl(dfsConfig.getUrl());
+        }
+        return list;
+    }
+
     /**
      * @param
      * @Author: lichanghong

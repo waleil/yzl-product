@@ -4,27 +4,26 @@ package cn.net.yzl.product.controller;
 import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
-import cn.net.yzl.common.util.DateFormatUtil;
 import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO;
 import cn.net.yzl.product.model.vo.product.vo.ProductVO;
 import cn.net.yzl.product.service.product.ProductService;
-import com.alibaba.nacos.common.utils.CollectionUtils;
 import io.swagger.annotations.Api;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,7 +73,7 @@ public class ProductController {
         if (vo.getPageSize() > 50) {
             vo.setPageSize(50);
         }
-        if (StringUtils.isNotBlank(vo.getKeyword())) {
+        if (!StringUtils.isEmpty(vo.getKeyword())) {
             String str = vo.getKeyword();
             vo.setKeyword(str.replace("%", "\\%"));
         }
@@ -104,7 +103,7 @@ public class ProductController {
         if (vo.getPageSize() > 50) {
             vo.setPageSize(50);
         }
-        if (StringUtils.isNotBlank(vo.getKeyword())) {
+        if (!StringUtils.isEmpty(vo.getKeyword())) {
             String str = vo.getKeyword();
             vo.setKeyword(str.replace("%", "\\%"));
         }
@@ -122,7 +121,7 @@ public class ProductController {
     @ApiOperation("编辑商品")
     public ComResponse<Void> editProduct(@RequestBody @Valid ProductVO vo) {
         String str = checkParams(vo);
-        if (StringUtils.isNotBlank(str)) {
+        if (StringUtils.isEmpty(str)) {
             return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), str);
         }
         return productService.editProduct(vo);
@@ -234,6 +233,25 @@ public class ProductController {
     public ComResponse<List<ProductDiseaseDTO>> queryDiseaseByProductCode(@RequestParam("productCode") String productCode) {
         List<ProductDiseaseDTO> diseaseDTOS = productService.queryDiseaseByProductCode(productCode);
         return ComResponse.success(diseaseDTOS);
+    }
+    /**
+     * @param codes
+     * @Author: lichanghong
+     * @Description: 根据商品编号查询病症
+     * @Date: 2021/1/10 4:03 下午
+     * @Return: java.util.List<cn.net.yzl.product.model.vo.product.dto.ProductDiseaseDTO>
+     */
+    @GetMapping(value = "v1/queryByCodes")
+    @ApiOperation("根据商品编号查询病症")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "codes", paramType="query",required = true,value = "商品code，以逗号分隔"),
+    })
+    public ComResponse<List<ProductDTO>> queryByProductCodes(@RequestParam("codes") String codes){
+        if(StringUtils.isEmpty(codes)){
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
+        }
+        List<String> list = new ArrayList<>(StringUtils.commaDelimitedListToSet(codes));
+        return ComResponse.success(productService.queryByProductCodes(list));
     }
 }
 

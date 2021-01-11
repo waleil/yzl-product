@@ -83,4 +83,12 @@ public interface ProductMapper {
      * @Return:
      */
     List<ProductDTO> queryByDiseasePid(@Param("list") List<Integer> list);
+    /**
+     * @Author: lichanghong
+     * @Description: 根据病症一级主键查询商品信息
+     * @Date: 2021/1/10 6:28 下午
+     * @param list 主键编号
+     * @Return:
+     */
+    List<ProductDTO> queryByProductCodes(@Param("list") List<String> list);
 }
