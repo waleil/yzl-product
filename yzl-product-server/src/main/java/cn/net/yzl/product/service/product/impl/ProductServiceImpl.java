@@ -315,7 +315,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(String productName, Integer id,Integer pid) {
-        if (productName == null && id == null)
+        if (StringUtils.isEmpty(productName) && (id == null || pid ==null))
             return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
 
         //查询商品数据(商品图谱)
