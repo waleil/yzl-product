@@ -119,18 +119,20 @@ public class ProductMealServiceImpl implements ProductMealService {
     public ComResponse editProductMeal(MealVO vo) {
         //处理金额
         Meal meal = translateMeal(vo);
-        Long mealNo = vo.getMealNo();
+        String mealNo = vo.getMealNo();
         //代表新增
         if (null == mealNo) {
             //获取套餐ID
-            String cacheKey = CacheKeyUtil.maxProductCacheKey();
+            String cacheKey = CacheKeyUtil.maxMealCacheKey();
             long maxProductCode = redisUtil.incr(cacheKey, 1);
-            meal.setMealNo(maxProductCode);
+            String maxProductCodeStr= String.format("T%07d", maxProductCode);
+            meal.setMealNo(maxProductCodeStr);
             mealMapper.insertSelective(meal);
             //套餐商品新增
             List<MealProductVO> mealProducts = vo.getMealProducts();
             List<MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, MealProduct::new);
-            mealProductList.stream().forEach(n -> n.setMealNo(maxProductCode));
+//            mealProductList.stream().forEach(n -> n.setMealNo(maxProductCode));
+            mealProductList.stream().forEach(n -> n.setMealNo(cacheKey));
             mealProductMapper.insertSelectiveList(mealProductList);
         } else {
             MealStatus mealStatus = mealMapper.queryMealStatusByMaelNo(mealNo);
@@ -188,7 +190,6 @@ public class ProductMealServiceImpl implements ProductMealService {
     }
 
 
-
     //查询商品套餐列表
     @Override
     public ComResponse<Page<ProductMealListDTO>> queryProductMealList(ProductMealSelectVO vo) {
@@ -197,7 +198,7 @@ public class ProductMealServiceImpl implements ProductMealService {
         //查询套餐列表
         List<ProductMealListDTO> ProductMealList = mealMapper.queryListProductMeal(vo);
         if (!CollectionUtils.isEmpty(ProductMealList)) {
-            List<Integer> mealNoList = new ArrayList<Integer>();
+            List<String> mealNoList = new ArrayList<String>();
             for (ProductMealListDTO dto : ProductMealList) {
                 dto.setPriceD(new BigDecimal(String.valueOf(dto.getPrice() / 100d))
                         .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
@@ -209,7 +210,7 @@ public class ProductMealServiceImpl implements ProductMealService {
                 List<MealListProductDTO> mealProducts = mealProductMapper.queryMealProductByMealNos(mealNoList);
                 if (!CollectionUtils.isEmpty(mealProducts)) {
                     //根据套餐no转换为map
-                    Map<Integer, List<MealListProductDTO>> MealListProductMap = mealProducts.stream().collect(Collectors.groupingBy(MealListProductDTO::getMealNO, LinkedHashMap::new, Collectors.toList()));
+                    Map<String, List<MealListProductDTO>> MealListProductMap = mealProducts.stream().collect(Collectors.groupingBy(MealListProductDTO::getMealNO, LinkedHashMap::new, Collectors.toList()));
                     //设置套餐关联商品
                     ProductMealList.stream().forEach(productMealListDTO -> {
                         productMealListDTO.setMealProductList(MealListProductMap.get(productMealListDTO.getMealNo()));
@@ -227,8 +228,8 @@ public class ProductMealServiceImpl implements ProductMealService {
         try {
             //查询套餐信息
             cn.net.yzl.product.model.db.Meal meal = mealMapper.queryProductMealPortray(mealNo);
-            if (meal == null){
-                return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(),ResponseCodeEnums.NO_DATA_CODE.getMessage());
+            if (meal == null) {
+                return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(), ResponseCodeEnums.NO_DATA_CODE.getMessage());
             }
 
             //适宜人群集合
@@ -237,9 +238,9 @@ public class ProductMealServiceImpl implements ProductMealService {
             Set<String> forbiddenSet = new HashSet<>();
 
             //病症分组
-            Map<String,Set<String>> mapDisNameGroup = new HashMap<>();
+            Map<String, Set<String>> mapDisNameGroup = new HashMap<>();
 
-            if (meal != null){
+            if (meal != null) {
                 List<MealProduct> mealProductList = meal.getMealProductList();
                 for (MealProduct mealProduct : mealProductList) {
                     //根据商品code查询商品
@@ -255,7 +256,7 @@ public class ProductMealServiceImpl implements ProductMealService {
                     //适宜人群
                     String applicable = productDetailVO.getApplicable();
                     if (applicable != null && !applicable.isEmpty())
-                    applicableSet.addAll(Arrays.asList(applicable.split(",")));
+                        applicableSet.addAll(Arrays.asList(applicable.split(",")));
 
                     //禁忌人群
                     String forbidden = productDetailVO.getForbidden();
@@ -266,20 +267,20 @@ public class ProductMealServiceImpl implements ProductMealService {
                     Integer diseasePid = productDetailVO.getDiseasePid();
                     //病症id
                     Integer diseaseId = productDetailVO.getDiseaseId();
-                    if (diseasePid !=null && diseaseId !=null){
+                    if (diseasePid != null && diseaseId != null) {
                         //一级病症
                         Disease disease = diseaseBeanMapper.queryById(diseasePid, 0);
                         //一级病症名称
                         String disname = disease.getName();
 
                         //病症分组
-                        if (mapDisNameGroup.get(disname) == null){
+                        if (mapDisNameGroup.get(disname) == null) {
                             Set<String> setDis = new HashSet<>();
-                            mapDisNameGroup.put(disname,setDis);
+                            mapDisNameGroup.put(disname, setDis);
                         }
                         Set<String> setDisName = mapDisNameGroup.get(disname);
 
-                        Disease diseaseChil = diseaseBeanMapper.queryById(diseaseId,diseasePid);
+                        Disease diseaseChil = diseaseBeanMapper.queryById(diseaseId, diseasePid);
                         setDisName.add(diseaseChil.getName());
                     }
                 }

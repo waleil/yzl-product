@@ -24,9 +24,9 @@ public interface MealProductMapper {
      * @param mealNoList
      * @return
      */
-    List<MealListProductDTO> queryMealProductByMealNos(@Param("mealNoList") List<Integer> mealNoList);
+    List<MealListProductDTO> queryMealProductByMealNos(@Param("mealNoList") List<String> mealNoList);
 
-    void deleteByMealNo(Long mealNo);
+    void deleteByMealNo(String mealNo);
 
     void insertSelectiveList(List<MealProduct> mealProductList);
 }

@@ -15,7 +15,7 @@ public class MealProduct {
     private Integer id;
 
     @ApiModelProperty(value = "套餐编码",name = "mealNo")
-    private Long mealNo;
+    private String mealNo;
 
     @ApiModelProperty(value = "商品编码",name = "productCode")
     private String productCode;

@@ -112,17 +112,25 @@ public class InitEnv implements CommandLineRunner {
      */
     private void initMealCode() {
         MealMapper mealMapper = BeanUtils.getBean(MealMapper.class);
-        int maxId = mealMapper.queryMaxId();
+        String maxMealNo = mealMapper.queryMaxMealNo();
+        int maxMealNoInt = maxMealNo == null ? 0 : Integer.parseInt(maxMealNo.substring(1));
+        //先从redis中获取缓存的数据
         RedisUtil redisUtil = BeanUtils.getBean(RedisUtil.class);
         String cacheKey = CacheKeyUtil.maxMealCacheKey();
         String maxCode = redisUtil.getStr(cacheKey);
-        if (maxId > 0 && StringUtils.isNotBlank(maxCode)) {
-            if (maxId > Integer.parseInt(maxCode)) {
-                redisUtil.set(cacheKey, maxId);
+        //判断是否从redis中获取到数据
+        if (StringUtils.isNotEmpty(maxCode)) {
+            //从redis中获取到数据，判断它与数据库中获取的编号大小
+            int redisCode = Integer.parseInt(maxCode);
+            if (redisCode < maxMealNoInt) {
+                redisUtil.set(cacheKey, redisCode);
             }
         } else {
-            redisUtil.set(cacheKey, maxId);
+            //从redis中没有获取到值
+            if (maxMealNoInt < 1) {
+                maxMealNoInt = 1;
+            }
+            redisUtil.set(cacheKey, maxMealNoInt);
         }
-
     }
 }

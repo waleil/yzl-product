@@ -15,6 +15,6 @@ import java.util.Date;
 @Data
 public class MealStatus extends BaseObject {
     //套餐ID唯一编号
-    private Long mealNo;
+    private String mealNo;
     private Date updateTime;
 }

@@ -16,7 +16,7 @@ public class Meal extends BaseObject {
     private Integer id;
 
     @ApiModelProperty(value = "套餐编码",name = "mealNo")
-    private Long mealNo;
+    private String mealNo;
 
     @ApiModelProperty(value = "套餐名称",name = "name")
     private String name;

@@ -5,7 +5,7 @@
     <result column="product_code" property="productCode" jdbcType="VARCHAR" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
     <result column="main_flag" property="mainFlag" jdbcType="INTEGER" />
-    <result column="meal_no" property="mealNo" jdbcType="INTEGER" />
+    <result column="meal_no" property="mealNo" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -17,7 +17,7 @@
     insert into product_image (product_code, image_url, meal_no,
       itype, create_time, update_time
       )
-    values (#{productCode,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, #{mealNo,jdbcType=INTEGER},
+    values (#{productCode,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, #{mealNo,jdbcType=VARCHAR},
       #{itype,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -51,7 +51,7 @@
         #{imageUrl,jdbcType=VARCHAR},
       </if>
       <if test="mealNo != null" >
-        #{mealNo,jdbcType=INTEGER},
+        #{mealNo,jdbcType=VARCHAR},
       </if>
       <if test="mainFlag != null" >
         #{mainFlag,jdbcType=INTEGER},

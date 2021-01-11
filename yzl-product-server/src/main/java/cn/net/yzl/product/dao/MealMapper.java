@@ -39,7 +39,7 @@ public interface MealMapper {
     cn.net.yzl.product.model.db.Meal queryProductMealPortray(Integer mealNo);
 
     //查询最大套餐编号
-    int queryMaxId();
+    String queryMaxMealNo();
 
-    MealStatus queryMealStatusByMaelNo(Long mealNo);
+    MealStatus queryMealStatusByMaelNo(String mealNo);
 }

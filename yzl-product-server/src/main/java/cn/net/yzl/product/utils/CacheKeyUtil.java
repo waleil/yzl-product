@@ -71,6 +71,6 @@ public class CacheKeyUtil {
      * @Return: java.lang.String
      */
     public static String maxMealCacheKey(){
-        return new StringBuilder(serverName).append("-").append("maxMealId").toString();
+        return new StringBuilder(serverName).append("-").append("maxMealNo").toString();
     }
 }

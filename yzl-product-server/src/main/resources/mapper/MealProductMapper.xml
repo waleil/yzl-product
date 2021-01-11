@@ -3,7 +3,7 @@
 <mapper namespace="cn.net.yzl.product.dao.MealProductMapper" >
   <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.db.MealProduct" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="meal_no" property="mealNo" jdbcType="INTEGER" />
+    <result column="meal_no" property="mealNo" jdbcType="VARCHAR" />
     <result column="product_code" property="productCode" jdbcType="VARCHAR" />
     <result column="product_num" property="productNum" jdbcType="INTEGER" />
     <result column="meal_gift_flag" property="mealGiftFlag" jdbcType="BIT" />
@@ -30,7 +30,7 @@
     insert into meal_product (id, meal_no, product_code,
       product_num, meal_gift_flag, create_time,
       update_time)
-    values (#{id,jdbcType=INTEGER}, #{mealNo,jdbcType=INTEGER}, #{productCode,jdbcType=VARCHAR},
+    values (#{id,jdbcType=INTEGER}, #{mealNo,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR},
       #{productNum,jdbcType=INTEGER}, #{mealGiftFlag,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -64,7 +64,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="mealNo != null" >
-        #{mealNo,jdbcType=INTEGER},
+        #{mealNo,jdbcType=VARCHAR},
       </if>
       <if test="productCode != null" >
         #{productCode,jdbcType=VARCHAR},
@@ -88,7 +88,7 @@
     update meal_product
     <set >
       <if test="mealNo != null" >
-        meal_no = #{mealNo,jdbcType=INTEGER},
+        meal_no = #{mealNo,jdbcType=VARCHAR},
       </if>
       <if test="productCode != null" >
         product_code = #{productCode,jdbcType=VARCHAR},
@@ -111,7 +111,7 @@
 
   <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.db.MealProduct" >
     update meal_product
-    set meal_no = #{mealNo,jdbcType=INTEGER},
+    set meal_no = #{mealNo,jdbcType=VARCHAR},
       product_code = #{productCode,jdbcType=VARCHAR},
       product_num = #{productNum,jdbcType=INTEGER},
       meal_gift_flag = #{mealGiftFlag,jdbcType=BIT},
@@ -133,7 +133,7 @@
 
   <delete id="deleteByMealNo">
     delete from meal_product
-    where meal_no = #{mealNo,jdbcType=INTEGER}
+    where meal_no = #{mealNo,jdbcType=VARCHAR}
   </delete>
 
   <insert id="insertSelectiveList" parameterType="cn.net.yzl.product.model.db.MealProduct">
@@ -143,7 +143,7 @@
     values
     <foreach item="item" collection="list" separator=",">
       (
-      #{item.mealNo,jdbcType=INTEGER},
+      #{item.mealNo,jdbcType=VARCHAR},
       #{item.productCode,jdbcType=VARCHAR},
       #{item.productNum,jdbcType=INTEGER},
       #{item.mealGiftFlag,jdbcType=BIT},

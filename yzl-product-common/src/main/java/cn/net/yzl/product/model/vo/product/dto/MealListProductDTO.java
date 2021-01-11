@@ -28,6 +28,6 @@ public class MealListProductDTO extends BaseObject {
     private Integer mealGiftFlag;
 
     @ApiModelProperty(name = "mealNO", value = "套餐编号")
-    private Integer mealNO;
+    private String mealNO;
 
 }

@@ -20,7 +20,7 @@ import java.util.List;
 public class ProductMealListDTO extends BaseObject {
 
     @ApiModelProperty(name = "MealNo",value = "套餐唯一标识")
-    private Integer mealNo;
+    private String mealNo;
 
     @ApiModelProperty(name = "name", value = "套餐名称")
     @NotEmpty(message = "套餐名称不能为空")

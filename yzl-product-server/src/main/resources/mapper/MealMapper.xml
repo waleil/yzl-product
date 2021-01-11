@@ -3,7 +3,7 @@
 <mapper namespace="cn.net.yzl.product.dao.MealMapper">
     <resultMap id="BaseResultMap" type="cn.net.yzl.product.model.db.Meal">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="meal_no" property="mealNo" jdbcType="BIGINT"/>
+        <result column="meal_no" property="mealNo" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="price" property="price" jdbcType="INTEGER"/>
         <result column="discount_price" property="discountPrice" jdbcType="INTEGER"/>
@@ -45,7 +45,7 @@
       price, discount_price, integral, 
       descri, status, del_flag, old_id, 
       create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{mealNo,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{mealNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{price,jdbcType=INTEGER}, #{discountPrice,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, 
       #{descri,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{delFlag,jdbcType=INTEGER}, #{oldId,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
@@ -95,7 +95,7 @@
                 #{id,jdbcType=INTEGER},
             </if>
             <if test="mealNo != null">
-                #{mealNo,jdbcType=BIGINT},
+                #{mealNo,jdbcType=VARCHAR},
             </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
@@ -134,7 +134,7 @@
         update meal
         <set>
             <if test="mealNo != null">
-                meal_no = #{mealNo,jdbcType=BIGINT},
+                meal_no = #{mealNo,jdbcType=VARCHAR},
             </if>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
@@ -167,11 +167,11 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where meal_no = #{mealNo,jdbcType=BIGINT}
+        where meal_no = #{mealNo,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="cn.net.yzl.product.model.db.Meal">
     update meal
-    set meal_no = #{mealNo,jdbcType=BIGINT},
+    set meal_no = #{mealNo,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       price = #{price,jdbcType=INTEGER},
       discount_price = #{discountPrice,jdbcType=INTEGER},
@@ -235,7 +235,7 @@
         mp.product_code
         from meal m
         LEFT JOIN meal_product mp ON mp.meal_no=m.meal_no
-        where m.meal_no = #{mealNo,jdbcType=INTEGER} and m.del_flag=0
+        where m.meal_no = #{mealNo,jdbcType=VARCHAR} and m.del_flag=0
     </select>
 
 
@@ -285,13 +285,13 @@
     where meal_no = #{mealNo,jdbcType=VARCHAR}
   </select>
     <!--查询最大主键编号-->
-    <select id="queryMaxId" resultType="int">
-        select max(old_id) as maxId from  meal;
+    <select id="queryMaxMealNo" resultType="String">
+        select max(meal_no) as maxMealNo from  meal;
     </select>
     <!--根据商品套餐编码查询上下架状态及最后修改时间-->
-    <select id="queryMealStatusByMaelNo" parameterType="java.lang.Long" resultType="cn.net.yzl.product.model.pojo.product.MealStatus">
+    <select id="queryMealStatusByMaelNo" parameterType="String" resultType="cn.net.yzl.product.model.pojo.product.MealStatus">
     select meal_no as mealNo,
     update_time as updateTime
-    from meal where meal_no = #{mealNo,jdbcType=BIGINT}
+    from meal where meal_no = #{mealNo,jdbcType=VARCHAR}
   </select>
 </mapper>
