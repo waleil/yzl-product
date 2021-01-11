@@ -7,7 +7,7 @@ logging:
   file:
     path: /tmp
   config: classpath:logback.xml
-#mybatis:
-#  configuration:
+mybatis:
+  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true
