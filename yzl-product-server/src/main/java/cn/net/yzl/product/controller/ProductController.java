@@ -121,7 +121,7 @@ public class ProductController {
     @ApiOperation("编辑商品")
     public ComResponse<Void> editProduct(@RequestBody @Valid ProductVO vo) {
         String str = checkParams(vo);
-        if (StringUtils.isEmpty(str)) {
+        if (!StringUtils.isEmpty(str)) {
             return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), str);
         }
         return productService.editProduct(vo);
