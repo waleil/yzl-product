@@ -492,6 +492,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductPortraitDTO queryProductPortrait(String productCode) {
         ProductDetailVO productVO = productMapper.selectByProductCode(productCode);
         ProductPortraitDTO dto = transformProductPortraitDTO(productVO);
+        dto.setCategoryDictName(getFullCategoryName(productVO.getCategoryDictCode()));
         //品牌
         if (checkInteger(productVO.getBrandNo())) {
             BrandBean brandBean = brandBeanMapper.selectByPrimaryKey(productVO.getBrandNo());
@@ -669,6 +670,18 @@ public class ProductServiceImpl implements ProductService {
         dto.setLimitDownPriceD(new BigDecimal(String.valueOf(productVO.getLimitDownPrice() / 100d))
                 .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         return dto;
+    }
+
+    public String getFullCategoryName(Integer id) {
+        ComResponse<cn.net.yzl.product.model.db.Category> category = categoryService.getCategoryById(id);
+        if (category.getData() == null) {
+            return null;
+        }else if(category.getData().getPid()==null){
+            return category.getData().getName();
+        }
+        String pre = category.getData().getName();
+        String stuf = categoryService.getCategoryById(category.getData().getPid()).getData().getName();
+        return pre+" - "+stuf;
     }
 
 
