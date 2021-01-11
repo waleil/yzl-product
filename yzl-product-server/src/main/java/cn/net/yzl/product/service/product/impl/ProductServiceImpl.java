@@ -34,6 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -78,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ComResponse<Page<ProductListDTO>> queryListProduct(ProductSelectVO vo) {
+    public ComResponse<Page<ProductListDTO>> queryListProduct(@RequestParam("vo") ProductSelectVO vo) {
         //开启分页
         PageHelper.startPage(vo.getPageNo(), vo.getPageSize());
         List<ProductListDTO> list = productMapper.queryListProduct(vo);
