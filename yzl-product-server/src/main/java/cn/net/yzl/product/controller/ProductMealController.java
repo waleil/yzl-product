@@ -47,7 +47,7 @@ public class ProductMealController {
     }
 
 
-    @GetMapping(value = "v1/queryPageProductMeal")
+    @PostMapping(value = "v1/queryPageProductMeal")
     @ApiOperation("分页查询商品套餐列表")
     public ComResponse<Page<ProductMealListDTO>> queryListProductMeal(ProductMealSelectVO vo) {
         //价格必须成对出现
