@@ -196,10 +196,11 @@ public class ProductMealServiceImpl implements ProductMealService {
         //开启分页
         PageHelper.startPage(vo.getPageNo(), vo.getPageSize());
         //查询套餐列表
-        List<ProductMealListDTO> ProductMealList = mealMapper.queryListProductMeal(vo);
-        if (!CollectionUtils.isEmpty(ProductMealList)) {
+        List<ProductMealListDTO> productMealList = mealMapper.queryListProductMeal(vo);
+        if (!CollectionUtils.isEmpty(productMealList)) {
             List<String> mealNoList = new ArrayList<String>();
-            for (ProductMealListDTO dto : ProductMealList) {
+            for (ProductMealListDTO dto : productMealList) {
+
                 dto.setPriceD(new BigDecimal(String.valueOf(dto.getPrice() / 100d))
                         .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
                 dto.setFastDFSUrl(dfsConfig.getUrl());
@@ -210,16 +211,64 @@ public class ProductMealServiceImpl implements ProductMealService {
                 List<MealListProductDTO> mealProducts = mealProductMapper.queryMealProductByMealNos(mealNoList);
                 if (!CollectionUtils.isEmpty(mealProducts)) {
                     //根据套餐no转换为map
-                    Map<String, List<MealListProductDTO>> MealListProductMap = mealProducts.stream().collect(Collectors.groupingBy(MealListProductDTO::getMealNO, LinkedHashMap::new, Collectors.toList()));
+                    Map<String, List<MealListProductDTO>> mealListProductMap = mealProducts.stream().collect(Collectors.groupingBy(MealListProductDTO::getMealNO, LinkedHashMap::new, Collectors.toList()));
                     //设置套餐关联商品
-                    ProductMealList.stream().forEach(productMealListDTO -> {
-                        productMealListDTO.setMealProductList(MealListProductMap.get(productMealListDTO.getMealNo()));
+                    productMealList.stream().forEach(productMealListDTO -> {
+                        //品牌名称集合
+                        Set<String> brandNames = new HashSet<>();
+                        //商品编码集合
+                        Set<String> productCodes = new HashSet<>();
+
+                        List<Integer> listSort = new ArrayList<>();
+
+                        List<MealListProductDTO> mealListProductDTOList = mealListProductMap.get(productMealListDTO.getMealNo());
+                        for (MealListProductDTO mealListProductDTO : mealListProductDTOList) {
+                            String brandName = mealListProductDTO.getBrandName();
+                            if (brandName != null){
+                                brandNames.add(brandName);
+                            }
+                            String productCode = mealListProductDTO.getProductCode();
+                            if (productCode !=null)
+                            productCodes.add(productCode);
+
+                            //单个商品库存
+                            Integer stock = mealListProductDTO.getStock();
+                            //商品数量
+                            Integer productNum = mealListProductDTO.getProductNum();
+                            if (stock==0){
+                                listSort.add(0);
+                            }else if (productNum==0){
+                                listSort.add(stock);
+                            }else {
+                                if (stock==-1){//无限制库存
+                                    stock=99999999;
+                                }
+                                double floor = Math.floor(stock / productNum);
+                                listSort.add(new Double(floor).intValue());
+                            }
+                        }
+
+                        if (listSort.size()>0){
+                            Collections.sort(listSort, new Comparator<Integer>() {
+                                @Override
+                                public int compare(Integer o1, Integer o2) {
+                                    return o2.compareTo(o1);
+                                }
+                            });
+                            productMealListDTO.setStoreNum(listSort.get(0));
+
+                        }else {
+                            productMealListDTO.setStoreNum(0);
+                        }
+                        productMealListDTO.setProductCodes(productCodes);
+                        productMealListDTO.setBrandNames(brandNames);
+                        productMealListDTO.setMealProductList(mealListProductMap.get(productMealListDTO.getMealNo()));
                     });
                 }
             }
         }
         //分页查询
-        Page<ProductMealListDTO> pageInfo = AssemblerResultUtil.resultAssembler(ProductMealList);
+        Page<ProductMealListDTO> pageInfo = AssemblerResultUtil.resultAssembler(productMealList);
         return ComResponse.success(pageInfo);
     }
 

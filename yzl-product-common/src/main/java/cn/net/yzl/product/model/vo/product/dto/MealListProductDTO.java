@@ -30,4 +30,10 @@ public class MealListProductDTO extends BaseObject {
     @ApiModelProperty(name = "mealNO", value = "套餐编号")
     private String mealNO;
 
+    @ApiModelProperty(name = "brandName", value = "商品品牌名称")
+    private String brandName;
+
+    @ApiModelProperty(name = "stock", value = "商品库存")
+    private Integer stock;
+
 }
