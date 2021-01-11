@@ -1,6 +1,7 @@
 package cn.net.yzl.product.model.vo.product.vo;
 
 import cn.net.yzl.product.model.BaseObject;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @Date: 2021-01-09 15:46
  */
 @Data
+@ApiModel(value = "ProductMealUpdateStatusVO",description = "套餐")
 public class ProductMealUpdateStatusVO extends BaseObject {
     @ApiModelProperty(name = "mealNo", value = "套餐唯一编码")
     @NotEmpty(message = "套餐ID不能为空")

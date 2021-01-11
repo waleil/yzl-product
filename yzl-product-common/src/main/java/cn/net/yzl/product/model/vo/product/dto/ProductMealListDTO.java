@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author wanghuasheng
@@ -32,11 +33,23 @@ public class ProductMealListDTO extends BaseObject {
     @ApiModelProperty(name = "priceD", value = "市场价(售卖价)单位为元")
     private Double priceD;
 
+    @ApiModelProperty(name = "brandNames", value = "套餐商品品牌集合")
+    private Set<String> brandNames;
+
+    @ApiModelProperty(name = "productCodes", value = "套餐商品编码集合")
+    private Set<String> productCodes;
+
+    @ApiModelProperty(name = "storeNum", value = "套餐库存")
+    private Integer storeNum;
+
     @ApiModelProperty(name = "imageUrl", value = "套餐图片地址")
     private String imageUrl;
 
     @ApiModelProperty(name = "discountPrice", value = "套餐最低优惠折扣价")
     private Integer discountPrice;
+
+    @ApiModelProperty(name = "status", value = "套餐状态(0下架 1上架)")
+    private Integer status;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty(name = "createTime", value = "创建时间")

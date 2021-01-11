@@ -122,10 +122,10 @@
 
   <select id="queryMealProductByMealNos" parameterType="java.util.List" resultType="cn.net.yzl.product.model.vo.product.dto.MealListProductDTO">
     select
-    meal_no, product_code, product_num, meal_gift_flag
-    from meal_product
+    mp.meal_no, mp.product_code, mp.product_num, mp.meal_gift_flag,p.stock,b.name brandName
+    from meal_product mp left join product p on p.product_code=mp.product_code left join brand b on p.brand_no=b.id
     where
-    meal_no in
+    mp.meal_no in
     <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
       #{item}
     </foreach>

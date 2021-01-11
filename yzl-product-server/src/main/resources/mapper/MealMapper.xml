@@ -194,7 +194,7 @@
     <select id="queryListProductMeal" resultType="cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO"
             parameterType="cn.net.yzl.product.model.vo.product.vo.ProductMealSelectVO">
         select
-        meal_no, `name`, price, discount_price,
+        meal_no, `name`, price, discount_price,status,
         create_time, image_url, sale_start_time, sale_end_time
         from
         meal
