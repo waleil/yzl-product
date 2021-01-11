@@ -60,4 +60,8 @@ public class Meal extends BaseObject {
     @ApiModelProperty(value = "套餐商品信息",name = "mealProductList")
     private List<MealProduct> mealProductList;
 
+
+    @ApiModelProperty(value = "修改人",name = "updateNo")
+    private String updateNo;
+
 }
