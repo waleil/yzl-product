@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ComResponse<Page<ProductListDTO>> queryListProduct(@RequestParam("vo") ProductSelectVO vo) {
+    public ComResponse<Page<ProductListDTO>> queryListProduct(ProductSelectVO vo) {
         //开启分页
         PageHelper.startPage(vo.getPageNo(), vo.getPageSize());
         List<ProductListDTO> list = productMapper.queryListProduct(vo);

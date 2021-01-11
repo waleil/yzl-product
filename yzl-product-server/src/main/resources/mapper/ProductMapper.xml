@@ -677,7 +677,7 @@
                 cj_area_name = null,
             </if>
             <if test="cjAddr != null">
-                cj_addr = null,
+                cj_addr = #{cjAddr,jdbcType=VARCHAR},
             </if>
             <if test="updateNo != null">
                 update_no = #{updateNo,jdbcType=VARCHAR},

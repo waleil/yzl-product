@@ -50,9 +50,9 @@ public class ProductController {
         return ComResponse.success(list);
     }
 
-    @GetMapping(value = "v1/queryPageProduct")
+    @PostMapping(value = "v1/queryPageProduct")
     @ApiOperation("分页查询商品列表")
-    public ComResponse<Page<ProductListDTO>> queryListProduct(ProductSelectVO vo) {
+    public ComResponse<Page<ProductListDTO>> queryListProduct(@RequestBody ProductSelectVO vo) {
         //价格必须成对出现
         if ((vo.getPriceUp() != null && vo.getPriceDown() == null)
                 || (vo.getPriceUp() == null && vo.getPriceDown() != null)) {
