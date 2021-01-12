@@ -28,6 +28,12 @@ public class Meal extends BaseObject {
     @ApiModelProperty(value = "套餐最低优惠折扣价,以分为单位",name = "discountPrice")
     private Integer discountPrice;
 
+    @ApiModelProperty(value = "套餐价,以元为单位",name = "priceD")
+    private Double priceD;
+
+    @ApiModelProperty(value = "套餐最低优惠折扣价,以元为单位",name = "discountPriceD")
+    private Double discountPriceD;
+
     @ApiModelProperty(value = "积分",name = "integral")
     private Integer integral;
 
