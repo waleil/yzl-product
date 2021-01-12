@@ -18,6 +18,7 @@ import cn.net.yzl.product.model.pojo.disease.Disease;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductDisease;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
+import cn.net.yzl.product.model.pojo.product.ProductStockDO;
 import cn.net.yzl.product.model.vo.disease.DiseaseDTO;
 import cn.net.yzl.product.model.vo.disease.DiseaseTreeNode;
 import cn.net.yzl.product.model.vo.product.dto.*;
@@ -198,6 +199,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ComResponse updateStatusByProductCode(ProductUpdateStatusVO vo) {
         try {
+            //上架的时候判断时间
+            if(vo.getStatus()==1){
+                Map<String,Object> map = new HashMap<>();
+                map.put("nowTime",new Date());
+                map.put("list",vo.getProductCodeList());
+               List<String> list = productMapper.querySaleEndTimeByCodes(map);
+               if(vo.getProductCodeList().size()!=list.size()){
+                   return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), "商品已经过了销售结束日期,无法变更上架状态!");
+               }
+            }
             productMapper.updateStatusByProductCode(vo);
             return ComResponse.success();
         } catch (Exception ex) {
@@ -633,7 +644,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ComResponse productReduce(OrderProductVO orderProductVO) {
         //首先查询
-        List<String> codes = orderProductVO.getProductReduceVOS().stream().map(ProductReduceVO::getProductCode).collect(Collectors.toList());
+        List<String> codes = orderProductVO.getProductReduceVOS()
+                                            .stream()
+                                            .map(ProductReduceVO::getProductCode)
+                                            .collect(Collectors.toList());
         List<ProductDTO> list = this.queryByProductCodes(codes);
         //todo 逻辑待处理
         return ComResponse.success();
@@ -657,7 +671,7 @@ public class ProductServiceImpl implements ProductService {
      * @param list 主键编号
      * @Return:
      */
-    private List<ProductDTO> queryStockByCodes(@Param("list") List<String> list){
+    private List<ProductStockDO> queryStockByCodes(@Param("list") List<String> list){
       return   productMapper.queryStockByCodes(list);
     }
     /**

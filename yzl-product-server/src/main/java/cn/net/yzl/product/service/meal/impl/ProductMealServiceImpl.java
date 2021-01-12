@@ -81,6 +81,15 @@ public class ProductMealServiceImpl implements ProductMealService {
     @Override
     public ComResponse updateStatusByMealCode(ProductMealUpdateStatusVO vo) {
         try {
+            if(vo.getStatus()==1){
+                Map<String,Object> map = new HashMap<>();
+                map.put("nowTime",new Date());
+                map.put("list",vo.getMealNoList());
+                List<String> list = mealMapper.queryBySaleEndTimeAndCodes(map);
+                if(vo.getMealNoList().size()!=list.size()){
+                    return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), "套餐已经过了销售结束日期,无法变更上架状态!");
+                }
+            }
             mealMapper.updateStatusByMealCode(vo);
             return ComResponse.success();
         } catch (Exception ex) {

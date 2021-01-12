@@ -5,8 +5,10 @@ import cn.net.yzl.product.model.pojo.product.MealStatus;
 import cn.net.yzl.product.model.vo.product.dto.ProductMealListDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import cn.net.yzl.product.model.vo.product.vo.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MealMapper {
 
@@ -42,4 +44,6 @@ public interface MealMapper {
     String queryMaxMealNo();
 
     MealStatus queryMealStatusByMaelNo(String mealNo);
+
+    List<String> queryBySaleEndTimeAndCodes(@Param("params") Map<String,Object> map);
 }

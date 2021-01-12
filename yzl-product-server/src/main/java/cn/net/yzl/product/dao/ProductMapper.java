@@ -4,6 +4,7 @@ import cn.net.yzl.product.model.db.ProductAtlasBean;
 import cn.net.yzl.product.model.pojo.product.Product;
 import cn.net.yzl.product.model.pojo.product.ProductDisease;
 import cn.net.yzl.product.model.pojo.product.ProductStatus;
+import cn.net.yzl.product.model.pojo.product.ProductStockDO;
 import cn.net.yzl.product.model.vo.product.dto.ProductDTO;
 import cn.net.yzl.product.model.vo.product.dto.ProductDetailVO;
 import cn.net.yzl.product.model.vo.product.dto.ProductListDTO;
@@ -14,6 +15,7 @@ import cn.net.yzl.product.model.vo.product.dto.ProductStatusCountDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductMapper {
 
@@ -98,7 +100,9 @@ public interface ProductMapper {
      * @param list 主键编号
      * @Return:
      */
-    List<ProductDTO> queryStockByCodes(@Param("list") List<String> list);
+    List<ProductStockDO> queryStockByCodes(@Param("list") List<String> list);
 
     List<ProductDTO> selectByDiseaseId(int id);
+
+    List<String> querySaleEndTimeByCodes(@Param("params") Map<String,Object> map);
 }
