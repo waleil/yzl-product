@@ -234,7 +234,7 @@
         order by create_time desc
     </select>
 
-    <select id="queryProductMealPortray" parameterType="Integer"
+    <select id="queryProductMealPortray" parameterType="java.lang.String"
             resultMap="BaseResultMap">
       select
         m.id,

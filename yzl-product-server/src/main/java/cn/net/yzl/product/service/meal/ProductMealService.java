@@ -28,7 +28,7 @@ public interface ProductMealService {
 
 //    ComResponse<Page<ProductMealDTO>> queryListProductMeal(ProductMealVO vo);
 
-    ComResponse<MealDTO> queryProductMealPortray(Integer mealNo);
+    ComResponse<MealDTO> queryProductMealPortray(String mealNo);
 
     /**
      * @Description: 修改套餐上下架状态

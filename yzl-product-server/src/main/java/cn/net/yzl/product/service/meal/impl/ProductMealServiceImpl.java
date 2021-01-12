@@ -274,7 +274,7 @@ public class ProductMealServiceImpl implements ProductMealService {
     }
 
     @Override
-    public ComResponse<MealDTO> queryProductMealPortray(Integer mealNo) {
+    public ComResponse<MealDTO> queryProductMealPortray(String mealNo) {
         try {
             //查询套餐信息
             Meal meal = mealMapper.queryProductMealPortray(mealNo);

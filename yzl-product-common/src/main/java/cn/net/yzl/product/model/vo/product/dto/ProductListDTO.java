@@ -48,6 +48,15 @@ public class ProductListDTO extends BaseObject {
     @ApiModelProperty(name = "stock", value = "库存,-1代表不限制库存")
     private Integer stock;
 
+    @ApiModelProperty(name = "brandName",value = "品牌名称")
+    private String brandName;
+
+    @ApiModelProperty(name = "saleStartTime",value = "售卖开始时间")
+    private Date saleStartTime;
+
+    @ApiModelProperty(name = "saleEndTime",value = "售卖结束时间")
+    private Date saleEndTime;
+
     @ApiModelProperty(name = "status", value = "上下架状态：0-下架 1-上架")
     private int status;
 

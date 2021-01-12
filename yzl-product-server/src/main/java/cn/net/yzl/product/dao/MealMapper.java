@@ -36,7 +36,7 @@ public interface MealMapper {
     //查询商品套餐列表
     List<ProductMealListDTO> queryListProductMeal(ProductMealSelectVO vo);
 
-    Meal queryProductMealPortray(Integer mealNo);
+    Meal queryProductMealPortray(String mealNo);
 
     //查询最大套餐编号
     String queryMaxMealNo();

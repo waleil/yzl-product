@@ -181,7 +181,7 @@ public class ProductMealController {
 
     @GetMapping(value = "v1/queryProductMealPortray")
     @ApiOperation("查询商品套餐画像")
-    public ComResponse<MealDTO> queryProductMealPortray(@RequestParam("mealNo") Integer mealNo) {
+    public ComResponse<MealDTO> queryProductMealPortray(@RequestParam("mealNo") String mealNo) {
         return productMealService.queryProductMealPortray(mealNo);
     }
 }
