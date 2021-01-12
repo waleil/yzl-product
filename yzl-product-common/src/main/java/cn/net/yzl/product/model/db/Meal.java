@@ -1,6 +1,7 @@
 package cn.net.yzl.product.model.db;
 
 import cn.net.yzl.product.model.BaseObject;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -42,18 +43,22 @@ public class Meal extends BaseObject {
     @ApiModelProperty(value = "旧id",name = "oldId")
     private Integer oldId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty(value = "销售开始时间",name = "saleStartTime")
     private Date saleStartTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty(value = "销售结束时间",name = "saleEndTime")
     private Date saleEndTime;
 
     @ApiModelProperty(value = "套餐图片地址",name = "imageUrl")
     private String imageUrl;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间",name = "createTime")
     private Date createTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty(value = "修改时间",name = "updateTime")
     private Date updateTime;
 
