@@ -42,7 +42,7 @@ public class Meal extends BaseObject {
     @ApiModelProperty(value = "旧id",name = "oldId")
     private Integer oldId;
 
-    @ApiModelProperty(value = "销售开始时间",name = "mealNo")
+    @ApiModelProperty(value = "销售开始时间",name = "saleStartTime")
     private Date saleStartTime;
 
     @ApiModelProperty(value = "销售结束时间",name = "saleEndTime")

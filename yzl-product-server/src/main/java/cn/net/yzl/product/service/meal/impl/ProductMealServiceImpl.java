@@ -276,7 +276,7 @@ public class ProductMealServiceImpl implements ProductMealService {
     public ComResponse<MealDTO> queryProductMealPortray(Integer mealNo) {
         try {
             //查询套餐信息
-            cn.net.yzl.product.model.db.Meal meal = mealMapper.queryProductMealPortray(mealNo);
+            Meal meal = mealMapper.queryProductMealPortray(mealNo);
             if (meal == null) {
                 return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(), ResponseCodeEnums.NO_DATA_CODE.getMessage());
             }
@@ -301,6 +301,7 @@ public class ProductMealServiceImpl implements ProductMealService {
                     mealProduct.setSalePriceD(priceD);
                     mealProduct.setName(productDetailVO.getName());
                     mealProduct.setImageUrl(productDetailVO.getImageUrl());
+                    mealProduct.setMealNo(meal.getMealNo());
 
                     //适宜人群
                     String applicable = productDetailVO.getApplicable();
