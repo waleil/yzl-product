@@ -91,4 +91,6 @@ public interface ProductMapper {
      * @Return:
      */
     List<ProductDTO> queryByProductCodes(@Param("list") List<String> list);
+
+    List<ProductDTO> selectByDiseaseId(int id);
 }

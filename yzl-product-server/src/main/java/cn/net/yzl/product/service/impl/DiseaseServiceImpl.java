@@ -131,7 +131,7 @@ public class DiseaseServiceImpl implements DiseaseService {
                     List<DiseaseTreeNode> treeNodes = new ArrayList<>(subList.size());
                     subList.forEach(suNode -> {
                         DiseaseTreeNode subTreeNode = transform(suNode);
-                        //TODO 查询商品信息
+                        subTreeNode.setProductDTOList(productMapper.selectByDiseaseId(subTreeNode.getId()));
                         treeNodes.add(subTreeNode);
                     });
                     treeNode.setNodeList(treeNodes);

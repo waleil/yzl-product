@@ -901,6 +901,10 @@
             #{item}
         </foreach>
     </select>
+    <select id="selectByDiseaseId" resultType="cn.net.yzl.product.model.vo.product.dto.ProductDTO"
+            parameterType="int">
+        select product_code,name,goods_source from product where disease_id = #{id}
+    </select>
 </mapper>
 
 

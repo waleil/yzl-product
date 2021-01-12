@@ -17,6 +17,9 @@ public class ProductDTO extends BaseObject {
     @ApiModelProperty(name = "productCode",value = "商品ID(product唯一标识)")
     private String productCode;
 
+    @ApiModelProperty(name = "goodsSource",value = "商品来源（1：自营，2：三方）")
+    private Integer goodsSource;
+
     @ApiModelProperty(name = "productNo",value = "商品编号")
     private String productNo;
 
