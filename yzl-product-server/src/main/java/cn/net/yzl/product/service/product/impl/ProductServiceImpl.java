@@ -627,11 +627,11 @@ public class ProductServiceImpl implements ProductService {
      * @Author: lichanghong
      * @Description: 扣减库存
      * @Date: 2021/1/11 11:34 下午
-     * @param reduceVOS 扣减实体
+     * @param orderProductVO 扣减实体
      * @Return: cn.net.yzl.common.entity.ComResponse
      */
     @Override
-    public ComResponse productReduce(List<ProductReduceVO> reduceVOS) {
+    public ComResponse productReduce(OrderProductVO orderProductVO) {
         //todo 逻辑待处理
         return ComResponse.success();
     }
@@ -639,11 +639,11 @@ public class ProductServiceImpl implements ProductService {
      * @Author: lichanghong
      * @Description:    增加库存
      * @Date: 2021/1/11 11:30 下午
-     * @param reduceVOS
+     * @param orderProductVO
      * @Return:
      */
     @Override
-    public ComResponse increaseStock(List<ProductReduceVO> reduceVOS) {
+    public ComResponse increaseStock(OrderProductVO orderProductVO) {
         //todo 逻辑待处理
         return ComResponse.success();
     }

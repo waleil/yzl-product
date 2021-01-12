@@ -15,10 +15,10 @@ import javax.validation.constraints.NotEmpty;
  */
 @Data
 public class ProductReduceVO {
-    @ApiModelProperty(name = "productCode", value = "商品编号")
+    @ApiModelProperty(name = "productCode", required = true,value = "商品编号")
     @NotEmpty(message = "商品编号不能为空!")
     private String productCode;
-    @ApiModelProperty(name = "num", value = "商品数量")
+    @ApiModelProperty(name = "num",required = true, value = "商品数量")
     @DecimalMin(value = "1",message = "商品数量只能为正整数!")
     private Integer num;
 //    @ApiModelProperty(name = "orderNo", value = "订单编号")

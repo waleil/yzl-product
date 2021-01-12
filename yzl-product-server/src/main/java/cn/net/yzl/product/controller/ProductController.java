@@ -7,11 +7,8 @@ import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.model.vo.product.dto.*;
 import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.service.product.ProductService;
-import io.swagger.annotations.Api;
+import io.swagger.annotations.*;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -256,7 +253,7 @@ public class ProductController {
     }
 
     /**
-     * @param reduceVOS
+     * @param orderProductVO
      * @Author: lichanghong
      * @Description: 商品扣减
      * @Date: 2021/1/11 11:30 下午
@@ -264,12 +261,12 @@ public class ProductController {
      */
     @ApiOperation("扣减库存")
     @PostMapping(value = "v1/productReduce")
-    public ComResponse productReduce(List<ProductReduceVO> reduceVOS) {
-        return productService.productReduce(reduceVOS);
+    public ComResponse productReduce(@RequestBody @Valid OrderProductVO orderProductVO) {
+        return productService.productReduce(orderProductVO);
     }
 
     /**
-     * @param reduceVOS
+     * @param orderProductVO
      * @Author: lichanghong
      * @Description: 商品扣减
      * @Date: 2021/1/11 11:30 下午
@@ -277,8 +274,8 @@ public class ProductController {
      */
     @ApiOperation("取消单增加库存")
     @PostMapping(value = "v1/increaseStock")
-    public ComResponse increaseStock(List<ProductReduceVO> reduceVOS) {
-        return productService.productReduce(reduceVOS);
+    public ComResponse increaseStock(@RequestBody @Valid OrderProductVO orderProductVO) {
+        return productService.productReduce(orderProductVO);
     }
 }
 

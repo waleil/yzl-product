@@ -108,17 +108,17 @@ public interface ProductService {
      * @Author: lichanghong
      * @Description: 扣减库存
      * @Date: 2021/1/11 11:30 下午
-     * @param reduceVOS
+     * @param orderProductVO
      * @Return:
      */
-    ComResponse productReduce(List<ProductReduceVO> reduceVOS);
+    ComResponse productReduce(OrderProductVO orderProductVO);
     /**
      * @Author: lichanghong
      * @Description:    增加库存
      * @Date: 2021/1/11 11:30 下午
-     * @param reduceVOS
+     * @param orderProductVO
      * @Return:
      */
-    ComResponse increaseStock(List<ProductReduceVO> reduceVOS);
+    ComResponse increaseStock(OrderProductVO orderProductVO);
 
 }
