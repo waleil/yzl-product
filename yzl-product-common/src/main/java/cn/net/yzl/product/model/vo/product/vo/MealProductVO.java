@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@ApiModel(value = "MealProduct",description = "套餐商品信息")
+@ApiModel(value = "MealProductVO",description = "套餐商品信息")
 public class MealProductVO {
 
     @ApiModelProperty(value = "套餐编码",name = "mealNo")
