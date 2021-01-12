@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -72,10 +73,12 @@ public class ProductVO extends BaseObject {
 
     @ApiModelProperty(name = "saleStartTime", value = "销售开始日期")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @NotNull(message = "销售开始日期，不能为空!")
     private Date saleStartTime;
 
     @ApiModelProperty(name = "saleEndTime", value = "销售结束日期")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @NotNull(message = "销售结束日期，不能为空!")
     private Date saleEndTime;
 
     @ApiModelProperty(name = "patentCode", value = "发明专利号")
