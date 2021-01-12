@@ -223,32 +223,33 @@ public class ProductMealServiceImpl implements ProductMealService {
                         List<Integer> listSort = new ArrayList<>();
 
                         List<MealListProductDTO> mealListProductDTOList = mealListProductMap.get(productMealListDTO.getMealNo());
-                        for (MealListProductDTO mealListProductDTO : mealListProductDTOList) {
-                            String brandName = mealListProductDTO.getBrandName();
-                            if (brandName != null){
-                                brandNames.add(brandName);
-                            }
-                            String productCode = mealListProductDTO.getProductCode();
-                            if (productCode !=null)
-                            productCodes.add(productCode);
-
-                            //单个商品库存
-                            Integer stock = mealListProductDTO.getStock();
-                            //商品数量
-                            Integer productNum = mealListProductDTO.getProductNum();
-                            if (stock==0){
-                                listSort.add(0);
-                            }else if (productNum==0){
-                                listSort.add(stock);
-                            }else {
-                                if (stock==-1){//无限制库存
-                                    stock=99999999;
+                        if(!CollectionUtils.isEmpty(mealListProductDTOList)){
+                            for (MealListProductDTO mealListProductDTO : mealListProductDTOList) {
+                                String brandName = mealListProductDTO.getBrandName();
+                                if (brandName != null){
+                                    brandNames.add(brandName);
                                 }
-                                double floor = Math.floor(stock / productNum);
-                                listSort.add(new Double(floor).intValue());
+                                String productCode = mealListProductDTO.getProductCode();
+                                if (productCode !=null)
+                                    productCodes.add(productCode);
+
+                                //单个商品库存
+                                Integer stock = mealListProductDTO.getStock();
+                                //商品数量
+                                Integer productNum = mealListProductDTO.getProductNum();
+                                if (stock==0){
+                                    listSort.add(0);
+                                }else if (productNum==0){
+                                    listSort.add(stock);
+                                }else {
+                                    if (stock==-1){//无限制库存
+                                        stock=99999999;
+                                    }
+                                    double floor = Math.floor(stock / productNum);
+                                    listSort.add(new Double(floor).intValue());
+                                }
                             }
                         }
-
                         if (listSort.size()>0){
                             Collections.sort(listSort, new Comparator<Integer>() {
                                 @Override
