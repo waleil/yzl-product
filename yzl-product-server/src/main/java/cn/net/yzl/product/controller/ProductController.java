@@ -5,10 +5,7 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.product.model.vo.product.dto.*;
-import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductVO;
+import cn.net.yzl.product.model.vo.product.vo.*;
 import cn.net.yzl.product.service.product.ProductService;
 import io.swagger.annotations.Api;
 
@@ -158,7 +155,7 @@ public class ProductController {
             return "市场价价格不能为空";
         }
         //如果是修改需要判断修改时间
-        if(StringUtils.isEmpty(vo.getProductCode())){
+        if (StringUtils.isEmpty(vo.getProductCode())) {
             if (vo.getUpdateTime() == null) {
                 return "最后修改时间不能为空!";
             }
@@ -182,8 +179,8 @@ public class ProductController {
             @ApiImplicitParam(name = "pid", value = "病症pid", dataType = "Int", paramType = "query")
     })
     @GetMapping("v1/queryProductListAtlas")
-    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(@RequestParam(value = "productName",required = false) String productName, @RequestParam(value = "id",required = false) Integer id,@RequestParam(value = "pid",required = false) Integer pid) {
-        return productService.queryProductListAtlas(productName, id,pid);
+    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(@RequestParam(value = "productName", required = false) String productName, @RequestParam(value = "id", required = false) Integer id, @RequestParam(value = "pid", required = false) Integer pid) {
+        return productService.queryProductListAtlas(productName, id, pid);
     }
 
     /**
@@ -237,6 +234,7 @@ public class ProductController {
         List<ProductDiseaseDTO> diseaseDTOS = productService.queryDiseaseByProductCode(productCode);
         return ComResponse.success(diseaseDTOS);
     }
+
     /**
      * @param codes
      * @Author: lichanghong
@@ -247,14 +245,40 @@ public class ProductController {
     @GetMapping(value = "v1/queryByCodes")
     @ApiOperation("根据商品编号查询病症")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "codes", paramType="query",required = true,value = "商品code，以逗号分隔"),
+            @ApiImplicitParam(name = "codes", paramType = "query", required = true, value = "商品code，以逗号分隔"),
     })
-    public ComResponse<List<ProductDTO>> queryByProductCodes(@RequestParam("codes") String codes){
-        if(StringUtils.isEmpty(codes)){
-            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
+    public ComResponse<List<ProductDTO>> queryByProductCodes(@RequestParam("codes") String codes) {
+        if (StringUtils.isEmpty(codes)) {
+            return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
         }
         List<String> list = new ArrayList<>(StringUtils.commaDelimitedListToSet(codes));
         return ComResponse.success(productService.queryByProductCodes(list));
+    }
+
+    /**
+     * @param reduceVOS
+     * @Author: lichanghong
+     * @Description: 商品扣减
+     * @Date: 2021/1/11 11:30 下午
+     * @Return:
+     */
+    @ApiOperation("扣减库存")
+    @PostMapping(value = "v1/productReduce")
+    public ComResponse productReduce(List<ProductReduceVO> reduceVOS) {
+        return productService.productReduce(reduceVOS);
+    }
+
+    /**
+     * @param reduceVOS
+     * @Author: lichanghong
+     * @Description: 商品扣减
+     * @Date: 2021/1/11 11:30 下午
+     * @Return:
+     */
+    @ApiOperation("取消单增加库存")
+    @PostMapping(value = "v1/increaseStock")
+    public ComResponse increaseStock(List<ProductReduceVO> reduceVOS) {
+        return productService.productReduce(reduceVOS);
     }
 }
 

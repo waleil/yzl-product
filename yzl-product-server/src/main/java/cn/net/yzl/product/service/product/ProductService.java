@@ -4,10 +4,7 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.product.model.pojo.product.ProductDisease;
 import cn.net.yzl.product.model.vo.product.dto.*;
-import cn.net.yzl.product.model.vo.product.vo.ProductSelectVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductUpdateStatusVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductUpdateTimeVO;
-import cn.net.yzl.product.model.vo.product.vo.ProductVO;
+import cn.net.yzl.product.model.vo.product.vo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -107,4 +104,21 @@ public interface ProductService {
      * @Return:
      */
     List<ProductDTO> queryByProductCodes(List<String> list);
+    /**
+     * @Author: lichanghong
+     * @Description: 扣减库存
+     * @Date: 2021/1/11 11:30 下午
+     * @param reduceVOS
+     * @Return:
+     */
+    ComResponse productReduce(List<ProductReduceVO> reduceVOS);
+    /**
+     * @Author: lichanghong
+     * @Description:    增加库存
+     * @Date: 2021/1/11 11:30 下午
+     * @param reduceVOS
+     * @Return:
+     */
+    ComResponse increaseStock(List<ProductReduceVO> reduceVOS);
+
 }

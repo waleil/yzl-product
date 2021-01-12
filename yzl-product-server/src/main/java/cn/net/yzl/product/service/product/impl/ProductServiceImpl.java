@@ -623,6 +623,30 @@ public class ProductServiceImpl implements ProductService {
         }
         return list;
     }
+    /**
+     * @Author: lichanghong
+     * @Description: 扣减库存
+     * @Date: 2021/1/11 11:34 下午
+     * @param reduceVOS 扣减实体
+     * @Return: cn.net.yzl.common.entity.ComResponse
+     */
+    @Override
+    public ComResponse productReduce(List<ProductReduceVO> reduceVOS) {
+        //todo 逻辑待处理
+        return ComResponse.success();
+    }
+    /**
+     * @Author: lichanghong
+     * @Description:    增加库存
+     * @Date: 2021/1/11 11:30 下午
+     * @param reduceVOS
+     * @Return:
+     */
+    @Override
+    public ComResponse increaseStock(List<ProductReduceVO> reduceVOS) {
+        //todo 逻辑待处理
+        return ComResponse.success();
+    }
 
     /**
      * @param
