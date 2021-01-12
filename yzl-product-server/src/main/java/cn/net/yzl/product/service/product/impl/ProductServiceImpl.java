@@ -29,12 +29,12 @@ import cn.net.yzl.product.utils.CacheKeyUtil;
 import cn.net.yzl.product.utils.RedisUtil;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -632,6 +632,9 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ComResponse productReduce(OrderProductVO orderProductVO) {
+        //首先查询
+        List<String> codes = orderProductVO.getProductReduceVOS().stream().map(ProductReduceVO::getProductCode).collect(Collectors.toList());
+        List<ProductDTO> list = this.queryByProductCodes(codes);
         //todo 逻辑待处理
         return ComResponse.success();
     }
@@ -647,7 +650,16 @@ public class ProductServiceImpl implements ProductService {
         //todo 逻辑待处理
         return ComResponse.success();
     }
-
+    /**
+     * @Author: lichanghong
+     * @Description: 查询商品库存
+     * @Date: 2021/1/10 6:28 下午
+     * @param list 主键编号
+     * @Return:
+     */
+    private List<ProductDTO> queryStockByCodes(@Param("list") List<String> list){
+      return   productMapper.queryStockByCodes(list);
+    }
     /**
      * @param
      * @Author: lichanghong
