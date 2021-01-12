@@ -3,6 +3,7 @@ package cn.net.yzl.product.model.vo.product.vo;
 import cn.net.yzl.product.model.BaseObject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @date: 2021/1/10 14:40 下午
  */
 @Data
+@ApiModel(value = "MealVO",description = "套餐信息")
 public class MealVO extends BaseObject {
 
     @ApiModelProperty(value = "套餐编码",name = "mealNo")

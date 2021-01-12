@@ -281,6 +281,20 @@ public class ProductMealServiceImpl implements ProductMealService {
                 return ComResponse.fail(ResponseCodeEnums.NO_DATA_CODE.getCode(), ResponseCodeEnums.NO_DATA_CODE.getMessage());
             }
 
+            //套餐价(元)
+            Integer price = meal.getPrice();
+            if (price != null){
+                meal.setPriceD(new BigDecimal(String.valueOf(meal.getPrice() / 100d))
+                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            }
+
+            //优惠价(元)
+            Integer discountPrice = meal.getDiscountPrice();
+            if (discountPrice != null){
+                meal.setDiscountPriceD(new BigDecimal(String.valueOf(meal.getDiscountPriceD() / 100d))
+                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            }
+
             //适宜人群集合
             Set<String> applicableSet = new HashSet<>();
             //禁忌人群集合
