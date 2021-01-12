@@ -902,7 +902,7 @@
         p.`status` as status,
         p.stock as stock
         from product p
-        where p.del_flag = 0 and p.status = 1 and p.product_code in
+        where p.del_flag = 0  and p.product_code in
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
             #{item}
         </foreach>
