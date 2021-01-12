@@ -118,7 +118,7 @@ public class ProductMealController {
      * @return: java.lang.String
      **/
     public String checkParams(MealVO vo) {
-        if (StringUtils.isEmpty(vo.getName())){
+        if (StringUtils.isBlank(vo.getName())){
             return "套餐名称不能为空";
         }
         if (vo.getPriceD()==null){

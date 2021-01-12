@@ -75,4 +75,6 @@ public class Meal extends BaseObject {
     @ApiModelProperty(value = "修改人",name = "updateNo")
     private String updateNo;
 
+    @ApiModelProperty(value = "修改人",name = "createNo")
+    private String createNo;
 }

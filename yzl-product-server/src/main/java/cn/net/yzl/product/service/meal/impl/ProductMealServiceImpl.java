@@ -127,6 +127,7 @@ public class ProductMealServiceImpl implements ProductMealService {
             long maxProductCode = redisUtil.incr(cacheKey, 1);
             String maxProductCodeStr= String.format("T%07d", maxProductCode);
             meal.setMealNo(maxProductCodeStr);
+            meal.setCreateNo(maxProductCodeStr);
             mealMapper.insertSelective(meal);
             //套餐商品新增
             List<MealProductVO> mealProducts = vo.getMealProducts();
