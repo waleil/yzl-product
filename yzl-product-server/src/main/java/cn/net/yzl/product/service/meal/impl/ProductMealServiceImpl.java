@@ -292,7 +292,7 @@ public class ProductMealServiceImpl implements ProductMealService {
             //优惠价(元)
             Integer discountPrice = meal.getDiscountPrice();
             if (discountPrice != null){
-                meal.setDiscountPriceD(new BigDecimal(String.valueOf(meal.getDiscountPriceD() / 100d))
+                meal.setDiscountPriceD(new BigDecimal(String.valueOf(meal.getDiscountPrice() / 100d))
                         .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
             }
 
