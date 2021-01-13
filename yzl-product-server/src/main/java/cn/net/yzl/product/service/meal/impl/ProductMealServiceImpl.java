@@ -170,11 +170,15 @@ public class ProductMealServiceImpl implements ProductMealService {
             mealProductMapper.deleteByMealNo(mealNo);
             List<MealProductVO> mealProducts = vo.getMealProducts();
             List<MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, MealProduct::new);
-            mealProductList.stream().forEach(n -> {
-                        n.setMealNo(mealStatus.getMealNo());
-                        n.setUpdateTime(mealStatus.getUpdateTime());
-                    }
-            );
+            if(null ==mealProductList||mealProductList.size() == 0){
+                return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"商品列表为空，请检查您的输入！");
+            }
+            AtomicInteger mainCount = new AtomicInteger();
+            mealProductList.stream().forEach(n ->{
+                if (n.getMealGiftFlag()==0){
+                    mainCount.getAndIncrement();
+                }
+            });
             mealProductMapper.insertSelectiveList(mealProductList);
         }
         return ComResponse.success();
