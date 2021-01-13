@@ -2,7 +2,11 @@ package cn.net.yzl.product.utils;
 import cn.net.yzl.logger.annotate.SysAccessLog;
 import cn.net.yzl.logger.enums.DefaultDataEnums;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -133,7 +137,54 @@ public class RedisUtil {
             return null;
         }
     }
+    /**
+     * @Author: lichanghong
+     * @Description:    批量获取缓存
+     * @Date: 2021/1/13 11:51 上午
+     * @param keys
+     * @Return: java.util.List<java.lang.Object>
+     */@SysAccessLog(logKeyParamName = {"keys"},
+            source = DefaultDataEnums.Source.REDIS,action = DefaultDataEnums.Action.QUERY)
+    public List<Object> multiGet(Set<String> keys) {
+        try {
+            return redisTemplate.opsForValue().multiGet(keys);
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+        return null;
+    }
+    /**
+     * 批量添加数据，并设置过期时间
+     *
+     * @param map
+     */
+    @SysAccessLog(logKeyParamName = {"map"},
+            source = DefaultDataEnums.Source.REDIS,
+            action = DefaultDataEnums.Action.ADD)
+    public void multiSet(Map<String, Object> map) {
+        long start = System.currentTimeMillis();
+        try {
+            RedisSerializer keySerializer = redisTemplate.getKeySerializer();
+            RedisSerializer valueSerializer = redisTemplate.getValueSerializer();
+            redisTemplate.executePipelined(new RedisCallback() {
+                @Override
+                public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                    Set<String> keySet = map.keySet();
+                    keySet.stream().forEach(key -> {
+                        if (StringUtils.hasText(key)) {
+                            connection.setNX(keySerializer.serialize(key), valueSerializer.serialize(map.get(key)));
+                        }
+                    });
 
+                    return null;
+                }
+            });
+
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+
+    }
     /**
      * 普通缓存获取
      *

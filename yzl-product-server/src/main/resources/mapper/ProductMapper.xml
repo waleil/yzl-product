@@ -900,6 +900,7 @@
         p.sale_start_time as saleStartTime,
         p.sale_end_time as saleEndTime,
         p.`status` as status,
+        p.withhold_stock as holdStock,
         p.stock as stock
         from product p
         where p.del_flag = 0  and p.product_code in

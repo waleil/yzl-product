@@ -6,7 +6,9 @@ import cn.net.yzl.common.entity.ComResponse;
 import cn.net.yzl.common.entity.Page;
 import cn.net.yzl.common.enums.ResponseCodeEnums;
 import cn.net.yzl.common.util.AssemblerResultUtil;
+import cn.net.yzl.common.util.JsonUtil;
 import cn.net.yzl.product.config.FastDFSConfig;
+import cn.net.yzl.product.config.distributedlock.RedissonLockUtil;
 import cn.net.yzl.product.dao.BrandBeanMapper;
 import cn.net.yzl.product.dao.ProductDiseaseMapper;
 import cn.net.yzl.product.dao.ProductImageMapper;
@@ -183,7 +185,7 @@ public class ProductServiceImpl implements ProductService {
                 return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
             }
             //上架状态的商品不允许修改
-            if(productStatus.getStatus()==1){
+            if (productStatus.getStatus() == 1) {
                 return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), "商品正在上架，无法修改");
             }
             //修改
@@ -200,14 +202,14 @@ public class ProductServiceImpl implements ProductService {
     public ComResponse updateStatusByProductCode(ProductUpdateStatusVO vo) {
         try {
             //上架的时候判断时间
-            if(vo.getStatus()==1){
-                Map<String,Object> map = new HashMap<>();
-                map.put("nowTime",new Date());
-                map.put("list",vo.getProductCodeList());
-               List<String> list = productMapper.querySaleEndTimeByCodes(map);
-               if(vo.getProductCodeList().size()!=list.size()){
-                   return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), "商品已经过了销售结束日期,无法变更上架状态!");
-               }
+            if (vo.getStatus() == 1) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("nowTime", new Date());
+                map.put("list", vo.getProductCodeList());
+                List<String> list = productMapper.querySaleEndTimeByCodes(map);
+                if (vo.getProductCodeList().size() != list.size()) {
+                    return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), "商品已经过了销售结束日期,无法变更上架状态!");
+                }
             }
             productMapper.updateStatusByProductCode(vo);
             return ComResponse.success();
@@ -330,12 +332,12 @@ public class ProductServiceImpl implements ProductService {
      * @return
      */
     @Override
-    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(String productName, Integer id,Integer pid) {
-        if (StringUtils.isEmpty(productName) && (id == null || pid ==null))
+    public ComResponse<List<ProductAtlasDTO>> queryProductListAtlas(String productName, Integer id, Integer pid) {
+        if (StringUtils.isEmpty(productName) && (id == null || pid == null))
             return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(), ResponseCodeEnums.PARAMS_ERROR_CODE.getMessage());
 
         //查询商品数据(商品图谱)
-        List<ProductAtlasBean> productAtlasBeanList = productMapper.queryProductListAtlas(productName, id,pid);
+        List<ProductAtlasBean> productAtlasBeanList = productMapper.queryProductListAtlas(productName, id, pid);
 
         //判断是否有数据
         if (productAtlasBeanList == null || productAtlasBeanList.size() == 0)
@@ -485,8 +487,8 @@ public class ProductServiceImpl implements ProductService {
             }
             //查询关联病症
             List<ProductDiseaseVO> productDiseaseVOList = productDiseaseMapper.queryByProductCode(productCode);
-            if(!CollectionUtils.isEmpty(productDiseaseVOList)){
-                for(ProductDiseaseVO v:productDiseaseVOList){
+            if (!CollectionUtils.isEmpty(productDiseaseVOList)) {
+                for (ProductDiseaseVO v : productDiseaseVOList) {
                     Disease d = diseaseService.queryById(v.getDiseaseId(), v.getDiseasePid());
                     v.setDiseaseName(d.getName());
                 }
@@ -514,8 +516,8 @@ public class ProductServiceImpl implements ProductService {
         }
         //查询关联病症
         List<ProductDiseaseVO> diseaseVOS = productDiseaseMapper.queryByProductCode(productCode);
-        if (!CollectionUtils.isEmpty(diseaseVOS)){
-            for (ProductDiseaseVO v:diseaseVOS){
+        if (!CollectionUtils.isEmpty(diseaseVOS)) {
+            for (ProductDiseaseVO v : diseaseVOS) {
                 Disease d = diseaseService.queryById(v.getDiseaseId(), v.getDiseasePid());
                 v.setDiseaseName(d.getName());
             }
@@ -623,10 +625,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> queryByProductCodes(List<String> codes) {
         List<ProductDTO> list = productMapper.queryByProductCodes(codes);
-        if(CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             return Collections.emptyList();
         }
-        for(ProductDTO dto:list){
+        for (ProductDTO dto : list) {
             //处理价格
             dto.setSalePriceD(new BigDecimal(String.valueOf(dto.getSalePrice() / 100d))
                     .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
@@ -634,29 +636,38 @@ public class ProductServiceImpl implements ProductService {
         }
         return list;
     }
+
     /**
+     * @param orderProductVO 扣减实体
      * @Author: lichanghong
      * @Description: 扣减库存
      * @Date: 2021/1/11 11:34 下午
-     * @param orderProductVO 扣减实体
      * @Return: cn.net.yzl.common.entity.ComResponse
      */
     @Override
     public ComResponse productReduce(OrderProductVO orderProductVO) {
         //首先查询
         List<String> codes = orderProductVO.getProductReduceVOS()
-                                            .stream()
-                                            .map(ProductReduceVO::getProductCode)
-                                            .collect(Collectors.toList());
-        List<ProductDTO> list = this.queryByProductCodes(codes);
+                .stream()
+                .map(ProductReduceVO::getProductCode)
+                .collect(Collectors.toList());
+        List<ProductStockDO> productStockDOS= this.queryStockByCodes(codes);
+        for(ProductStockDO stockDO:productStockDOS){
+            //限制库存
+            if(stockDO.getLimitFlag()){
+               //校验库存
+
+            }
+        }
         //todo 逻辑待处理
         return ComResponse.success();
     }
+
     /**
-     * @Author: lichanghong
-     * @Description:    增加库存
-     * @Date: 2021/1/11 11:30 下午
      * @param orderProductVO
+     * @Author: lichanghong
+     * @Description: 增加库存
+     * @Date: 2021/1/11 11:30 下午
      * @Return:
      */
     @Override
@@ -664,16 +675,53 @@ public class ProductServiceImpl implements ProductService {
         //todo 逻辑待处理
         return ComResponse.success();
     }
+
     /**
+     * @param list 主键编号
      * @Author: lichanghong
      * @Description: 查询商品库存
      * @Date: 2021/1/10 6:28 下午
-     * @param list 主键编号
      * @Return:
      */
-    private List<ProductStockDO> queryStockByCodes(@Param("list") List<String> list){
-      return   productMapper.queryStockByCodes(list);
+    private List<ProductStockDO> queryStockByCodes(@Param("list") List<String> list) {
+        Set<String> cacheKeys = new HashSet<>();
+        for (String str : list) {
+            String cacheKey = CacheKeyUtil.generateProductStockCacheKey(str);
+            cacheKeys.add(cacheKey);
+        }
+        List<Object> objects = redisUtil.multiGet(cacheKeys);
+        List<ProductStockDO> productStockDOS = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(objects)) {
+            for (Object obj : objects) {
+                ProductStockDO stockDO = JsonUtil.getObjectFromJSONString(String.valueOf(obj), ProductStockDO.class);
+                if (stockDO != null && StringUtils.hasText(stockDO.getProductCode())) {
+                    list.remove(stockDO.getProductCode());
+                    productStockDOS.add(stockDO);
+                }
+            }
+        }
+        if (list.size() > 0) {
+            synchronized (ProductServiceImpl.class) {
+                List<ProductStockDO> productStockDOList = productMapper.queryStockByCodes(list);
+                if (!CollectionUtils.isEmpty(productStockDOList)) {
+                    productStockDOS.addAll(productStockDOList);
+                    Map<String, Object> map = new HashMap<>();
+                    //循环数据
+                    for (ProductStockDO stockDO : productStockDOList) {
+                        //说明不限制库存
+                        if(stockDO.getStock()==-1){
+                            stockDO.setLimitFlag(false);
+                        }
+                        String cacheKey = CacheKeyUtil.generateProductStockCacheKey(stockDO.getProductCode());
+                        map.put(cacheKey, JsonUtil.toJsonStr(stockDO));
+                    }
+                    redisUtil.multiSet(map);
+                }
+            }
+        }
+        return productStockDOS;
     }
+
     /**
      * @param
      * @Author: lichanghong
@@ -727,12 +775,12 @@ public class ProductServiceImpl implements ProductService {
         ComResponse<cn.net.yzl.product.model.db.Category> category = categoryService.getCategoryById(id);
         if (category.getData() == null) {
             return null;
-        }else if(category.getData().getPid()==null){
+        } else if (category.getData().getPid() == null) {
             return category.getData().getName();
         }
         String pre = category.getData().getName();
         String stuf = categoryService.getCategoryById(category.getData().getPid()).getData().getName();
-        return pre+" - "+stuf;
+        return pre + " - " + stuf;
     }
 
 

@@ -73,4 +73,16 @@ public class CacheKeyUtil {
     public static String maxMealCacheKey(){
         return new StringBuilder(serverName).append("-").append("maxMealNo").toString();
     }
+    /**
+     * @Author: lichanghong
+     * @Description: 生成缓存库存key
+     * @Date: 2021/1/13 12:20 下午
+     * @param productCode
+     * @Return: java.lang.String
+     */
+    public static String generateProductStockCacheKey(String productCode){
+
+        return new StringBuilder(serverName).append("-")
+                .append("productStock:").append(productCode).toString();
+    }
 }

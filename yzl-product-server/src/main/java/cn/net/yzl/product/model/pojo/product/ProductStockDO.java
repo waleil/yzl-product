@@ -28,7 +28,7 @@ public class ProductStockDO {
     /**
         是否限制库存
      */
-    private boolean limitFlag;
+    private Boolean limitFlag;
     /**
      销售开始时间
      */
@@ -41,4 +41,8 @@ public class ProductStockDO {
      上下架状态
      */
     private Integer status;
+    /**
+     冻结库存
+     */
+    private Integer holdStock;
 }
