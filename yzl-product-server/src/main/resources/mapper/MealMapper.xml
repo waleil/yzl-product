@@ -228,7 +228,7 @@
         </if>
         <if test="upPrice != null ">
             <if test="downPrice != null ">
-                AND sale_price BETWEEN #{downPrice} AND #{upPrice}
+                AND price BETWEEN #{downPrice} AND #{upPrice}
             </if>
         </if>
         order by create_time desc

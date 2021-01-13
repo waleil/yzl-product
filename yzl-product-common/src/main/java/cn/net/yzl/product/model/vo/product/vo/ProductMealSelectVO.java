@@ -28,7 +28,7 @@ public class ProductMealSelectVO extends BaseObject {
 
     @ApiModelProperty(name = "priceDown", value = "价格区间下限")
     private Double priceDown;
-    @ApiModelProperty(name = "priceDown", value = "价格区间上限")
+    @ApiModelProperty(name = "priceUp", value = "价格区间上限")
     private Double priceUp;
     @JsonIgnore
     private Integer downPrice;
