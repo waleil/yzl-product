@@ -55,7 +55,7 @@
     from category_dict
     where pid = #{pid,jdbcType=INTEGER}
     and del_flag=0
-    order by old_id desc
+    order by sort desc,create_time desc
   </select>
   <select id="getProductCountByCid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
     select count(1)
