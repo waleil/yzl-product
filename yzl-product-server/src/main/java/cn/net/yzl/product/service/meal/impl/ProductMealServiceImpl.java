@@ -33,6 +33,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -142,7 +143,19 @@ public class ProductMealServiceImpl implements ProductMealService {
             List<MealProductVO> mealProducts = vo.getMealProducts();
             List<MealProduct> mealProductList = BeanCopyUtil.copyListProperties(mealProducts, MealProduct::new);
 //            mealProductList.stream().forEach(n -> n.setMealNo(maxProductCode));
-            mealProductList.stream().forEach(n -> n.setMealNo(cacheKey));
+            if(null ==mealProductList||mealProductList.size() == 0){
+                return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"商品列表为空，请检查您的输入！");
+            }
+            AtomicInteger mainCount = new AtomicInteger();
+            mealProductList.stream().forEach(n ->{
+                n.setMealNo(cacheKey);
+                if (n.getMealGiftFlag()==0){
+                    mainCount.getAndIncrement();
+                }
+            });
+            if (mainCount.get() == 0) {
+                return ComResponse.fail(ResponseCodeEnums.PARAMS_ERROR_CODE.getCode(),"套餐商品数量为0，清检查您的输入！");
+            }
             mealProductMapper.insertSelectiveList(mealProductList);
         } else {
             MealStatus mealStatus = mealMapper.queryMealStatusByMaelNo(mealNo);

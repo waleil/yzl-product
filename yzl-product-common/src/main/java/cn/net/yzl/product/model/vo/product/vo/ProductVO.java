@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -39,30 +40,36 @@ public class ProductVO extends BaseObject {
     @ApiModelProperty(name = "engName", value = "英文名称")
     private String engName;
 
-    @ApiModelProperty(name = "goodsSource", required = true, value = "商品来源：1-自营 2-三方")
-    @DecimalMin(value = "1",message = "最小只能为1")
+    @ApiModelProperty(name = "goodsSource", required = true, value = "销售渠道：1-自营 2-三方")
+    @NotNull(message = "商品来源不能为空！")
+    @DecimalMin(value = "1",message = "参数类型超出范围！")
+    @DecimalMax(value = "2", message = "参数类型查出范围！")
     private Integer goodsSource;
 
     @ApiModelProperty(name = "brandNo", value = "品牌编号")
     private Integer brandNo;
 
     @ApiModelProperty(name = "categoryDictCode", value = "商品分类")
-    @DecimalMin(value = "1",message = "商品分类不能为空")
+    @NotNull(message = "分类不能为空！")
     private Integer categoryDictCode;
 
     @ApiModelProperty(name = "salePriceD", required = true, value = "市场价(售卖价),以元为单位")
     @DecimalMin(value = "0",message = "市场价,不能为空")
+    @DecimalMax(value = "9999999.00", message = "参数超过限制！")
     private Double salePriceD;
 
     @ApiModelProperty(name = "costPriceD", required = true, value = "成本价,以元为单位")
     @DecimalMin(value = "0",message = "成本价,不能为空")
+    @DecimalMax(value = "9999999.00", message = "参数超过限制！")
     private Double costPriceD;
 
     @ApiModelProperty(name = "limitDownPriceD", required = true, value = "最低价格,所有的优惠扣减不能低于此价格,以元为单位")
     @DecimalMin(value = "0",message = "最低价格,不能为空")
+    @DecimalMax(value = "9999999.00", message = "参数超过限制！")
     private Double limitDownPriceD;
 
     @ApiModelProperty(name = "stock", required = true, value = "库存,-1代表不限制库存")
+    @NotNull(message = "库存总量不能为空！")
     private Integer stock;
 
     @ApiModelProperty(name = "stockThreshold", value = "库存阈值")
@@ -95,11 +102,13 @@ public class ProductVO extends BaseObject {
     private Integer importFlag;
 
     @ApiModelProperty(name = "productionTime", required = true, value = "生产日期")
+    @NotEmpty(message = "生产日期不能为空！")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date productionTime;
 
     @ApiModelProperty(name = "expirationDate", required = true, value = "保质期")
-    @DecimalMin(value = "1",message = "保质期为空")
+    @DecimalMin(value = "1",message = "参数超过限制")
+    @NotNull(message = "保质期不能为空！")
     private Integer expirationDate;
 
     @ApiModelProperty(name = "validDate", required = true, value = "有效期至")
@@ -110,15 +119,18 @@ public class ProductVO extends BaseObject {
     private String unit;
 
     @ApiModelProperty(name = "totalUseNum", required = true, value = "规格")
-    @DecimalMin(value = "1",message = "规格不能为空")
+    @DecimalMin(value = "1",message = "参数超过限制!")
+    @NotNull(message = "规格不能为空")
     private Integer totalUseNum;
 
     @ApiModelProperty(name = "oneUseNum", required = true, value = "每次数量")
-    @DecimalMin(value = "1",message = "每次数量不能为空")
+    @DecimalMin(value = "1",message = "参数超过限制")
+    @NotNull(message = "每次数量不能为空")
     private Integer oneUseNum;
 
     @ApiModelProperty(name = "oneToTimes", required = true, value = "每日几次")
-    @DecimalMin(value = "1",message = "每日几次不能为空")
+    @DecimalMin(value = "1",message = "参数超过限制")
+    @NotNull(message = "每日几次不能为空")
     private Integer oneToTimes;
 
     @ApiModelProperty(name = "cjName", required = true, value = "厂家名称")
