@@ -97,6 +97,9 @@
             <if test="updateTime != null">
                 update_time,
             </if>
+            <if test="imageUrl != null">
+                image_url,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -141,6 +144,9 @@
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="imageUrl != null">
+                #{imageUrl,jdbcType=TIMESTAMP},
+            </if>
         </trim>
     </insert>
 
@@ -182,6 +188,9 @@
             </if>
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="imageUrl != null">
+                image_url = #{imageUrl,jdbcType=TIMESTAMP},
             </if>
         </set>
         where meal_no = #{mealNo,jdbcType=VARCHAR}
