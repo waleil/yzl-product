@@ -50,10 +50,10 @@ public class ProductListDTO extends BaseObject {
 
     @ApiModelProperty(name = "brandName",value = "品牌名称")
     private String brandName;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(name = "saleStartTime",value = "售卖开始时间")
     private Date saleStartTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(name = "saleEndTime",value = "售卖结束时间")
     private Date saleEndTime;
 
