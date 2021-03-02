@@ -70,6 +70,7 @@
         p.product_no as productNo,
         p.`name` as name,
         p.brand_no as brandNo,
+        p.bar_code as barCode,
         p.category_dict_code as categoryDictCode,
         p.sale_price as salePrice,
         p.stock as stock,

@@ -36,6 +36,9 @@ public class ProductListDTO extends BaseObject {
     @ApiModelProperty(name = "brandNo", value = "品牌编号")
     private Integer brandNo;
 
+    @ApiModelProperty(name = "barCode", value = "条形码")
+    private String barCode;
+
     @ApiModelProperty(name = "categoryDictCode", value = "商品分类")
     private Integer categoryDictCode;
 
